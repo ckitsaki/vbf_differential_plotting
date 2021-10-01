@@ -1,0 +1,11 @@
+executable = submit_systematics.sh
+
+output = output/$(ClusterId).$(ProcId).out
+error = error/$(ClusterId).$(ProcId).err
+log = log/$(ClusterId).$(ProcId).log
+
+sample = Fakes
+
+arguments = $(sample) $(sys_name) False False True
++JobFlavour = "tomorrow"
+queue 1 sys_name in (mu_FF_Com el_FF_Com mu_FF_EWSUBTR el_FF_EWSUBTR el_FF_STAT_2015_2018_3_1 el_FF_STAT_2015_2018_4_1 el_FF_STAT_2015_1_1 el_FF_STAT_2015_2_1 el_FF_STAT_2015_3_1 el_FF_STAT_2015_4_1 el_FF_STAT_2017_1_1 el_FF_STAT_2017_2_1 el_FF_STAT_2017_3_1 el_FF_STAT_2017_4_1 el_FF_STAT_2016_1_1 mu_FF_STAT_2017_2_2 mu_FF_STAT_2017_3_1 mu_FF_STAT_2017_3_2 mu_FF_STAT_2016_1_1 mu_FF_STAT_2016_1_2 mu_FF_STAT_2016_2_1 mu_FF_STAT_2016_2_2 mu_FF_STAT_2016_3_1 mu_FF_STAT_2016_3_2 mu_FF_STAT_2018_1_1 mu_FF_STAT_2018_1_2 mu_FF_STAT_2018_2_1 mu_FF_STAT_2018_2_2 mu_FF_STAT_2018_3_1 mu_FF_STAT_2018_3_2 el_FF_STAT_2015_2018_1_1 el_FF_STAT_2015_2018_2_1 mu_FF_STAT_2015_2018_1_1 mu_FF_STAT_2015_2018_1_2 mu_FF_STAT_2015_2018_2_1 mu_FF_STAT_2015_2018_2_2 mu_FF_STAT_2015_2018_3_1 mu_FF_STAT_2015_2018_3_2 mu_FF_STAT_2015_1_1 mu_FF_STAT_2015_1_2 mu_FF_STAT_2015_2_1 mu_FF_STAT_2015_2_2 mu_FF_STAT_2015_3_1 mu_FF_STAT_2015_3_2 mu_FF_STAT_2017_1_1 mu_FF_STAT_2017_1_2 mu_FF_STAT_2017_2_1 el_FF_STAT_2016_2_1 el_FF_STAT_2016_3_1 el_FF_STAT_2016_4_1 el_FF_STAT_2018_1_1 el_FF_STAT_2018_2_1 el_FF_STAT_2018_3_1 el_FF_STAT_2018_4_1)
