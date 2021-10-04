@@ -14,4 +14,5 @@ rm merged*.root
 rm ../error/*
 rm ../log/*
 rm ../output/* 
-rm -v !("systematics.root")
+shopt -s extglob
+rm -- !("systematics.root")

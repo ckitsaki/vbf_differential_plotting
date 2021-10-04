@@ -681,9 +681,9 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
         }
     }
     else{
-        if(campaign=="c16a") path2 = "/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/2jet/c16a/";//"/atlasgpfs01/usatlas/data/jennyz/reco_ntuples/sagar/c16a/";   // for lxplus use /eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/2jet/c16a/ 
-        if(campaign=="c16d") path2 = "/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/";"/atlasgpfs01/usatlas/data/jennyz/reco_ntuples/chenj/";       // for lxplus use /eos/user/c/chenj/c16d-nTupDumpSpot/2jet/ 
-        if(campaign=="c16e") path2 = "/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/2jet/c16e/";//"/atlasgpfs01/usatlas/data/jennyz/reco_ntuples/sagar/c16e/"; // for lxplus use /eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/2jet/c16e/
+        if(campaign=="c16a") path2 = "/atlasgpfs01/usatlas/data/jennyz/reco_ntuples/sagar/c16a/";   // for lxplus use /eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/2jet/c16a/ 
+        if(campaign=="c16d") path2 = "/atlasgpfs01/usatlas/data/jennyz/reco_ntuples/chenj/";       // for lxplus use /eos/user/c/chenj/c16d-nTupDumpSpot/2jet/ 
+        if(campaign=="c16e") path2 = "/atlasgpfs01/usatlas/data/jennyz/reco_ntuples/sagar/c16e/"; // for lxplus use /eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/2jet/c16e/
     }
     std::string tmp_sample_name = "";
 
