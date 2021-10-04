@@ -267,8 +267,8 @@ inline std::string xAxisTitle(std::string observable)
   if(observable == "nJets") title = "n_{jet}";
   if(observable == "lep0_pt") title = "leading lepton #it{p}_{T} [GeV]";
   if(observable == "lep1_pt") title = "subleading lepton #it{p}_{T} [GeV]";
-  if(observable == "lep0_eta") title = "leading lepton #eta";
-  if(observable == "lep1_eta") title = "subleading lepton #eta";
+  if(observable == "lep0_eta") title = "leading lepton #it{#eta}";
+  if(observable == "lep1_eta") title = "subleading lepton #it{#eta}";
   if(observable == "Ptll") title = "P_{t}^{#ell#ell} [GeV]";
 
   return title;

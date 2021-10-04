@@ -45,17 +45,17 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
 
         }
         else{
-            f_the_file_c16a_2jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/2jet/c16a/data.root");
+            f_the_file_c16a_2jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/2jet/c16a/data.root");
 
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/data.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/data.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
 
-            f_the_file_c16e_2jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/2jet/c16e/data.root");
+            f_the_file_c16e_2jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/2jet/c16e/data.root");
 
             t_the_tree_c16e_2jet = (TTree*)f_the_file_c16e_2jet->Get(tree_name.data());
             Init(t_the_tree_c16e_2jet);
@@ -102,7 +102,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/Zjets.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/Zjets.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
@@ -152,7 +152,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/diboson1.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/diboson1.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
@@ -201,7 +201,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/diboson2.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/diboson2.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
@@ -250,7 +250,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/EW_WW_MadGraph.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/EW_WW_MadGraph.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
@@ -299,7 +299,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/Fakes.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/Fakes.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
@@ -348,7 +348,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/ggf.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/ggf.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
@@ -398,7 +398,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             Init(t_the_tree_c16a_2jet);
 
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/htt.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/htt.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
@@ -449,7 +449,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/top1.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/top1.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
@@ -498,7 +498,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/top2.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/top2.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
@@ -547,7 +547,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/vbf.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/vbf.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
@@ -596,7 +596,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/Vgamma.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/Vgamma.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);
@@ -645,7 +645,7 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
             t_the_tree_c16a_2jet = (TTree*)f_the_file_c16a_2jet->Get(tree_name.data());
             Init(t_the_tree_c16a_2jet);
 
-            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/c16d/vh.root");
+            f_the_file_c16d_2jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/2jet/vh.root");
 
             t_the_tree_c16d_2jet = (TTree*)f_the_file_c16d_2jet->Get(tree_name.data());
             Init(t_the_tree_c16d_2jet);

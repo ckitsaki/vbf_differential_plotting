@@ -66,29 +66,7 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
   return h;
 }
 
-TH1F* plotting::DrawOverflow(TH1F* h){
-    //function to paint the histogram h with an extra bin for overflows
-    UInt_t nx    = h->GetNbinsX()+1;
-    Double_t *xbins= new Double_t[nx+1];
-    for (UInt_t i=0;i<nx;i++)
-        xbins[i]=h->GetBinLowEdge(i+1);
-    xbins[nx]=xbins[nx-1]+h->GetBinWidth(nx);
-    //book a temporary histogram having extra bins for overflows
-    TH1F *htmp = new TH1F("htmp", "htmp", nx, xbins);
-    htmp->Sumw2();
-    //fill the new histogram including the overflows
-    for (UInt_t i=1; i<=nx; i++) {
-        htmp->SetBinContent(htmp->FindBin(htmp->GetBinCenter(i)),h->GetBinContent(i));
-        htmp->SetBinError(htmp->FindBin(htmp->GetBinCenter(i)),h->GetBinError(i));
-    }
-    htmp->SetBinContent(htmp->FindBin(h->GetBinLowEdge(1)-1), h->GetBinContent(0));
-    htmp->SetBinError(htmp->FindBin(h->GetBinLowEdge(1)-1), h->GetBinError(0));
-    // Restore the number of entries
-    htmp->SetEntries(h->GetEffectiveEntries());
-    return htmp;
-}
-
-void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool overflow=false)
+void plotting::PlotsforNote(std::string region, std::string observable, bool unblind)
 {
 
   std::cout<<"Preparing the plot for the supporting note.."<<std::endl;
@@ -135,8 +113,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_ggf->SetLineColor(kRed+1);
   h_Zjets->SetFillColor(kGreen+2);
   h_Zjets->SetLineColor(kBlack);
-  h_vh->SetFillColor(kViolet-6);
-  h_vh->SetLineColor(kViolet-6);
+  h_vh->SetFillColor(kViolet-5);
+  h_vh->SetLineColor(kViolet-5);
   h_htt->SetFillColor(kOrange+3);
   h_htt->SetLineColor(kOrange+3);
 
@@ -147,20 +125,6 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_ttbar1->SetLineWidth(1);
   h_singleTop1->SetLineWidth(1);
   h_Zjets->SetLineWidth(1);
-
-  if(overflow){
-  	h_Fakes_over = DrawOverflow((TH1F*)h_Fakes->Clone("h_Fakes_over"));
-  	h_WW_over = DrawOverflow((TH1F*)h_Fakes->Clone("h_WW_over"));
-  	h_NonWW_over = DrawOverflow((TH1F*)h_Fakes->Clone("h_NonWW_over"));
-  	h_ttbar_over = DrawOverflow((TH1F*)h_Fakes->Clone("h_ttbar_over"));
-  	h_singleTop_over = DrawOverflow((TH1F*)h_Fakes->Clone("h_singleTop_over"));
-  	h_vbf_over = DrawOverflow((TH1F*)h_Fakes->Clone("h_vbf_over"));
-  	h_ggf_over = DrawOverflow((TH1F*)h_Fakes->Clone("h_ggf_over"));
-  	h_Zjets_over = DrawOverflow((TH1F*)h_Fakes->Clone("h_Zjets_over"));
-  	h_vh_over = DrawOverflow((TH1F*)h_Fakes->Clone("h_vh_over"));
-  	h_htt_over = DrawOverflow((TH1F*)h_Fakes->Clone("h_htt_over"));
-  	//if(unblind) h_data_over = DrawOverflow((TH1F*)h_data->Clone("h_data_over"));
-  }
 
   std::vector<float> fakes_stat, WW_stat, NonWW_stat, ttbar_stat, singleTop_stat, zjets_stat, vh_stat, htt_stat, ggf_stat, total_stat, x_stat, y_stat;
 
@@ -201,7 +165,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   }
 */
   // =====>> add experimental systematics
-  std::string sys_path = "./sys_files_chara/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_systematics.root";
+  std::string sys_path = "./exp_systematics/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_ExpSys.root";
   TFile *f_exp = new TFile(sys_path.c_str());
   size_t size1 = sizeof(v_sys_list)/sizeof(v_sys_list[0]);
   size_t size2 = sizeof(v_sys_MET)/sizeof(v_sys_MET[0]);
@@ -302,7 +266,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
       total_exp_sys_up.push_back(std::sqrt(total_sum_up));
       total_exp_sys_down.push_back(std::sqrt(total_sum_down));
   }
-  
+
   TGraphAsymmErrors* h_exp_sys_errors = new TGraphAsymmErrors();
 
   for(int isys = 0; isys<m_nbins; isys++)
@@ -310,30 +274,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     h_exp_sys_errors->SetPoint(isys,x_stat.at(isys),y_stat.at(isys));
     h_exp_sys_errors->SetPointError(isys,h_Fakes->GetBinWidth(isys)/2,h_Fakes->GetBinWidth(isys)/2, std::sqrt(std::pow(total_exp_sys_up.at(isys),2)+std::pow(total_stat.at(isys),2)), std::sqrt(std::pow(total_exp_sys_down.at(isys),2)+std::pow(total_stat.at(isys),2))); 
   }
-/*
-  TH1F* h_vh_overflow = DrawOverflow(h_vh);
-  TH1F* h_htt_overflow = DrawOverflow(h_htt);
-  TH1F* h_ggf_overflow = DrawOverflow(h_ggf);
-  TH1F* h_NonWW_overflow = DrawOverflow(h_NonWW);
-  TH1F* h_Fakes_overflow = DrawOverflow(h_Fakes);
-  TH1F* h_singleTop1_overflow = DrawOverflow(h_singleTop1);
-  TH1F* h_WW_overflow = DrawOverflow(h_WW);
-  TH1F* h_ttbar1_overflow = DrawOverflow(h_ttbar1);
-  TH1F* h_Zjets_overflow = DrawOverflow(h_Zjets);
-*/
+
   if(m_regionName == "SR"){
-  	if(overflow)
-  	{
-  		h_stack->Add(h_vh_over); // vh
-    	h_stack->Add(h_htt_over); // htt
-    	h_stack->Add(h_ggf_over);  // ggF
-    	h_stack->Add(h_NonWW_over); // nonWW + Vgamma
-    	h_stack->Add(h_Fakes_over); // Fakes
-    	h_stack->Add(h_singleTop_over); // Single Top
-    	h_stack->Add(h_Zjets_over); //Z+jets
-    	h_stack->Add(h_WW_over); // WW +EWWW Madgraph
-    	h_stack->Add(h_ttbar_over); // ttbar
-  	}else{
     	h_stack->Add(h_vh); // vh
     	h_stack->Add(h_htt); // htt
     	h_stack->Add(h_ggf);  // ggF
@@ -343,21 +285,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     	h_stack->Add(h_Zjets); //Z+jets
     	h_stack->Add(h_WW); // WW +EWWW Madgraph
     	h_stack->Add(h_ttbar1); // ttbar
-	}
   }
   else{
-  	if(overflow)
-  	{
-  		h_stack->Add(h_vh_over);
-    	h_stack->Add(h_htt_over);
-    	h_stack->Add(h_ggf_over);
-    	h_stack->Add(h_WW_over);
-    	h_stack->Add(h_NonWW_over);
-    	h_stack->Add(h_ttbar_over);
-    	h_stack->Add(h_singleTop_over);
-    	h_stack->Add(h_Zjets_over);
-    	h_stack->Add(h_Fakes_over);
-  	}else{
     	h_stack->Add(h_vh);
     	h_stack->Add(h_htt);
     	h_stack->Add(h_ggf);
@@ -367,7 +296,6 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     	h_stack->Add(h_singleTop1);
     	h_stack->Add(h_Zjets);
     	h_stack->Add(h_Fakes);
-    }
   }
 
   TCanvas *c = new TCanvas("atlas_square","Canvas title",0.,0.,600,600);
@@ -383,8 +311,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 }
   
   h_stack->Draw("hist");
-  if(overflow) h_vbf_over->Draw("hist same");
-  else h_vbf->Draw("hist same");
+  h_vbf->Draw("hist same");
   
   h_exp_sys_errors->SetFillColor(kGray+2);
   h_exp_sys_errors->SetLineColor(kWhite);
@@ -395,19 +322,17 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
    h_data->Draw("pe same");
   }
 
-  //h_stack->SetMinimum(10e-03);
- // h_stack->SetMaximum(180);//(10e+05);
-  if(unblind) h_stack->GetXaxis()->SetRangeUser(0,2500);
+  h_stack->SetMinimum(m_yminimum);
+  h_stack->SetMaximum(m_ymaximum);
+  if(unblind) h_stack->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
   if(unblind) h_stack->GetXaxis()->SetLabelSize(0);
 
   if(!unblind){
-  gPad->SetLogy();
-  h_stack->SetMinimum(10e-04);
-  h_stack->SetMaximum(10e+05);
+  if(m_regionName=="SR") gPad->SetLogy();
+  
   h_stack->GetXaxis()->SetTitle(xAxisTitle(observable).c_str());
   h_stack->GetXaxis()->SetTitleSize(.04);
   h_stack->GetXaxis()->SetLabelSize(.04);
- // h_stack->GetYaxis()->SetNdivisions(505);
   h_stack->GetYaxis()->SetLabelSize(.04);
   h_stack->GetYaxis()->SetTitleSize(.04);
   }
@@ -415,9 +340,15 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   // y-axis label
   float binEvt = (h_stack->GetXaxis()->GetXmax() - h_stack->GetXaxis()->GetXmin())/m_nbins;
   char res[10];
-  ftoa(binEvt, res, 0);
+  int digit = 0;
+  if (binEvt<1) digit = 2;
+  ftoa(binEvt, res, digit);
   std::string res_to_string = res;
-  std::string yTitle = "Events / "+ res_to_string + " GeV";
+  std::string unit=" GeV";
+  if(m_obsName=="DPhill") unit = " rad";
+  else if(m_obsName=="lep0_eta" || m_obsName=="lep1_eta" || m_obsName=="jet0_eta" || m_obsName=="jet1_eta" || m_obsName=="MT" || m_obsName=="DYll" || m_obsName=="DYjj" || m_obsName=="DPhijj" || m_obsName=="SignedDPhijj" || m_obsName=="costhetastar" || m_obsName=="sumOfCentralitiesL") unit="";
+  std::string yTitle = "Events / "+ res_to_string + unit;
+  if(m_obsName=="nJets") yTitle = "Events";
   h_stack->GetYaxis()->SetTitle(yTitle.c_str());
 
   if(unblind) legend = new TLegend(0.55,0.55,0.92,0.9);
@@ -491,7 +422,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_ratio_unc->SetFillStyle(3345);
   h_ratio->Draw("pe");
 
-  TLine *l=new TLine(pad1->GetUxmin(),1.0,2500,1.0);
+  TLine *l=new TLine(pad1->GetUxmin(),1.0,m_xmaximum,1.0);
   l->SetLineColor(kRed);
   l->Draw("same");
   h_ratio_unc->Draw("e2 same");
@@ -511,10 +442,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_ratio->GetYaxis()->SetTitleOffset(.7);
   h_ratio->GetYaxis()->SetTitle("Data / Pred.");
  // h_stack->GetYaxis()->SetTitleOffset(.3);
-  h_ratio->GetXaxis()->SetRangeUser(0,2500);
- // h_ratio2->GetXaxis()->SetRangeUser(0,1300);
-
-  h_ratio->GetYaxis()->SetRangeUser(0.,3.);
+  h_ratio->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
+  h_ratio->GetYaxis()->SetRangeUser(m_y_ratio_min,m_y_ratio_max);
 }
 
   std::string save_name = "./plots/"+region+"_"+observable+".pdf";
@@ -529,7 +458,7 @@ void plotting::PlotsforPaper(std::string region, std::string observable, bool un
 }
 
 
-plotting::plotting(std::string region, std::string observable, bool unblind, bool forPaper)
+plotting::plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool monitorAxesLimits)
 {
   gROOT->SetBatch(kTRUE);
   SetAtlasStyle();
@@ -542,8 +471,41 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
 
   setBins(forPaper);
 
+  if(monitorAxesLimits)
+  {
+    float y_maximum, x_minimum, x_maximum;
+    std::cout<<"Set Y-axis maximum ";
+    std::cin>>y_maximum;
+    std::cout<<"Set X-axis minimum ";
+    std::cin>>x_minimum;
+    std::cout<<"Set X-axis maximum ";
+    std::cin>>x_maximum;
+    
+    if (unblind)
+    {
+      float y_ratio_min, y_ratio_max;
+      std::cout<<"==== Limits for the bottom panel ====\n";
+      std::cout<<"y-axis min value \n";
+      std::cin>>y_ratio_min;
+      std::cout<<"y-axis max value \n";
+      std::cin>>y_ratio_max;
+
+      setYminRatio(y_ratio_min);
+      setYmaxRatio(y_ratio_max);
+
+    }
+    setYMax(y_maximum);
+    setXMin(x_minimum);
+    setXMax(x_maximum);
+  }
+  else
+  {
+    setYaxisRanges();
+    setXaxisRanges();
+  }
+
   if(forPaper) PlotsforPaper(m_regionName, m_obsName, unblind);
-  else PlotsforNote(m_regionName, m_obsName, unblind, false);
+  else PlotsforNote(m_regionName, m_obsName, unblind);
 
   clock_t tEnd = clock();
   auto t_end = std::chrono::high_resolution_clock::now();
