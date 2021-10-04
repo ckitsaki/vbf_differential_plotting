@@ -2,6 +2,15 @@
 #include "Style/AtlasStyle.C"
 #include "plotting.h"
 
+std::string v_theo_vbf[5] = {"theo_vbf_scale", "theo_vbf_alphas", "theo_vbf_pdf4lhc", "theo_vbf_shower", "theo_vbf_generator"};
+
+std::string v_theo_ggf[11] = {"theo_ggF_qcd_wg1_mu", "theo_ggF_qcd_wg1_res", "theo_ggF_qcd_wg1_mig01", "theo_ggF_qcd_wg1_mig12", "theo_ggF_qcd_wg1_vbf2j", "theo_ggF_qcd_wg1_vbf3j", "theo_ggF_qcd_wg1_qm_t", "theo_ggF_qcd_wg1_pTH", "theo_ggF_pdf4lhc", "theo_ggF_alphas", "theo_ggF_shower"};
+
+std::string v_theo_top[6] = {"theo_ttbar_shower", "theo_ttbar_matching", "theo_ttbar_scale", "theo_ttbar_isr", "theo_ttbar_fsr", "theo_ttbar_pdf"};
+
+std::string v_theo_Zjets[4] = {"theo_ztautau_scale", "theo_ztautau_alphas", "theo_ztautau_pdf", "theo_ztautau_generator"};
+
+std::string v_theo_diboson[7] = {"theo_ww_scale", "theo_ww_alphas", "theo_ww_pdf", "theo_ww_QSF", "theo_ww_CKKW", "theo_ww_shower", "theo_ww_CSSKIN"};
 
 TH1F* plotting::getNominalHisto(std::string sample)
 {
@@ -66,7 +75,22 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
   return h;
 }
 
-void plotting::PlotsforNote(std::string region, std::string observable, bool unblind)
+TH1F* plotting::getTheoryHisto(std::string sample, std::string theo_sys, bool isUp)
+{
+  std::string theo_filename = "./theo_systematics/" + sample + "_theory_" + m_obsName + ".root";
+  TFile* f_theo_file = new TFile(theo_filename.c_str());
+  std::string theo_nom = sample + "_" + theo_sys + "__Nom_" + m_regionName + "_" + m_obsName;
+  std::string theo_var = sample + "_" + theo_sys + "__1up_" + m_regionName + "_" + m_obsName;
+  if(!isUp) theo_var = sample + "_" + theo_sys + "__1down_" + m_regionName + "_" + m_obsName;
+  TH1F* h_theo_nom = (TH1F*)f_theo_file->Get(theo_nom.c_str());
+  TH1F* h_theo_var = (TH1F*)f_theo_file->Get(theo_var.c_str());
+
+  h_theo_nom->Add(h_theo_var,-1);
+
+  return h_theo_nom;
+}
+
+void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool doTheo)
 {
 
   std::cout<<"Preparing the plot for the supporting note.."<<std::endl;
@@ -250,7 +274,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   
   }
 
-  std::vector<float> total_exp_sys_up, total_exp_sys_down;
+  std::vector<float> total_exp_sys_up, total_exp_sys_down, total_theo_up, total_theo_down;
 
   for(int ibin =0; ibin<m_nbins; ibin++){
     float total_sum_up = 0;
@@ -265,6 +289,30 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     }
       total_exp_sys_up.push_back(std::sqrt(total_sum_up));
       total_exp_sys_down.push_back(std::sqrt(total_sum_down));
+  }
+
+  if(doTheo)
+  {
+    for(int ibin=0; ibin<m_nbins; ibin++)
+    {
+      float vbf_sum_theo_up = 0;
+      float vbf_sum_theo_down = 0;
+      for(int i=0; i<sizeof(v_theo_vbf)/sizeof(v_theo_vbf[0]); i++)
+      {
+        TH1F* h_theo_up = getTheoryHisto("vbf", v_theo_vbf[i], true);
+        
+        float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
+        vbf_sum_theo_up += total_up;
+
+        TH1F* h_theo_down = getTheoryHisto("vbf", v_theo_vbf[i], false);
+        
+        float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
+        vbf_sum_theo_down += total_down;
+      }
+      total_theo_up.push_back(std::sqrt(vbf_sum_theo_up));    
+      total_theo_down.push_back(std::sqrt(vbf_sum_theo_down)); 
+      std::cout<<"Bin-"<<ibin<<" "<<total_theo_up.at(ibin)<<" "<<total_theo_down.at(ibin)<<std::endl; 
+    }
   }
 
   TGraphAsymmErrors* h_exp_sys_errors = new TGraphAsymmErrors();
@@ -458,7 +506,7 @@ void plotting::PlotsforPaper(std::string region, std::string observable, bool un
 }
 
 
-plotting::plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool monitorAxesLimits)
+plotting::plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool monitorAxesLimits, bool doTheo)
 {
   gROOT->SetBatch(kTRUE);
   SetAtlasStyle();
@@ -505,7 +553,7 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
   }
 
   if(forPaper) PlotsforPaper(m_regionName, m_obsName, unblind);
-  else PlotsforNote(m_regionName, m_obsName, unblind);
+  else PlotsforNote(m_regionName, m_obsName, unblind, doTheo);
 
   clock_t tEnd = clock();
   auto t_end = std::chrono::high_resolution_clock::now();
