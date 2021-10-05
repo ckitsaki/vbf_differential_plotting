@@ -9,7 +9,7 @@ In order to add the experimental uncertainties as error bands, for a given obser
 
 Usage:
 1. `mkdir sys_files error log output` 
-2. Modify the script `submit_systematics.sh`, i.e `region`, `observable` and `dir` variables should be changed according to what you wish to plot.
+2. Modify the script `submit_systematics.sh`, i.e `region`, `observable` and `dir` variables should be changed according to what you wish to plot. Notice: dir variable should link to the src folder.
 3. Run `./submit_jobs.sh`. Jobs for each systematic uncertainty and process (vbf, ggf, vh, htt, diboson, top, Zjets, Fakes) will be send to condor.
 4. For each of the processes and systematic uncertainties a corresponding .root file is saved under the `sys_files` folder. Modify the `hadd_sys_files.sh` script by updating the `observable` variable with respect to what was declared at Step 2 and then run the script `./hadd_sys_files.sh`. All .root files will be hadded into a single .root file (i.e systematics.root) while at the same time contents under the directories `error`,`log` and `output` will be deleted. 
 
@@ -37,7 +37,7 @@ plotting("region","observable",unblind,forPaper,setAxesLimits,addTheo,lxplus)
 ```
 Arguments:
 * region (string): choose among SR, TopCR, DYCR, WWCR, ggFCR1, ggFCR2, ggFCR3
-* observable (string): choose among lep0_pt, lep1_pt, jet0_pt, jet1_pt, jet2_pt, Mjj, DPhill, DPhijj, DYjj, Mll, DYll, nJets, Ml0j0, Ml1j1, Ml0j1, Ml1j0, MET, jet0_eta,jet1_eta, lep0_eta, lep1_eta, Ptll, SignedDPhijj, MT, costhetastar, ptTot, sumOfCentralitiesL, pt_H
+* observable (string): choose among lep0_pt, lep1_pt, jet0_pt, jet1_pt, jet2_pt, Mjj, DPhill, DPhijj, DYjj, Mll, DYll, nJets, Ml0j0, Ml1j1, Ml0j1, Ml1j0, MET, jet0_eta, jet1_eta, lep0_eta, lep1_eta, Ptll, SignedDPhijj, MT, costhetastar, ptTot, sumOfCentralitiesL, pt_H, bdt_vbf, bdt_TopWWAll, bdt_ggFCR1, bdt_ggFCR2, bdt_ggFCR3
 * unblind (bool): decides if data will be shown or not. Values: True or False.
 * forPaper (bool): decides if the plot is for the supporting note or the paper. For the moment, set it to False. 
 * setAxesLimits (bool): gives the ability to change the axes limits without diving in the code. Hint: at first set it to False to see the default limits and if needed change it to True to adjust the desired limits on axes. Values: True or False. 
