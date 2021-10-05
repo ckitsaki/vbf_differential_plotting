@@ -74,6 +74,10 @@ class TreeReader{
   float inggFCR3;
   float mcChannelNumber;
   float bdt_vbf;
+  float bdt_TopWWAll;
+  float bdt_ggFCR1;
+  float bdt_ggFCR2;
+  float bdt_ggFCR3;
   double weight;
 
   TreeReader(std::string region, std::string sample, std::string tree_name, bool lxplus);
@@ -144,6 +148,10 @@ inline void TreeReader::Init(TTree* tree)
   inggFCR3 = -1;
   mcChannelNumber = -1;
   bdt_vbf = 0;
+  bdt_TopWWAll = 0;
+  bdt_ggFCR1 = 0;
+  bdt_ggFCR2 = 0;
+  bdt_ggFCR3 = 0;
   weight = 0;
 
   the_tree = tree;
@@ -185,6 +193,10 @@ inline void TreeReader::Init(TTree* tree)
   the_tree->SetBranchAddress("inggFCR3", &inggFCR3);
   the_tree->SetBranchAddress("mcChannelNumber", &mcChannelNumber);
   the_tree->SetBranchAddress("bdt_vbf", &bdt_vbf);
+  the_tree->SetBranchAddress("bdt_TopWWAll", &bdt_TopWWAll);
+  the_tree->SetBranchAddress("bdt_ggFCR1", &bdt_ggFCR1);
+  the_tree->SetBranchAddress("bdt_ggFCR2", &bdt_ggFCR2);
+  the_tree->SetBranchAddress("bdt_ggFCR3", &bdt_ggFCR3);
   the_tree->SetBranchAddress("weight", &weight);
 
 }
@@ -236,6 +248,11 @@ inline float TreeReader::getObservable(std::string observable)
   if(observable=="lep0_eta") variable_to_plot = lep0_eta;
   if(observable=="lep1_eta") variable_to_plot = lep1_eta;
   if(observable=="Ptll") variable_to_plot = Ptll/1000;
+  if(observable=="bdt_TopWWAll") variable_to_plot = bdt_TopWWAll;
+  if(observable=="bdt_vbf") variable_to_plot = bdt_vbf;
+  if(observable=="bdt_ggFCR1") variable_to_plot = bdt_ggFCR1;
+  if(observable=="bdt_ggFCR2") variable_to_plot = bdt_ggFCR2; 
+  if(observable=="bdt_ggFCR3") variable_to_plot = bdt_ggFCR3;
 
   return variable_to_plot;
 }
@@ -274,6 +291,10 @@ inline std::string xAxisTitle(std::string observable)
   if(observable == "lep0_eta") title = "leading lepton #it{#eta}";
   if(observable == "lep1_eta") title = "subleading lepton #it{#eta}";
   if(observable == "Ptll") title = "P_{t}^{#ell#ell} [GeV]";
+  if(observable == "bdt_ggFCR1") title = "BDT output ggF CR1";
+  if(observable == "bdt_ggFCR2") title = "BDT output ggF VR2";
+  if(observable == "bdt_ggFCR3") title = "BDT output ggF VR3";
+  if(observable == "bdt_TopWWAll") title = "BDT output Top vs WW";
 
   return title;
 }

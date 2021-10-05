@@ -433,8 +433,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_stack->GetXaxis()->SetLabelSize(.04);
   h_stack->GetYaxis()->SetLabelSize(.04);
   h_stack->GetYaxis()->SetTitleSize(.04);
-  h_stack->GetYaxis()->SetTitleOffset(.7);
-  if(m_regionName=="SR") h_stack->GetYaxis()->SetTitleOffset(.7);
+  h_stack->GetYaxis()->SetTitleOffset(2.);
+  if(m_regionName=="SR") h_stack->GetYaxis()->SetTitleOffset(1.5);
   }
 
   // y-axis label
@@ -446,7 +446,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   std::string res_to_string = res;
   std::string unit=" GeV";
   if(m_obsName=="DPhill") unit = " rad";
-  else if(m_obsName=="lep0_eta" || m_obsName=="lep1_eta" || m_obsName=="jet0_eta" || m_obsName=="jet1_eta" || m_obsName=="MT" || m_obsName=="DYll" || m_obsName=="DYjj" || m_obsName=="DPhijj" || m_obsName=="SignedDPhijj" || m_obsName=="costhetastar" || m_obsName=="sumOfCentralitiesL") unit="";
+  else if(m_obsName=="lep0_eta" || m_obsName=="lep1_eta" || m_obsName=="jet0_eta" || m_obsName=="jet1_eta" || m_obsName=="MT" || m_obsName=="DYll" || m_obsName=="DYjj" || m_obsName=="DPhijj" || m_obsName=="SignedDPhijj" || m_obsName=="costhetastar" || m_obsName=="sumOfCentralitiesL" || m_obsName=="bdt_vbf" || m_obsName=="bdt_TopWWAll" || m_obsName=="bdt_ggFCR1" || m_obsName=="bdt_ggFCR2" || m_obsName=="bdt_ggFCR3") unit="";
   std::string yTitle = "Events / "+ res_to_string + unit;
   if(m_obsName=="nJets") yTitle = "Events";
   h_stack->GetYaxis()->SetTitle(yTitle.c_str());

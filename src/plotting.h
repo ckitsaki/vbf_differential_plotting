@@ -147,6 +147,12 @@ inline void plotting::setBins(bool forPaper)
 { 
 
   if(!forPaper){
+    if(m_obsName=="bdt_vbf" || m_obsName=="bdt_TopWWAll" || m_obsName=="bdt_ggFCR1" || m_obsName=="bdt_ggFCR2" || m_obsName=="bdt_ggFCR3")
+    {
+      m_nbins = 20; 
+      m_xmin = -1;
+      m_xmax = 1;
+    }
     if(m_obsName=="MET" || m_obsName=="pt_H")
     {
       m_nbins = 25;
