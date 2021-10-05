@@ -77,7 +77,8 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
 
 TH1F* plotting::getTheoryHisto(std::string sample, std::string theo_sys, bool isUp)
 {
-  std::string theo_filename = "./theo_systematics/" + sample + "_theory_" + m_obsName + ".root";
+  std::string theo_filename = "./theo_systematics/" + sample + "_theory_2jets.root";
+  if(m_regionName=="ggFCR3") theo_filename = "./theo_systematics/" + sample + "_theory_01jets.root";
   TFile* f_theo_file = new TFile(theo_filename.c_str());
   std::string theo_nom = sample + "_" + theo_sys + "__Nom_" + m_regionName + "_" + m_obsName;
   std::string theo_var = sample + "_" + theo_sys + "__1up_" + m_regionName + "_" + m_obsName;
@@ -90,7 +91,7 @@ TH1F* plotting::getTheoryHisto(std::string sample, std::string theo_sys, bool is
   return h_theo_nom;
 }
 
-void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool doTheo)
+void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo)
 {
 
   std::cout<<"Preparing the plot for the supporting note.."<<std::endl;
@@ -137,8 +138,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_ggf->SetLineColor(kRed+1);
   h_Zjets->SetFillColor(kGreen+2);
   h_Zjets->SetLineColor(kBlack);
-  h_vh->SetFillColor(kViolet-5);
-  h_vh->SetLineColor(kViolet-5);
+  h_vh->SetFillColor(kViolet-8);
+  h_vh->SetLineColor(kViolet-8);
   h_htt->SetFillColor(kOrange+3);
   h_htt->SetLineColor(kOrange+3);
 
@@ -152,7 +153,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 
   std::vector<float> fakes_stat, WW_stat, NonWW_stat, ttbar_stat, singleTop_stat, zjets_stat, vh_stat, htt_stat, ggf_stat, total_stat, x_stat, y_stat;
 
-  // statistical uncertainties
+  // ================  statistical uncertainties ===================== //
 
   for(int ibin=0; ibin<m_nbins; ibin++)
   {
@@ -176,6 +177,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     float stat = std::sqrt(std::pow(fakes_stat.at(istat),2)+std::pow(WW_stat.at(istat),2)+std::pow(NonWW_stat.at(istat),2)+std::pow(ttbar_stat.at(istat),2)+std::pow(singleTop_stat.at(istat),2)+std::pow(zjets_stat.at(istat),2)+std::pow(vh_stat.at(istat),2)+std::pow(htt_stat.at(istat),2)+std::pow(ggf_stat.at(istat),2));
     total_stat.push_back(stat);
   }
+// ============================================================= //
 
  // if(unblind) h_data_stat = new TGraphAsymmErrors();
 /*
@@ -188,7 +190,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     else break;
   }
 */
-  // =====>> add experimental systematics
+  // =============== add experimental systematics =================================== //
   std::string sys_path = "./exp_systematics/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_ExpSys.root";
   TFile *f_exp = new TFile(sys_path.c_str());
   size_t size1 = sizeof(v_sys_list)/sizeof(v_sys_list[0]);
@@ -290,22 +292,68 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
       total_exp_sys_up.push_back(std::sqrt(total_sum_up));
       total_exp_sys_down.push_back(std::sqrt(total_sum_down));
   }
+// ===================================================================== //
 
-  if(doTheo)
+// ===================== add theory systematics ========================= //
+  if(addTheo)
   {
     for(int ibin=0; ibin<m_nbins; ibin++)
     {
       float vbf_sum_theo_up = 0;
       float vbf_sum_theo_down = 0;
-      for(int i=0; i<sizeof(v_theo_vbf)/sizeof(v_theo_vbf[0]); i++)
+      for(int ivbf=0; ivbf<sizeof(v_theo_vbf)/sizeof(v_theo_vbf[0]); ivbf++)
       {
-        TH1F* h_theo_up = getTheoryHisto("vbf", v_theo_vbf[i], true);
+        TH1F* h_theo_up = getTheoryHisto("vbf", v_theo_vbf[ivbf], true);
         
         float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
         vbf_sum_theo_up += total_up;
 
-        TH1F* h_theo_down = getTheoryHisto("vbf", v_theo_vbf[i], false);
+        TH1F* h_theo_down = getTheoryHisto("vbf", v_theo_vbf[ivbf], false);
         
+        float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
+        vbf_sum_theo_down += total_down;
+      }
+
+      for(int iggf=0; iggf<sizeof(v_theo_ggf)/sizeof(v_theo_ggf[0]); iggf++)
+      {
+        TH1F* h_theo_up = getTheoryHisto("ggf", v_theo_ggf[iggf], true);
+        float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
+        vbf_sum_theo_up += total_up;
+
+        TH1F* h_theo_down = getTheoryHisto("ggf", v_theo_ggf[iggf], false);
+        float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
+        vbf_sum_theo_down += total_down;
+      }
+
+      for(int itop=0; itop<sizeof(v_theo_top)/sizeof(v_theo_top[0]); itop++)
+      {
+        TH1F* h_theo_up = getTheoryHisto("top", v_theo_top[itop], true);
+        float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
+        vbf_sum_theo_up += total_up;
+
+        TH1F* h_theo_down = getTheoryHisto("top", v_theo_top[itop], false);
+        float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
+        vbf_sum_theo_down += total_down;
+      }
+
+      for(int izjets=0; izjets<sizeof(v_theo_Zjets)/sizeof(v_theo_Zjets[0]); izjets++)
+      {
+        TH1F* h_theo_up = getTheoryHisto("Zjets", v_theo_Zjets[izjets], true);
+        float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
+        vbf_sum_theo_up += total_up;
+
+        TH1F* h_theo_down = getTheoryHisto("Zjets", v_theo_Zjets[izjets], false);
+        float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
+        vbf_sum_theo_down += total_down;
+      }
+
+      for(int idiboson=0; idiboson<sizeof(v_theo_diboson)/sizeof(v_theo_diboson[0]); idiboson++)
+      {
+        TH1F* h_theo_up = getTheoryHisto("diboson", v_theo_diboson[idiboson], true);
+        float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
+        vbf_sum_theo_up += total_up;
+
+        TH1F* h_theo_down = getTheoryHisto("diboson", v_theo_diboson[idiboson], false);
         float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
         vbf_sum_theo_down += total_down;
       }
@@ -314,13 +362,14 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
       std::cout<<"Bin-"<<ibin<<" "<<total_theo_up.at(ibin)<<" "<<total_theo_down.at(ibin)<<std::endl; 
     }
   }
-
+// ====================================================================================================== //
   TGraphAsymmErrors* h_exp_sys_errors = new TGraphAsymmErrors();
 
   for(int isys = 0; isys<m_nbins; isys++)
   {
     h_exp_sys_errors->SetPoint(isys,x_stat.at(isys),y_stat.at(isys));
-    h_exp_sys_errors->SetPointError(isys,h_Fakes->GetBinWidth(isys)/2,h_Fakes->GetBinWidth(isys)/2, std::sqrt(std::pow(total_exp_sys_up.at(isys),2)+std::pow(total_stat.at(isys),2)), std::sqrt(std::pow(total_exp_sys_down.at(isys),2)+std::pow(total_stat.at(isys),2))); 
+    if(addTheo) h_exp_sys_errors->SetPointError(isys, h_Fakes->GetBinWidth(isys)/2, h_Fakes->GetBinWidth(isys)/2, std::sqrt(std::pow(total_exp_sys_up.at(isys),2)+std::pow(total_stat.at(isys),2)+std::pow(total_theo_up.at(isys),2)), std::sqrt(std::pow(total_exp_sys_down.at(isys),2)+std::pow(total_stat.at(isys),2)+std::pow(total_theo_down.at(isys),2)));
+    else h_exp_sys_errors->SetPointError(isys,h_Fakes->GetBinWidth(isys)/2,h_Fakes->GetBinWidth(isys)/2, std::sqrt(std::pow(total_exp_sys_up.at(isys),2)+std::pow(total_stat.at(isys),2)), std::sqrt(std::pow(total_exp_sys_down.at(isys),2)+std::pow(total_stat.at(isys),2))); 
   }
 
   if(m_regionName == "SR"){
@@ -372,6 +421,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 
   h_stack->SetMinimum(m_yminimum);
   h_stack->SetMaximum(m_ymaximum);
+ 
   if(unblind) h_stack->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
   if(unblind) h_stack->GetXaxis()->SetLabelSize(0);
 
@@ -383,6 +433,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_stack->GetXaxis()->SetLabelSize(.04);
   h_stack->GetYaxis()->SetLabelSize(.04);
   h_stack->GetYaxis()->SetTitleSize(.04);
+  h_stack->GetYaxis()->SetTitleOffset(.7);
+  if(m_regionName=="SR") h_stack->GetYaxis()->SetTitleOffset(.7);
   }
 
   // y-axis label
@@ -427,7 +479,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   legAtlas->SetTextSize(0.);
   legAtlas->AddEntry((TObject*)0, "#it{#scale[1.5]{ATLAS}} #font[42]{#scale[1.5]{Internal}}", "");
   legAtlas->AddEntry((TObject*)0, "#bf{#sqrt{#scale[1.]{s}} #scale[1.]{= 13 TeV,} #scale[1.]{#int} #scale[1.]{Ldt = 139 fb^{-1}}}", "");
-  std::string regionLabel = "#bf{e#mu + #mu e channel}";//"#bf{"+region+"}";
+  std::string regionLabel = "#bf{e#mu + #mue channel}";//"#bf{"+region+"}";
   legAtlas->AddEntry((TObject*)0, regionLabel.c_str(),"");
 
   legAtlas->Draw();
@@ -506,7 +558,7 @@ void plotting::PlotsforPaper(std::string region, std::string observable, bool un
 }
 
 
-plotting::plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool monitorAxesLimits, bool doTheo)
+plotting::plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo)
 {
   gROOT->SetBatch(kTRUE);
   SetAtlasStyle();
@@ -519,7 +571,7 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
 
   setBins(forPaper);
 
-  if(monitorAxesLimits)
+  if(setAxesLimits)
   {
     float y_maximum, x_minimum, x_maximum;
     std::cout<<"Set Y-axis maximum ";
@@ -553,7 +605,7 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
   }
 
   if(forPaper) PlotsforPaper(m_regionName, m_obsName, unblind);
-  else PlotsforNote(m_regionName, m_obsName, unblind, doTheo);
+  else PlotsforNote(m_regionName, m_obsName, unblind, addTheo);
 
   clock_t tEnd = clock();
   auto t_end = std::chrono::high_resolution_clock::now();

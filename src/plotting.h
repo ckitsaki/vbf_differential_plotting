@@ -58,9 +58,9 @@ public:
 
   inline void setBins(bool forPaper);
  
-  void PlotsforNote(std::string region, std::string observable, bool unblind, bool doTheo);
+  void PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo);
   void PlotsforPaper(std::string region, std::string observable, bool unblind);
-  plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool monitorAxesLimits, bool doTheo); 
+  plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo); 
 
 
 private:
