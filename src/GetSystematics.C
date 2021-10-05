@@ -82,11 +82,11 @@ void ftoa(float n, char* res, int afterpoint)
 
 
 
-TH1F* GetSystematics::getNominalHisto(std::string sample)
+TH1F* GetSystematics::getNominalHisto(std::string sample, bool lxplus)
 {
   std::string tree_name = getSampleName(sample) + "_nominal";
   
-  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name);
+  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name, lxplus);
 
   std::cout<<sample<<" - added \n";
 
@@ -150,7 +150,7 @@ TH1F* GetSystematics::getNominalHisto(std::string sample, std::string campaign)
   return h;
 }
 
-TH1F* GetSystematics::getSysHist(bool sys_up, std::string sample, std::string sysName)
+TH1F* GetSystematics::getSysHist(bool sys_up, std::string sample, std::string sysName, bool lxplus)
 {
 
   std::string sys_type="__1up";
@@ -160,7 +160,7 @@ TH1F* GetSystematics::getSysHist(bool sys_up, std::string sample, std::string sy
   
   std::cout<<"preparing... "<<tree_name<<'\n';
 
-  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name);
+  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name, lxplus);
 
   std::string histo_name = m_obsName + "_" + tree_name ;
 
@@ -223,7 +223,7 @@ TH1F* GetSystematics::getSysHist(bool sys_up, std::string sample, std::string sy
   return h;
 }
 
-TH1F* GetSystematics::getMETHist(bool sys_up, std::string sample, std::string sysName)
+TH1F* GetSystematics::getMETHist(bool sys_up, std::string sample, std::string sysName, bool lxplus)
 {
 
   std::string sys_type="__1up";
@@ -233,7 +233,7 @@ TH1F* GetSystematics::getMETHist(bool sys_up, std::string sample, std::string sy
   
   std::cout<<"preparing... "<<tree_name<<'\n';
 
-  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name);
+  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name, lxplus);
 
   std::string histo_name = m_obsName + "_" + tree_name + sys_type;
 

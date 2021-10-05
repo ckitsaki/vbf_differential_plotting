@@ -12,11 +12,11 @@ std::string v_theo_Zjets[4] = {"theo_ztautau_scale", "theo_ztautau_alphas", "the
 
 std::string v_theo_diboson[7] = {"theo_ww_scale", "theo_ww_alphas", "theo_ww_pdf", "theo_ww_QSF", "theo_ww_CKKW", "theo_ww_shower", "theo_ww_CSSKIN"};
 
-TH1F* plotting::getNominalHisto(std::string sample)
+TH1F* plotting::getNominalHisto(std::string sample, bool lxplus)
 {
   std::string tree_name = getSampleName(sample) + "_nominal";
   
-  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name);
+  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name, lxplus);
 
   std::cout<<sample<<" - added \n";
 
@@ -41,11 +41,11 @@ TH1F* plotting::getNominalHisto(std::string sample)
   return h;
 }
 
-TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannelNumber)
+TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannelNumber, bool lxplus)
 {
   std::string tree_name = getSampleName(sample) + "_nominal";
   
-  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name);
+  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name, lxplus);
 
   std::cout<<sample<<" - added \n";
 
@@ -91,7 +91,7 @@ TH1F* plotting::getTheoryHisto(std::string sample, std::string theo_sys, bool is
   return h_theo_nom;
 }
 
-void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo)
+void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo, bool lxplus)
 {
 
   std::cout<<"Preparing the plot for the supporting note.."<<std::endl;
@@ -99,22 +99,22 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   std::vector<float> v_ttbar = {410472};
   std::vector<float> v_singleTop = {410648, 410649};
 
-  h_Fakes = getNominalHisto("Fakes");
-  h_WW = getNominalHisto("diboson1");
-  h_NonWW = getNominalHisto("diboson2");
-  h_WWEW = getNominalHisto("WWEW");
-  h_Zjets = getNominalHisto("Zjets");
-  h_Vgamma = getNominalHisto("Vgamma");
-  h_ttbar1 = getNominalHisto("top1", v_ttbar);
-  h_ttbar2 = getNominalHisto("top2", v_ttbar);
-  h_singleTop1 = getNominalHisto("top1", v_singleTop);
-  h_singleTop2 = getNominalHisto("top2", v_singleTop);
-  h_vbf = getNominalHisto("vbf");
-  h_ggf = getNominalHisto("ggf");
-  h_vh = getNominalHisto("vh");
-  h_htt = getNominalHisto("htt");
+  h_Fakes = getNominalHisto("Fakes", lxplus);
+  h_WW = getNominalHisto("diboson1", lxplus);
+  h_NonWW = getNominalHisto("diboson2", lxplus);
+  h_WWEW = getNominalHisto("WWEW", lxplus);
+  h_Zjets = getNominalHisto("Zjets", lxplus);
+  h_Vgamma = getNominalHisto("Vgamma", lxplus);
+  h_ttbar1 = getNominalHisto("top1", v_ttbar, lxplus);
+  h_ttbar2 = getNominalHisto("top2", v_ttbar, lxplus);
+  h_singleTop1 = getNominalHisto("top1", v_singleTop, lxplus);
+  h_singleTop2 = getNominalHisto("top2", v_singleTop, lxplus);
+  h_vbf = getNominalHisto("vbf", lxplus);
+  h_ggf = getNominalHisto("ggf", lxplus);
+  h_vh = getNominalHisto("vh", lxplus);
+  h_htt = getNominalHisto("htt", lxplus);
   
-  if(unblind) h_data = getNominalHisto("data");
+  if(unblind) h_data = getNominalHisto("data", lxplus);
   
   THStack* h_stack = new THStack("h_stack","");
 
@@ -558,7 +558,7 @@ void plotting::PlotsforPaper(std::string region, std::string observable, bool un
 }
 
 
-plotting::plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo)
+plotting::plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo, bool lxplus=true)
 {
   gROOT->SetBatch(kTRUE);
   SetAtlasStyle();
@@ -605,7 +605,7 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
   }
 
   if(forPaper) PlotsforPaper(m_regionName, m_obsName, unblind);
-  else PlotsforNote(m_regionName, m_obsName, unblind, addTheo);
+  else PlotsforNote(m_regionName, m_obsName, unblind, addTheo, lxplus);
 
   clock_t tEnd = clock();
   auto t_end = std::chrono::high_resolution_clock::now();

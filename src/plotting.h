@@ -52,15 +52,15 @@ public:
   inline void setYaxisRanges();
   inline void setXaxisRanges();
 
-  TH1F* getNominalHisto(std::string sample);
-  TH1F* getNominalHisto(std::string sample, std::vector<float> mcChannelNumber);
+  TH1F* getNominalHisto(std::string sample, bool lxplus);
+  TH1F* getNominalHisto(std::string sample, std::vector<float> mcChannelNumber, bool lxplus);
   TH1F* getTheoryHisto(std::string sample, std::string theo_sys, bool isUp);
 
   inline void setBins(bool forPaper);
  
-  void PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo);
+  void PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo, bool lxplus);
   void PlotsforPaper(std::string region, std::string observable, bool unblind);
-  plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo); 
+  plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo, bool lxplus); 
 
 
 private:

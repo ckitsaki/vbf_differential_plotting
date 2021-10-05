@@ -32,10 +32,10 @@ public:
   inline void setRegionName(std::string region){m_regionName=region;};
   inline std::string getRegionName(){return m_regionName;};
   inline bool isForPaper(){return m_forPaper;};
-  TH1F* getNominalHisto(std::string sample);
+  TH1F* getNominalHisto(std::string sample, bool lxplus);
   TH1F* getNominalHisto(std::string sample, std::string campaign);
-  TH1F* getSysHist(bool sys_up, std::string sample, std::string sysName);
-  TH1F* getMETHist(bool sys_up, std::string sample, std::string sysName);
+  TH1F* getSysHist(bool sys_up, std::string sample, std::string sysName, bool lxplus);
+  TH1F* getMETHist(bool sys_up, std::string sample, std::string sysName, bool lxplus);
   TH1F* getSysHist(bool sys_up, std::string sample, std::string sysName, std::string campaign);
   TH1F* getMETHist(bool sys_up, std::string sample, std::string sysName, std::string campaign);
 

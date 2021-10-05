@@ -76,7 +76,7 @@ class TreeReader{
   float bdt_vbf;
   double weight;
 
-  TreeReader(std::string region, std::string sample, std::string tree_name);
+  TreeReader(std::string region, std::string sample, std::string tree_name, bool lxplus);
   TreeReader(std::string region, std::string sample, std::string tree_name, std::string campaign);
   virtual ~TreeReader()=default;
   inline std::string xAxisTitle(std::string observable);
@@ -97,6 +97,10 @@ private:
   std::string path0;
   std::string path1;
   std::string path2;
+
+  std::string path2a; 
+  std::string path2d;
+  std::string path2e;
 
 };
 
