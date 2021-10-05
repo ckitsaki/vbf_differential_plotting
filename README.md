@@ -25,3 +25,20 @@ checkFiles()
 
 Produce the final plot
 ----------------------
+The experimental and theory systematics need to be available as histograms stored in .root files under the directories `exp_systematics` and `theo_systematics` respectively. Once these files are present, the plotting tool can be used.
+
+Usage:
+1. `mkdir plots`. The requested plot will be saved under `plots` directory.
+2. Log in to root in order to use the plotting tool.
+```
+root -l 
+.L src/plotting.C
+plotting("region","observable",unblind,forPaper,setAxesLimits,addTheo)
+```
+Arguments:
+* region (string): choose among SR, TopCR, DYCR, WWCR, ggFCR1, ggFCR2, ggFCR3
+* observable (string): choose among lep0_pt, lep1_pt, jet0_pt, jet1_pt, jet2_pt, Mjj, DPhill, DPhijj, DYjj, Mll, DYll, nJets, Ml0j0, Ml1j1, Ml0j1, Ml1j0, MET, jet0_eta,jet1_eta, lep0_eta, lep1_eta, Ptll, SignedDPhijj, MT, costhetastar, ptTot, sumOfCentralitiesL, pt_H
+* unblind (bool): decides if data will be shown or not. Values: True or False.
+* forPaper (bool): decides if the plot is for the supporting note or the paper. For the moment, set it to False. 
+* setAxesLimits (bool): gives the ability to change the axes limits without diving in the code. Hint: at first set it to False to see the default limits and if needed change it to True to adjust the desired limits on axes. Values: True or False. 
+* addTheo (bool): decides if the theory uncertainties will be taken into account in the error band. For the moment, set it to False until all theory systematics will be available.
