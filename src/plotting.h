@@ -44,6 +44,7 @@ public:
   inline std::string getRegionName(){return m_regionName;};
   inline float getYMin(){return m_yminimum;};
   inline float getYMax(){return m_ymaximum;};
+  inline void setYMin(float minimum){m_yminimum = minimum;};
   inline void setYMax(float maximum){m_ymaximum = maximum;};
   inline void setXMax(float maximum){m_xmaximum = maximum;};
   inline void setXMin(float minimum){m_xminimum = minimum;};
@@ -51,14 +52,15 @@ public:
   inline void setYmaxRatio(float y_max){m_y_ratio_max = y_max;};
   inline void setYaxisRanges();
   inline void setXaxisRanges();
+  inline void workOnLxplus(bool lxplus){m_lxplus = lxplus;};
 
-  TH1F* getNominalHisto(std::string sample, bool lxplus);
-  TH1F* getNominalHisto(std::string sample, std::vector<float> mcChannelNumber, bool lxplus);
+  TH1F* getNominalHisto(std::string sample);
+  TH1F* getNominalHisto(std::string sample, std::vector<float> mcChannelNumber);
   TH1F* getTheoryHisto(std::string sample, std::string theo_sys, bool isUp);
 
   inline void setBins(bool forPaper);
  
-  void PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo, bool lxplus);
+  void PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo);
   void PlotsforPaper(std::string region, std::string observable, bool unblind);
   plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo, bool lxplus); 
 
@@ -76,6 +78,7 @@ private:
   float m_xmaximum;
   float m_y_ratio_min=0.;
   float m_y_ratio_max=3.;
+  bool m_lxplus;
 
 };
 

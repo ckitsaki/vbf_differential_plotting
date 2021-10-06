@@ -12,11 +12,11 @@ std::string v_theo_Zjets[4] = {"theo_ztautau_scale", "theo_ztautau_alphas", "the
 
 std::string v_theo_diboson[7] = {"theo_ww_scale", "theo_ww_alphas", "theo_ww_pdf", "theo_ww_QSF", "theo_ww_CKKW", "theo_ww_shower", "theo_ww_CSSKIN"};
 
-TH1F* plotting::getNominalHisto(std::string sample, bool lxplus)
+TH1F* plotting::getNominalHisto(std::string sample)
 {
   std::string tree_name = getSampleName(sample) + "_nominal";
   
-  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name, lxplus);
+  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name, m_lxplus);
 
   std::cout<<sample<<" - added \n";
 
@@ -41,11 +41,11 @@ TH1F* plotting::getNominalHisto(std::string sample, bool lxplus)
   return h;
 }
 
-TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannelNumber, bool lxplus)
+TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannelNumber)
 {
   std::string tree_name = getSampleName(sample) + "_nominal";
   
-  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name, lxplus);
+  TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name, m_lxplus);
 
   std::cout<<sample<<" - added \n";
 
@@ -91,7 +91,7 @@ TH1F* plotting::getTheoryHisto(std::string sample, std::string theo_sys, bool is
   return h_theo_nom;
 }
 
-void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo, bool lxplus)
+void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo)
 {
 
   std::cout<<"Preparing the plot for the supporting note.."<<std::endl;
@@ -99,22 +99,22 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   std::vector<float> v_ttbar = {410472};
   std::vector<float> v_singleTop = {410648, 410649};
 
-  h_Fakes = getNominalHisto("Fakes", lxplus);
-  h_WW = getNominalHisto("diboson1", lxplus);
-  h_NonWW = getNominalHisto("diboson2", lxplus);
-  h_WWEW = getNominalHisto("WWEW", lxplus);
-  h_Zjets = getNominalHisto("Zjets", lxplus);
-  h_Vgamma = getNominalHisto("Vgamma", lxplus);
-  h_ttbar1 = getNominalHisto("top1", v_ttbar, lxplus);
-  h_ttbar2 = getNominalHisto("top2", v_ttbar, lxplus);
-  h_singleTop1 = getNominalHisto("top1", v_singleTop, lxplus);
-  h_singleTop2 = getNominalHisto("top2", v_singleTop, lxplus);
-  h_vbf = getNominalHisto("vbf", lxplus);
-  h_ggf = getNominalHisto("ggf", lxplus);
-  h_vh = getNominalHisto("vh", lxplus);
-  h_htt = getNominalHisto("htt", lxplus);
+  h_Fakes = getNominalHisto("Fakes");
+  h_WW = getNominalHisto("diboson1");
+  h_NonWW = getNominalHisto("diboson2");
+  h_WWEW = getNominalHisto("WWEW");
+  h_Zjets = getNominalHisto("Zjets");
+  h_Vgamma = getNominalHisto("Vgamma");
+  h_ttbar1 = getNominalHisto("top1", v_ttbar);
+  h_ttbar2 = getNominalHisto("top2", v_ttbar);
+  h_singleTop1 = getNominalHisto("top1", v_singleTop);
+  h_singleTop2 = getNominalHisto("top2", v_singleTop);
+  h_vbf = getNominalHisto("vbf");
+  h_ggf = getNominalHisto("ggf");
+  h_vh = getNominalHisto("vh");
+  h_htt = getNominalHisto("htt");
   
-  if(unblind) h_data = getNominalHisto("data", lxplus);
+  if(unblind) h_data = getNominalHisto("data");
   
   THStack* h_stack = new THStack("h_stack","");
 
@@ -406,7 +406,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   pad1->Draw();
   pad1->cd();
 }
-  
+
   h_stack->Draw("hist");
   h_vbf->Draw("hist same");
   
@@ -566,6 +566,8 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
   clock_t tStart = clock();
   auto t_start = std::chrono::high_resolution_clock::now();
 
+  workOnLxplus(lxplus);
+
   setObsName(observable);
   setRegionName(region);
 
@@ -573,7 +575,9 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
 
   if(setAxesLimits)
   {
-    float y_maximum, x_minimum, x_maximum;
+    float y_maximum, y_minimum, x_minimum, x_maximum;
+    std::cout<<"Set Y-axis minimum ";
+    std::cin>>y_minimum;
     std::cout<<"Set Y-axis maximum ";
     std::cin>>y_maximum;
     std::cout<<"Set X-axis minimum ";
@@ -594,6 +598,7 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
       setYmaxRatio(y_ratio_max);
 
     }
+    setYMin(y_minimum);
     setYMax(y_maximum);
     setXMin(x_minimum);
     setXMax(x_maximum);
@@ -605,7 +610,7 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
   }
 
   if(forPaper) PlotsforPaper(m_regionName, m_obsName, unblind);
-  else PlotsforNote(m_regionName, m_obsName, unblind, addTheo, lxplus);
+  else PlotsforNote(m_regionName, m_obsName, unblind, addTheo);
 
   clock_t tEnd = clock();
   auto t_end = std::chrono::high_resolution_clock::now();
