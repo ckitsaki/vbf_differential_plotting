@@ -200,6 +200,22 @@ inline void GetSystematics::setBins(bool forPaper)
     }
   }
   else{
+    if(m_obsName=="bdt_vbf" || m_obsName=="bdt_vbf_Mjj" || m_obsName=="bdt_vbf_Mll" || m_obsName=="bdt_vbf_DYjj" || m_obsName=="bdt_vbf_DYll" || m_obsName=="bdt_vbf_DPhijj" || m_obsName=="bdt_vbf_DPhill" || m_obsName=="bdt_vbf_jet0_pt" || m_obsName=="bdt_vbf_jet1_pt") //SR1
+    {
+      m_nbins = 4;
+      m_binsEdges = new double[m_nbins+1]{0.5, 0.7, .86, .94, 1.};
+    }
+    if(m_obsName == "bdt_TopWWAll" || m_obsName=="bdt_ggFCR1")
+    {
+      m_nbins = 4;
+      m_binsEdges = new double[m_nbins+1]{-1., -0.5, 0, 0.5, 1.};
+    }
+    if(m_obsName=="MT")
+    {
+      m_nbins = 5;
+      m_binsEdges = new double[m_nbins+1]{40, 62, 84, 106, 128, 150};
+    }
+
     if(m_obsName=="Mll")
     {
       m_nbins = 5;
@@ -210,15 +226,15 @@ inline void GetSystematics::setBins(bool forPaper)
       m_nbins = 6;
       m_binsEdges = new double[m_nbins+1]{450, 700, 950, 1200, 1500, 2200, 2500};
     }
-    if(m_obsName=="pTH")
+    if(m_obsName=="pt_H")
     {
-      m_nbins = 6;
-      m_binsEdges = new double[m_nbins+1]{0, 80, 120, 160, 200, 260, 850};
+      m_nbins = 5;
+      m_binsEdges = new double[m_nbins+1]{0, 80, 120, 160, 260, 850};
     }
     if(m_obsName=="DYll")
     {
       m_nbins = 5;
-      m_binsEdges = new double[m_nbins+1]{0, 0.4, 0.6, 0.8, 1., 9.};
+      m_binsEdges = new double[m_nbins+1]{0, 0.4, 0.6, 0.8, 1., 100.};
     }
     if(m_obsName=="DYjj")
     {
@@ -232,13 +248,13 @@ inline void GetSystematics::setBins(bool forPaper)
     }
     if(m_obsName == "SignedDPhijj")
     {
-      m_nbins = 8;
-      m_binsEdges = new double[m_nbins+1]{-3.14, -2.36, -1.57, -0.786, 0, 0.786, 1.57, 2.36, 3.14};
+      m_nbins = 4;
+      m_binsEdges = new double[m_nbins+1]{-3.14, -1.57, 0, 1.57, 3.14};
     }
     if(m_obsName=="costhetastar")
     {
-      m_nbins = 8;
-      m_binsEdges = new double[m_nbins+1]{0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.315, 0.375, 1.};
+      m_nbins = 5;
+      m_binsEdges = new double[m_nbins+1]{0, 0.0625, 0.125, 0.1875, 0.3125, 1.};
     }
     if(m_obsName=="Ptll")
     {
@@ -248,12 +264,12 @@ inline void GetSystematics::setBins(bool forPaper)
     if(m_obsName=="jet0_pt")
     {
       m_nbins = 5;
-      m_binsEdges = new double[m_nbins+1]{30, 90, 120, 160, 220, 310};
+      m_binsEdges = new double[m_nbins+1]{30, 90, 120, 160, 220, 700};
     }
     if(m_obsName=="jet1_pt")
     {
       m_nbins = 5;
-      m_binsEdges = new double[m_nbins+1]{30, 45, 60, 90, 120, 210};
+      m_binsEdges = new double[m_nbins+1]{30, 45, 60, 90, 120, 1400};
     }
     if(m_obsName=="lep0_pt")
     {

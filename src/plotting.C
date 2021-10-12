@@ -19,8 +19,13 @@ TH1F* plotting::getNominalHisto(std::string sample)
   TreeReader *treeReader = new TreeReader(m_regionName, sample, tree_name, m_lxplus);
 
   std::cout<<sample<<" - added \n";
-
-  TH1F* h =  new TH1F("histo", "histo", m_nbins, m_xmin, m_xmax);
+  
+  TH1F* h;
+  if(!m_forPaper)
+  {
+    h = new TH1F("histo", "histo", m_nbins, m_xmin, m_xmax);
+  }
+  else h = new TH1F("histo", "histo", m_nbins, m_binsEdges);
 
   std::vector<TTree*> v = treeReader->getTrees();
 
@@ -49,7 +54,12 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
 
   std::cout<<sample<<" - added \n";
 
-  TH1F* h =  new TH1F("histo", "histo", m_nbins, m_xmin, m_xmax);
+  TH1F* h;
+  if(!m_forPaper)
+  {
+    h = new TH1F("histo", "histo", m_nbins, m_xmin, m_xmax);
+  }
+  else h = new TH1F("histo", "histo", m_nbins, m_binsEdges);
 
   std::vector<TTree*> v = treeReader->getTrees();
 
@@ -151,7 +161,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_singleTop1->SetLineWidth(1);
   h_Zjets->SetLineWidth(1);
 
-  std::vector<float> fakes_stat, WW_stat, NonWW_stat, ttbar_stat, singleTop_stat, zjets_stat, vh_stat, htt_stat, ggf_stat, total_stat, x_stat, y_stat;
+  std::vector<float> fakes_stat, WW_stat, NonWW_stat, ttbar_stat, singleTop_stat, zjets_stat, vh_stat, htt_stat, ggf_stat, vbf_stat, total_stat, x_stat, y_stat;
 
   // ================  statistical uncertainties ===================== //
 
@@ -167,14 +177,15 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     vh_stat.push_back(h_vh->GetBinError(ibin+1));
     htt_stat.push_back(h_htt->GetBinError(ibin+1));
     ggf_stat.push_back(h_ggf->GetBinError(ibin+1));
+    vbf_stat.push_back(h_vbf->GetBinError(ibin+1));
 
     x_stat.push_back(h_Fakes->GetBinCenter(ibin+1));
-    y_stat.push_back(h_Fakes->GetBinContent(ibin+1)+h_WW->GetBinContent(ibin+1)+h_NonWW->GetBinContent(ibin+1)+h_ttbar1->GetBinContent(ibin+1)+h_singleTop1->GetBinContent(ibin+1)+h_Zjets->GetBinContent(ibin+1)+h_vh->GetBinContent(ibin+1)+h_htt->GetBinContent(ibin+1)+h_ggf->GetBinContent(ibin+1));  
+    y_stat.push_back(h_Fakes->GetBinContent(ibin+1)+h_WW->GetBinContent(ibin+1)+h_NonWW->GetBinContent(ibin+1)+h_ttbar1->GetBinContent(ibin+1)+h_singleTop1->GetBinContent(ibin+1)+h_Zjets->GetBinContent(ibin+1)+h_vh->GetBinContent(ibin+1)+h_htt->GetBinContent(ibin+1)+h_ggf->GetBinContent(ibin+1)+h_vbf->GetBinContent(ibin+1));  
   }
 
   for(int istat=0; istat<fakes_stat.size(); istat++)
   {
-    float stat = std::sqrt(std::pow(fakes_stat.at(istat),2)+std::pow(WW_stat.at(istat),2)+std::pow(NonWW_stat.at(istat),2)+std::pow(ttbar_stat.at(istat),2)+std::pow(singleTop_stat.at(istat),2)+std::pow(zjets_stat.at(istat),2)+std::pow(vh_stat.at(istat),2)+std::pow(htt_stat.at(istat),2)+std::pow(ggf_stat.at(istat),2));
+    float stat = std::sqrt(std::pow(fakes_stat.at(istat),2)+std::pow(WW_stat.at(istat),2)+std::pow(NonWW_stat.at(istat),2)+std::pow(ttbar_stat.at(istat),2)+std::pow(singleTop_stat.at(istat),2)+std::pow(zjets_stat.at(istat),2)+std::pow(vh_stat.at(istat),2)+std::pow(htt_stat.at(istat),2)+std::pow(ggf_stat.at(istat),2)+std::pow(vbf_stat.at(istat),2));
     total_stat.push_back(stat);
   }
 // ============================================================= //
@@ -209,9 +220,9 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 
   std::vector<std::string> name;
 
-  std::vector<std::string> name_Zjets, name_diboson, name_Vgamma, name_top, name_Fakes, name_ggf, name_vh, name_htt;
-  std::vector<std::string> name_Zjets_up, name_diboson_up, name_Vgamma_up, name_top_up, name_Fakes_up, name_ggf_up, name_vh_up, name_htt_up, name_Zjets_down, name_diboson_down, name_Vgamma_down, name_top_down, name_Fakes_down, name_ggf_down, name_vh_down, name_htt_down;
-  std::vector<TH1F*> h_Zjets_up, h_diboson_up, h_Vgamma_up, h_top_up, h_Fakes_up, h_ggf_up, h_vh_up, h_htt_up, h_Zjets_down, h_diboson_down, h_Vgamma_down, h_top_down, h_Fakes_down, h_ggf_down, h_vh_down, h_htt_down;
+  std::vector<std::string> name_Zjets, name_diboson, name_Vgamma, name_top, name_Fakes, name_ggf, name_vh, name_htt, name_vbf;
+  std::vector<std::string> name_Zjets_up, name_diboson_up, name_Vgamma_up, name_top_up, name_Fakes_up, name_ggf_up, name_vh_up, name_htt_up, name_vbf_up, name_Zjets_down, name_diboson_down, name_Vgamma_down, name_top_down, name_Fakes_down, name_ggf_down, name_vh_down, name_htt_down, name_vbf_down;
+  std::vector<TH1F*> h_Zjets_up, h_diboson_up, h_Vgamma_up, h_top_up, h_Fakes_up, h_ggf_up, h_vh_up, h_htt_up, h_vbf_up, h_Zjets_down, h_diboson_down, h_Vgamma_down, h_top_down, h_Fakes_down, h_ggf_down, h_vh_down, h_htt_down, h_vbf_down;
 
   for(int i=0; i<(size1+size2+size3); i++)
   {
@@ -222,6 +233,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     name_ggf.push_back(m_obsName + "_" + getSampleName("ggf") + "_" + all_sys[i]);
     name_vh.push_back(m_obsName + "_" + getSampleName("vh") + "_" + all_sys[i]);
     name_htt.push_back(m_obsName + "_" + getSampleName("htt") + "_" + all_sys[i]);
+    name_vbf.push_back(m_obsName + "_" + getSampleName("vbf") + "_" + all_sys[i]);
 
   }
   //handle fakes
@@ -273,6 +285,11 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     name_htt_down.push_back(name_htt.at(i) + "__1down");
     h_htt_up.push_back((TH1F*)f_exp->Get(name_htt_up.at(i).c_str()));
     h_htt_down.push_back((TH1F*)f_exp->Get(name_htt_down.at(i).c_str()));
+
+    name_vbf_up.push_back(name_vbf.at(i) + "__1up");
+    name_vbf_down.push_back(name_vbf.at(i) + "__1down");
+    h_vbf_up.push_back((TH1F*)f_exp->Get(name_vbf_up.at(i).c_str()));
+    h_vbf_down.push_back((TH1F*)f_exp->Get(name_vbf_down.at(i).c_str()));
   
   }
 
@@ -282,10 +299,10 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     float total_sum_up = 0;
     float total_sum_down = 0;
     for(int i=0; i<name_Zjets.size(); i++){
-      float total_up = std::pow(h_Zjets->GetBinContent(ibin+1) - h_Zjets_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ttbar1->GetBinContent(ibin+1)+h_singleTop1->GetBinContent(ibin+1) - h_top_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_WW->GetBinContent(ibin+1) + h_NonWW->GetBinContent(ibin+1) - h_diboson_up.at(i)->GetBinContent(ibin+1) - h_Vgamma_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ggf->GetBinContent(ibin+1) - h_ggf_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_vh->GetBinContent(ibin+1) - h_vh_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_htt->GetBinContent(ibin+1) - h_htt_up.at(i)->GetBinContent(ibin+1),2);
+      float total_up = std::pow(h_Zjets->GetBinContent(ibin+1) - h_Zjets_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ttbar1->GetBinContent(ibin+1)+h_singleTop1->GetBinContent(ibin+1) - h_top_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_WW->GetBinContent(ibin+1) + h_NonWW->GetBinContent(ibin+1) - h_diboson_up.at(i)->GetBinContent(ibin+1) - h_Vgamma_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ggf->GetBinContent(ibin+1) - h_ggf_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_vh->GetBinContent(ibin+1) - h_vh_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_htt->GetBinContent(ibin+1) - h_htt_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_vbf->GetBinContent(ibin+1) - h_vbf_up.at(i)->GetBinContent(ibin+1),2);
       if(i<sizeof(v_sys_Fakes)/sizeof(v_sys_Fakes[0])) total_up += (std::pow(h_Fakes->GetBinContent(ibin+1) - h_Fakes_up.at(i)->GetBinContent(ibin+1),2));
       total_sum_up +=total_up;
-      float total_down = std::pow(h_Zjets->GetBinContent(ibin+1) - h_Zjets_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ttbar1->GetBinContent(ibin+1)+h_singleTop1->GetBinContent(ibin+1) - h_top_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_WW->GetBinContent(ibin+1) + h_NonWW->GetBinContent(ibin+1) - h_diboson_down.at(i)->GetBinContent(ibin+1) - h_Vgamma_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ggf->GetBinContent(ibin+1) - h_ggf_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_vh->GetBinContent(ibin+1) - h_vh_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_htt->GetBinContent(ibin+1) - h_htt_down.at(i)->GetBinContent(ibin+1),2);
+      float total_down = std::pow(h_Zjets->GetBinContent(ibin+1) - h_Zjets_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ttbar1->GetBinContent(ibin+1)+h_singleTop1->GetBinContent(ibin+1) - h_top_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_WW->GetBinContent(ibin+1) + h_NonWW->GetBinContent(ibin+1) - h_diboson_down.at(i)->GetBinContent(ibin+1) - h_Vgamma_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ggf->GetBinContent(ibin+1) - h_ggf_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_vh->GetBinContent(ibin+1) - h_vh_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_htt->GetBinContent(ibin+1) - h_htt_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_vbf->GetBinContent(ibin+1) - h_vbf_down.at(i)->GetBinContent(ibin+1),2);
       if(i<sizeof(v_sys_Fakes)/sizeof(v_sys_Fakes[0])) total_down += (std::pow(h_Fakes->GetBinContent(ibin+1) - h_Fakes_down.at(i)->GetBinContent(ibin+1),2));
       total_sum_down += total_down;
     }
@@ -368,11 +385,12 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   for(int isys = 0; isys<m_nbins; isys++)
   {
     h_exp_sys_errors->SetPoint(isys,x_stat.at(isys),y_stat.at(isys));
-    if(addTheo) h_exp_sys_errors->SetPointError(isys, h_Fakes->GetBinWidth(isys)/2, h_Fakes->GetBinWidth(isys)/2, std::sqrt(std::pow(total_exp_sys_up.at(isys),2)+std::pow(total_stat.at(isys),2)+std::pow(total_theo_up.at(isys),2)), std::sqrt(std::pow(total_exp_sys_down.at(isys),2)+std::pow(total_stat.at(isys),2)+std::pow(total_theo_down.at(isys),2)));
-    else h_exp_sys_errors->SetPointError(isys,h_Fakes->GetBinWidth(isys)/2,h_Fakes->GetBinWidth(isys)/2, std::sqrt(std::pow(total_exp_sys_up.at(isys),2)+std::pow(total_stat.at(isys),2)), std::sqrt(std::pow(total_exp_sys_down.at(isys),2)+std::pow(total_stat.at(isys),2))); 
+    if(addTheo) h_exp_sys_errors->SetPointError(isys, h_Fakes->GetBinWidth(isys+1)/2, h_Fakes->GetBinWidth(isys+1)/2, std::sqrt(std::pow(total_exp_sys_up.at(isys),2)+std::pow(total_stat.at(isys),2)+std::pow(total_theo_up.at(isys),2)), std::sqrt(std::pow(total_exp_sys_down.at(isys),2)+std::pow(total_stat.at(isys),2)+std::pow(total_theo_down.at(isys),2)));
+    else h_exp_sys_errors->SetPointError(isys,h_Fakes->GetBinWidth(isys+1)/2,h_Fakes->GetBinWidth(isys+1)/2, std::sqrt(std::pow(total_exp_sys_up.at(isys),2)+std::pow(total_stat.at(isys),2)), std::sqrt(std::pow(total_exp_sys_down.at(isys),2)+std::pow(total_stat.at(isys),2))); 
   }
 
   if(m_regionName == "SR"){
+      h_stack->Add(h_vbf); //vbf
     	h_stack->Add(h_vh); // vh
     	h_stack->Add(h_htt); // htt
     	h_stack->Add(h_ggf);  // ggF
@@ -384,6 +402,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     	h_stack->Add(h_ttbar1); // ttbar
   }
   else{
+      h_stack->Add(h_vbf);
     	h_stack->Add(h_vh);
     	h_stack->Add(h_htt);
     	h_stack->Add(h_ggf);
@@ -408,7 +427,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 }
 
   h_stack->Draw("hist");
-  h_vbf->Draw("hist same");
+//  h_vbf->Draw("hist same");
   
   h_exp_sys_errors->SetFillColor(kGray+2);
   h_exp_sys_errors->SetLineColor(kWhite);
@@ -448,7 +467,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   if(m_obsName=="DPhill") unit = " rad";
   else if(m_obsName=="lep0_eta" || m_obsName=="lep1_eta" || m_obsName=="jet0_eta" || m_obsName=="jet1_eta" || m_obsName=="MT" || m_obsName=="DYll" || m_obsName=="DYjj" || m_obsName=="DPhijj" || m_obsName=="SignedDPhijj" || m_obsName=="costhetastar" || m_obsName=="sumOfCentralitiesL" || m_obsName=="bdt_vbf" || m_obsName=="bdt_TopWWAll" || m_obsName=="bdt_ggFCR1" || m_obsName=="bdt_ggFCR2" || m_obsName=="bdt_ggFCR3") unit="";
   std::string yTitle = "Events / "+ res_to_string + unit;
-  if(m_obsName=="nJets") yTitle = "Events";
+  if(m_obsName=="nJets" || binEvt==1) yTitle = "Events";
   h_stack->GetYaxis()->SetTitle(yTitle.c_str());
 
   if(unblind) legend = new TLegend(0.55,0.55,0.92,0.9);
@@ -571,6 +590,7 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
   setObsName(observable);
   setRegionName(region);
 
+  plotsForPaper(forPaper);
   setBins(forPaper);
 
   if(setAxesLimits)
