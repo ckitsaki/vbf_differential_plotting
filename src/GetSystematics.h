@@ -234,7 +234,7 @@ inline void GetSystematics::setBins(bool forPaper)
     if(m_obsName=="DYll")
     {
       m_nbins = 5;
-      m_binsEdges = new double[m_nbins+1]{0, 0.4, 0.6, 0.8, 1., 100.};
+      m_binsEdges = new double[m_nbins+1]{0, 0.4, 0.6, 0.8, 1., 9.};
     }
     if(m_obsName=="DYjj")
     {

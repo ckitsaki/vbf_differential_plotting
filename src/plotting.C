@@ -143,23 +143,27 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_ttbar1->SetLineColor(kBlack);
   h_singleTop1->SetFillColor(kYellow+1);
   h_singleTop1->SetLineColor(kBlack);
-  h_vbf->SetLineColor(kBlue);
+  h_vbf->SetLineColor(kBlack);
+  h_vbf->SetFillColor(kBlue);
   h_ggf->SetFillColor(kRed+1);
-  h_ggf->SetLineColor(kRed+1);
+  h_ggf->SetLineColor(kBlack);
   h_Zjets->SetFillColor(kGreen+2);
   h_Zjets->SetLineColor(kBlack);
   h_vh->SetFillColor(kViolet-8);
-  h_vh->SetLineColor(kViolet-8);
+  h_vh->SetLineColor(kBlack);
   h_htt->SetFillColor(kOrange+3);
-  h_htt->SetLineColor(kOrange+3);
+  h_htt->SetLineColor(kBlack);
 
-  h_vbf->SetLineWidth(2);
+  h_vbf->SetLineWidth(1);
   h_WW->SetLineWidth(1);
   h_Fakes->SetLineWidth(1);
   h_NonWW->SetLineWidth(1);
   h_ttbar1->SetLineWidth(1);
   h_singleTop1->SetLineWidth(1);
   h_Zjets->SetLineWidth(1);
+  h_ggf->SetLineWidth(1);
+  h_htt->SetLineWidth(1);
+  h_vh->SetLineWidth(1);
 
   std::vector<float> fakes_stat, WW_stat, NonWW_stat, ttbar_stat, singleTop_stat, zjets_stat, vh_stat, htt_stat, ggf_stat, vbf_stat, total_stat, x_stat, y_stat;
 
@@ -438,10 +442,11 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
    h_data->Draw("pe same");
   }
 
+
   h_stack->SetMinimum(m_yminimum);
   h_stack->SetMaximum(m_ymaximum);
  
-  if(unblind) h_stack->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
+  h_stack->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
   if(unblind) h_stack->GetXaxis()->SetLabelSize(0);
 
   if(!unblind){
