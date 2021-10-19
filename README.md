@@ -41,8 +41,9 @@ Arguments:
 * unblind (bool): decides if data will be shown or not. Values: True or False.
 * forPaper (bool): decides if the plot is for the supporting note or the paper. For the moment, set it to False. 
 * setAxesLimits (bool): gives the ability to change the axes limits without diving in the code. Hint: at first set it to False to see the default limits and if needed change it to True to adjust the desired limits on axes. Values: True or False. 
-* addTheo (bool): decides if the theory uncertainties will be taken into account in the error band. For the moment, set it to False until all theory systematics will be available.
+* addTheo (bool): decides if the theory uncertainties will be taken into account in the error band.
 * lxplus (bool): set it to True if you work on lxplus. For spar set it to False.
 
 Additional info:
 * xAxis labeling can be changed in function `std::string xAxisTitle(std::string observable)` of `src/TreeReader.h`
+* many files are processed at the same time you can change the limit of the maximum number of open files in your system with `ulimit -n limit`, limit: any positive number ex. 2048.

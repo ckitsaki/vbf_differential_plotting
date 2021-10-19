@@ -89,7 +89,7 @@ TH1F* plotting::getTheoryHisto(std::string sample, std::string theo_sys, bool is
 {
   std::string theo_filename = "./theo_systematics/" + sample + "_theory_2jets.root";
   if(m_regionName=="ggFCR3") theo_filename = "./theo_systematics/" + sample + "_theory_01jets.root";
-  TFile* f_theo_file = new TFile(theo_filename.c_str());
+  TFile* f_theo_file = new TFile(theo_filename.c_str(), "READ");
   std::string theo_nom = sample + "_" + theo_sys + "__Nom_" + m_regionName + "_" + m_obsName;
   std::string theo_var = sample + "_" + theo_sys + "__1up_" + m_regionName + "_" + m_obsName;
   if(!isUp) theo_var = sample + "_" + theo_sys + "__1down_" + m_regionName + "_" + m_obsName;
@@ -98,6 +98,7 @@ TH1F* plotting::getTheoryHisto(std::string sample, std::string theo_sys, bool is
 
   h_theo_nom->Add(h_theo_var,-1);
 
+//  f_theo_file->Delete("R");
   return h_theo_nom;
 }
 
@@ -313,6 +314,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
       total_exp_sys_up.push_back(std::sqrt(total_sum_up));
       total_exp_sys_down.push_back(std::sqrt(total_sum_down));
   }
+
+
 // ===================================================================== //
 
 // ===================== add theory systematics ========================= //
@@ -359,11 +362,11 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 
       for(int izjets=0; izjets<sizeof(v_theo_Zjets)/sizeof(v_theo_Zjets[0]); izjets++)
       {
-        TH1F* h_theo_up = getTheoryHisto("Zjets", v_theo_Zjets[izjets], true);
+        TH1F* h_theo_up = getTheoryHisto("Zjets0", v_theo_Zjets[izjets], true);
         float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
         vbf_sum_theo_up += total_up;
 
-        TH1F* h_theo_down = getTheoryHisto("Zjets", v_theo_Zjets[izjets], false);
+        TH1F* h_theo_down = getTheoryHisto("Zjets0", v_theo_Zjets[izjets], false);
         float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
         vbf_sum_theo_down += total_down;
       }
