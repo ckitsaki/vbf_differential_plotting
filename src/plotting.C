@@ -397,10 +397,10 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   }
 
   if(m_regionName == "SR"){
-      h_stack->Add(h_vbf); //vbf
     	h_stack->Add(h_vh); // vh
     	h_stack->Add(h_htt); // htt
     	h_stack->Add(h_ggf);  // ggF
+      h_stack->Add(h_vbf); //vbf
     	h_stack->Add(h_NonWW); // nonWW + Vgamma
     	h_stack->Add(h_Fakes); // Fakes
     	h_stack->Add(h_singleTop1); // Single Top
@@ -549,7 +549,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_ratio_unc->SetFillStyle(3345);
   h_ratio->Draw("pe");
 
-  TLine *l=new TLine(pad1->GetUxmin(),1.0,m_xmaximum,1.0);
+  TLine *l=new TLine(m_xminimum,1.0,m_xmaximum,1.0);
   l->SetLineColor(kRed);
   l->Draw("same");
   h_ratio_unc->Draw("e2 same");

@@ -65,6 +65,7 @@ class TreeReader{
   float ptTot;
   float sumOfCentralitiesL;
   float pt_H;
+  float mtt;
   float inSR;
   float inWWCR;
   float inTopCR;
@@ -133,6 +134,7 @@ inline void TreeReader::Init(TTree* tree)
   Ml0j1 = 0;
   MET = 0;
   pt_H = 0;
+  mtt = 0;
   costhetastar = 0;
   ptTot = 0;
   MT = 0;
@@ -183,6 +185,7 @@ inline void TreeReader::Init(TTree* tree)
   the_tree->SetBranchAddress("costhetastar", &costhetastar);
   the_tree->SetBranchAddress("sumOfCentralitiesL", &sumOfCentralitiesL);
   the_tree->SetBranchAddress("pt_H", &pt_H);
+  the_tree->SetBranchAddress("mtt", &mtt);
   the_tree->SetBranchAddress("ptTot", &ptTot);
   the_tree->SetBranchAddress("inSR", &inSR);
   the_tree->SetBranchAddress("inWWCR", &inWWCR);
@@ -235,6 +238,7 @@ inline float TreeReader::getObservable(std::string observable)
   if(observable=="DPhijj") variable_to_plot = DPhijj;
   if(observable=="DPhill") variable_to_plot = DPhill;
   if(observable=="MT") variable_to_plot = (MT)/1000;
+  if(observable=="mtt") variable_to_plot = (mtt)/1000;
   if(observable=="MET") variable_to_plot = (MET)/1000;
   if(observable == "Ml1j1") variable_to_plot = (Ml1j1)/1000;
   if(observable == "Ml1j0") variable_to_plot = (Ml1j0)/1000;
@@ -262,9 +266,10 @@ inline std::string xAxisTitle(std::string observable)
 {
   std::string title;
   if(observable == "Mjj") title = "m_{jj} [GeV]";
-  if(observable == "Mll") title = "m_{#ell#ell} [GeV]";
+  if(observable == "Mll") title = "m_{ll} [GeV]";
+  if(observable == "mtt") title = "m_{tt} [GeV]";
   if(observable == "DYjj") title = "#Delta y_{jj}";
-  if(observable == "DYll") title = "#Delta y_{#ell#ell}";
+  if(observable == "DYll") title = "#Delta y_{ll}";
   if(observable == "jet0_pt") title = "leading jet #it{p}_{T} [GeV]";
   if(observable == "jet1_pt") title = "subleading jet #it{p}_{T} [GeV]";
   if(observable == "jet2_pt") title = "third jet #it{p}_{T} [GeV]";
@@ -276,13 +281,13 @@ inline std::string xAxisTitle(std::string observable)
   if(observable == "sumOfCentralitiesL") title = "sumOfCentralitiesL";
   if(observable == "SignedDPhijj") title = "#Delta#phi_{jj}";
   if(observable == "DPhijj") title = "|#Delta#phi_{jj}|";
-  if(observable == "DPhill") title = "#Delta#phi_{#ell#ell} [rad]";
-  if(observable == "MT") title = "m_T";
+  if(observable == "DPhill") title = "#Delta#phi_{ll} [rad]";
+  if(observable == "MT") title = "m_{T} [GeV]";
   if(observable == "MET") title = "E_{T}^{miss} [GeV]";
-  if(observable == "Ml1j1") title = "m_{#el_{1}j_{1}} [GeV]";
-  if(observable == "Ml1j0") title = "m_{#el_{1}j_{0}} [GeV]";
-  if(observable == "Ml0j1") title = "m_{#el_{0}j_{1}} [GeV]";
-  if(observable == "Ml0j0") title = "m_{#el_{0}j_{0}} [GeV]";
+  if(observable == "Ml1j1") title = "m_{l_{1}j_{1}} [GeV]";
+  if(observable == "Ml1j0") title = "m_{l_{1}j_{0}} [GeV]";
+  if(observable == "Ml0j1") title = "m_{l_{0}j_{1}} [GeV]";
+  if(observable == "Ml0j0") title = "m_{l_{0}j_{0}} [GeV]";
   if(observable == "jet0_eta") title = "leading jet #eta";
   if(observable == "jet1_eta") title = "subleading jet #eta";
   if(observable == "nJets") title = "n_{jet}";
@@ -290,7 +295,7 @@ inline std::string xAxisTitle(std::string observable)
   if(observable == "lep1_pt") title = "subleading lepton #it{p}_{T} [GeV]";
   if(observable == "lep0_eta") title = "leading lepton #it{#eta}";
   if(observable == "lep1_eta") title = "subleading lepton #it{#eta}";
-  if(observable == "Ptll") title = "P_{t}^{#ell#ell} [GeV]";
+  if(observable == "Ptll") title = "P_{t}^{ll} [GeV]";
   if(observable == "bdt_ggFCR1") title = "BDT output ggF CR1";
   if(observable == "bdt_ggFCR2") title = "BDT output ggF VR2";
   if(observable == "bdt_ggFCR3") title = "BDT output ggF VR3";

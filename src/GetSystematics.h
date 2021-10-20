@@ -174,7 +174,7 @@ inline void GetSystematics::setBins(bool forPaper)
       m_xmin = 0;
       m_xmax = 200;
     }
-    if(m_obsName=="pTH")
+    if(m_obsName=="pt_H")
     {
       m_nbins = 25;
       m_xmin = 0;
