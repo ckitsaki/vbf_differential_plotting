@@ -88,7 +88,7 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
 TH1F* plotting::getTheoryHisto(std::string sample, std::string theo_sys, bool isUp)
 {
   std::string theo_filename = "./theo_systematics/" + sample + "_theory_2jets.root";
-  if(m_regionName=="ggFCR3") theo_filename = "./theo_systematics/" + sample + "_theory_01jets.root";
+  if(m_regionName=="ggFCR3") theo_filename = "./theo_systematics/" + sample + "_theory_1jets.root";
   TFile* f_theo_file = new TFile(theo_filename.c_str(), "READ");
   std::string theo_nom = sample + "_" + theo_sys + "__Nom_" + m_regionName + "_" + m_obsName;
   std::string theo_var = sample + "_" + theo_sys + "__1up_" + m_regionName + "_" + m_obsName;
@@ -532,6 +532,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_all_bkg->Add(h_vh);
   h_all_bkg->Add(h_htt);
   h_all_bkg->Add(h_ggf);
+  h_all_bkg->Add(h_vbf);
 //  TH1F* h_all_bkg_signal = (TH1F*) h_all_bkg->Clone("all_bkg_signal");
 //  h_all_bkg_signal->Add(h_vbf);
  // TH1F* h_ratio2 = (TH1F*) h_data->Clone("ratio2");
@@ -542,7 +543,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   
   for(int i=0; i<m_nbins; i++){
     h_ratio_unc->SetPoint(i,h_ratio->GetBinCenter(i+1),1);
-    h_ratio_unc->SetPointError(i,h_ratio->GetBinWidth(i+1)/2, h_ratio->GetBinWidth(i+1)/2, total_exp_sys_up.at(i)/h_data->GetBinContent(i+1), total_exp_sys_down.at(i)/h_data->GetBinContent(i+1));
+    if(addTheo) h_ratio_unc->SetPointError(i,h_ratio->GetBinWidth(i+1)/2, h_ratio->GetBinWidth(i+1)/2, (std::sqrt(std::pow(total_exp_sys_up.at(i),2) + std::pow(total_theo_up.at(i),2) + std::pow(total_stat.at(i),2)))/h_data->GetBinContent(i+1), (std::sqrt(std::pow(total_exp_sys_down.at(i),2) + std::pow(total_theo_down.at(i),2) + std::pow(total_stat.at(i),2)))/h_data->GetBinContent(i+1));
+    else h_ratio_unc->SetPointError(i,h_ratio->GetBinWidth(i+1)/2, h_ratio->GetBinWidth(i+1)/2, (std::sqrt(std::pow(total_exp_sys_up.at(i),2) + std::pow(total_stat.at(i),2)))/h_data->GetBinContent(i+1), (std::sqrt(std::pow(total_exp_sys_down.at(i),2) + std::pow(total_stat.at(i),2)))/h_data->GetBinContent(i+1));
   }
 
   h_ratio_unc->SetFillColor(kGray+2);  
