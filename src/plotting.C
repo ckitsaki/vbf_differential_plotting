@@ -380,7 +380,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
         TH1F* h_theo_down = getTheoryHisto("diboson", v_theo_diboson[idiboson], false);
         float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
         vbf_sum_theo_down += total_down;
-      }
+      } 
       total_theo_up.push_back(std::sqrt(vbf_sum_theo_up));    
       total_theo_down.push_back(std::sqrt(vbf_sum_theo_down)); 
       std::cout<<"Bin-"<<ibin<<" "<<total_theo_up.at(ibin)<<" "<<total_theo_down.at(ibin)<<std::endl; 
