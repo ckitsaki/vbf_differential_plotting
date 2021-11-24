@@ -98,24 +98,10 @@ void plotting::getTheoryVariations(std::string sample, std::string theo_sys, int
   TH1F* h_theo_var_up = (TH1F*)f_theo_file->Get(theo_var_up.c_str());
   TH1F* h_theo_var_down = (TH1F*)f_theo_file->Get(theo_var_down.c_str());
 
-
-//  if( (h_theo_nom && h_theo_var_up && h_theo_var_down)  && (ibin+1) >= h_theo_nom->FindFirstBinAbove(0, 1) ) {
-  
   nom_content = h_theo_nom->GetBinContent(ibin+1);
-  //h_theo_nom->Add(h_theo_var,-1);
 
-//  f_theo_file->Delete("R");
   var_up = h_theo_var_up->GetBinContent(ibin+1);
   var_down = h_theo_var_down->GetBinContent(ibin+1);
-// }
-// else if( (h_theo_nom && h_theo_var_up && h_theo_var_down)  && (ibin+1) < h_theo_nom->FindFirstBinAbove(0, 1)){
-// 	nom_content = 0;
-// 	var_down = 0; 
-// 	var_up = 0;
-// }
-
-
-
 }
 
 void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo)
@@ -211,18 +197,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   }
 // ============================================================= //
 
- // if(unblind) h_data_stat = new TGraphAsymmErrors();
-/*
-  for(int istat = 0; istat<m_nbins; istat++)
-  {
-    if(unblind){
-      h_data_stat->SetPoint(istat, h_data->GetBinCenter(istat+1), h_data->GetBinContent(istat+1));
-      h_data_stat->SetPointError(istat, h_data->GetBinWidth(istat+1)/2, h_data->GetBinWidth(istat+1)/2, h_data->GetBinError(istat+1), h_data->GetBinError(istat+1));//std::sqrt(std::pow(h_data->GetBinError(istat+1),2)+std::pow(total_stat.at(istat),2)), std::sqrt(std::pow(h_data->GetBinError(istat+1),2)+std::pow(total_stat.at(istat),2)));
-    }
-    else break;
-  }
-*/
-  // =============== add experimental systematics =================================== //
+
+// =============== add experimental systematics =================================== //
   std::string sys_path = "./exp_systematics/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_ExpSys.root";
   TFile *f_exp = new TFile(sys_path.c_str());
   size_t size1 = sizeof(v_sys_list)/sizeof(v_sys_list[0]);
@@ -349,6 +325,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 
 // ===================== add theory systematics ========================= //
 
+// TODO: improve it
   if(addTheo)
   {
   	float nom_content = 0; 
@@ -528,7 +505,6 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 
       total_theo_up.push_back(diff_up);    
       total_theo_down.push_back(diff_down); 
-      std::cout<<"Bin-"<<ibin<<" "<<total_theo_up.at(ibin)<<" "<<total_theo_down.at(ibin)<<std::endl; 
     }
   }
 // ====================================================================================================== //
@@ -568,7 +544,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 
   TCanvas *c = new TCanvas("atlas_square","Canvas title",0.,0.,600,600);
 
-  if(unblind) h_data->SetMarkerStyle(8);//h_data_stat->SetMarkerStyle(8);
+  if(unblind) h_data->SetMarkerStyle(8);
 
   if(unblind){
   pad1 = new TPad("pad1","pad1", 0, 0.35, 1., 1.);
