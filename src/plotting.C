@@ -2,15 +2,15 @@
 #include "Style/AtlasStyle.C"
 #include "plotting.h"
 
-std::string v_theo_vbf[5] = {"theo_vbf_scale", "theo_vbf_alphas", "theo_vbf_pdf4lhc", "theo_vbf_shower", "theo_vbf_generator"};
+std::string v_theo_vbf[5] =  	{"theo_vbf_shower", "theo_vbf_alphas", "theo_vbf_scale", "theo_vbf_pdf4lhc", "theo_vbf_generator"}; 
 
-std::string v_theo_ggf[11] = {"theo_ggF_qcd_wg1_mu", "theo_ggF_qcd_wg1_res", "theo_ggF_qcd_wg1_mig01", "theo_ggF_qcd_wg1_mig12", "theo_ggF_qcd_wg1_vbf2j", "theo_ggF_qcd_wg1_vbf3j", "theo_ggF_qcd_wg1_qm_t", "theo_ggF_qcd_wg1_pTH", "theo_ggF_pdf4lhc", "theo_ggF_alphas", "theo_ggF_shower"};
+std::string v_theo_ggf[11] =  	{"theo_ggF_shower", "theo_ggF_alphas", "theo_ggF_pdf4lhc", "theo_ggF_qcd_wg1_mu", "theo_ggF_qcd_wg1_res", "theo_ggF_qcd_wg1_mig01", "theo_ggF_qcd_wg1_mig12", "theo_ggF_qcd_wg1_vbf2j", "theo_ggF_qcd_wg1_vbf3j", "theo_ggF_qcd_wg1_qm_t", "theo_ggF_qcd_wg1_pTH" };
 
-std::string v_theo_top[6] = {"theo_ttbar_shower", "theo_ttbar_matching", "theo_ttbar_scale", "theo_ttbar_isr", "theo_ttbar_fsr", "theo_ttbar_pdf"};
+std::string v_theo_top[6] =     {"theo_ttbar_shower", "theo_ttbar_scale", "theo_ttbar_pdf", "theo_ttbar_matching", "theo_ttbar_isr", "theo_ttbar_fsr", };
 
-std::string v_theo_Zjets[4] = {"theo_ztautau_scale", "theo_ztautau_alphas", "theo_ztautau_pdf", "theo_ztautau_generator"};
+std::string v_theo_Zjets[4] =   {"theo_ztautau_alphas", "theo_ztautau_scale", "theo_ztautau_pdf", "theo_ztautau_generator"};
 
-std::string v_theo_diboson[7] = {"theo_ww_scale", "theo_ww_alphas", "theo_ww_pdf", "theo_ww_QSF", "theo_ww_CKKW", "theo_ww_shower", "theo_ww_CSSKIN"};
+std::string v_theo_diboson[7] = {"theo_ww_shower",  "theo_ww_alphas", "theo_ww_scale", "theo_ww_pdf", "theo_ww_QSF", "theo_ww_CKKW",  "theo_ww_CSSKIN"};
 
 TH1F* plotting::getNominalHisto(std::string sample)
 {
@@ -85,21 +85,37 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
   return h;
 }
 
-TH1F* plotting::getTheoryHisto(std::string sample, std::string theo_sys, bool isUp)
+void plotting::getTheoryVariations(std::string sample, std::string theo_sys, int ibin, float &nom_content, float &var_up, float &var_down)
 {
   std::string theo_filename = "./theo_systematics/" + sample + "_theory_2jets.root";
   if(m_regionName=="ggFCR3") theo_filename = "./theo_systematics/" + sample + "_theory_1jets.root";
   TFile* f_theo_file = new TFile(theo_filename.c_str(), "READ");
   std::string theo_nom = sample + "_" + theo_sys + "__Nom_" + m_regionName + "_" + m_obsName;
-  std::string theo_var = sample + "_" + theo_sys + "__1up_" + m_regionName + "_" + m_obsName;
-  if(!isUp) theo_var = sample + "_" + theo_sys + "__1down_" + m_regionName + "_" + m_obsName;
+  std::string theo_var_up = sample + "_" + theo_sys + "__1up_" + m_regionName + "_" + m_obsName;
+  std::string theo_var_down = sample + "_" + theo_sys + "__1down_" + m_regionName + "_" + m_obsName;
+  
   TH1F* h_theo_nom = (TH1F*)f_theo_file->Get(theo_nom.c_str());
-  TH1F* h_theo_var = (TH1F*)f_theo_file->Get(theo_var.c_str());
+  TH1F* h_theo_var_up = (TH1F*)f_theo_file->Get(theo_var_up.c_str());
+  TH1F* h_theo_var_down = (TH1F*)f_theo_file->Get(theo_var_down.c_str());
 
-  h_theo_nom->Add(h_theo_var,-1);
+
+//  if( (h_theo_nom && h_theo_var_up && h_theo_var_down)  && (ibin+1) >= h_theo_nom->FindFirstBinAbove(0, 1) ) {
+  
+  nom_content = h_theo_nom->GetBinContent(ibin+1);
+  //h_theo_nom->Add(h_theo_var,-1);
 
 //  f_theo_file->Delete("R");
-  return h_theo_nom;
+  var_up = h_theo_var_up->GetBinContent(ibin+1);
+  var_down = h_theo_var_down->GetBinContent(ibin+1);
+// }
+// else if( (h_theo_nom && h_theo_var_up && h_theo_var_down)  && (ibin+1) < h_theo_nom->FindFirstBinAbove(0, 1)){
+// 	nom_content = 0;
+// 	var_down = 0; 
+// 	var_up = 0;
+// }
+
+
+
 }
 
 void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo)
@@ -190,8 +206,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 
   for(int istat=0; istat<fakes_stat.size(); istat++)
   {
-    float stat = std::sqrt(std::pow(fakes_stat.at(istat),2)+std::pow(WW_stat.at(istat),2)+std::pow(NonWW_stat.at(istat),2)+std::pow(ttbar_stat.at(istat),2)+std::pow(singleTop_stat.at(istat),2)+std::pow(zjets_stat.at(istat),2)+std::pow(vh_stat.at(istat),2)+std::pow(htt_stat.at(istat),2)+std::pow(ggf_stat.at(istat),2)+std::pow(vbf_stat.at(istat),2));
-    total_stat.push_back(stat);
+    float stat = fakes_stat.at(istat)/2 + WW_stat.at(istat)/2 + NonWW_stat.at(istat)/2 + ttbar_stat.at(istat)/2 + singleTop_stat.at(istat)/2 + zjets_stat.at(istat)/2 + vh_stat.at(istat)/2 + htt_stat.at(istat)/2 + ggf_stat.at(istat)/2 + vbf_stat.at(istat)/2 ; //std::sqrt(std::pow(fakes_stat.at(istat)/2,2)+std::pow(WW_stat.at(istat)/2,2)+std::pow(NonWW_stat.at(istat)/2,2)+std::pow(ttbar_stat.at(istat)/2,2)+std::pow(singleTop_stat.at(istat)/2,2)+std::pow(zjets_stat.at(istat)/2,2)+std::pow(vh_stat.at(istat)/2,2)+std::pow(htt_stat.at(istat)/2,2)+std::pow(ggf_stat.at(istat)/2,2)+std::pow(vbf_stat.at(istat)/2,2));
+    total_stat.push_back(std::pow(stat,2));
   }
 // ============================================================= //
 
@@ -303,86 +319,215 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   for(int ibin =0; ibin<m_nbins; ibin++){
     float total_sum_up = 0;
     float total_sum_down = 0;
-    for(int i=0; i<name_Zjets.size(); i++){
-      float total_up = std::pow(h_Zjets->GetBinContent(ibin+1) - h_Zjets_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ttbar1->GetBinContent(ibin+1)+h_singleTop1->GetBinContent(ibin+1) - h_top_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_WW->GetBinContent(ibin+1) + h_NonWW->GetBinContent(ibin+1) - h_diboson_up.at(i)->GetBinContent(ibin+1) - h_Vgamma_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ggf->GetBinContent(ibin+1) - h_ggf_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_vh->GetBinContent(ibin+1) - h_vh_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_htt->GetBinContent(ibin+1) - h_htt_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_vbf->GetBinContent(ibin+1) - h_vbf_up.at(i)->GetBinContent(ibin+1),2);
-      if(i<sizeof(v_sys_Fakes)/sizeof(v_sys_Fakes[0])) total_up += (std::pow(h_Fakes->GetBinContent(ibin+1) - h_Fakes_up.at(i)->GetBinContent(ibin+1),2));
-      total_sum_up +=total_up;
-      float total_down = std::pow(h_Zjets->GetBinContent(ibin+1) - h_Zjets_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ttbar1->GetBinContent(ibin+1)+h_singleTop1->GetBinContent(ibin+1) - h_top_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_WW->GetBinContent(ibin+1) + h_NonWW->GetBinContent(ibin+1) - h_diboson_down.at(i)->GetBinContent(ibin+1) - h_Vgamma_up.at(i)->GetBinContent(ibin+1),2) + std::pow(h_ggf->GetBinContent(ibin+1) - h_ggf_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_vh->GetBinContent(ibin+1) - h_vh_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_htt->GetBinContent(ibin+1) - h_htt_down.at(i)->GetBinContent(ibin+1),2) + std::pow(h_vbf->GetBinContent(ibin+1) - h_vbf_down.at(i)->GetBinContent(ibin+1),2);
-      if(i<sizeof(v_sys_Fakes)/sizeof(v_sys_Fakes[0])) total_down += (std::pow(h_Fakes->GetBinContent(ibin+1) - h_Fakes_down.at(i)->GetBinContent(ibin+1),2));
-      total_sum_down += total_down;
-    }
-      total_exp_sys_up.push_back(std::sqrt(total_sum_up));
-      total_exp_sys_down.push_back(std::sqrt(total_sum_down));
-  }
+    float total_sum_nom = 0;
 
+    float diff_up = 0 ;
+    float diff_down = 0;
+    
+    for(int i=0; i<name_Zjets.size(); i++){
+    	float total_sum_nom = h_Zjets->GetBinContent(ibin+1) +  h_ttbar1->GetBinContent(ibin+1)+ h_singleTop1->GetBinContent(ibin+1) + h_WW->GetBinContent(ibin+1) + h_NonWW->GetBinContent(ibin+1) + h_ggf->GetBinContent(ibin+1)	+ h_vh->GetBinContent(ibin+1) + h_htt->GetBinContent(ibin+1) + h_vbf->GetBinContent(ibin+1);
+    	float total_sum_up = h_Zjets_up.at(i)->GetBinContent(ibin+1) +  h_top_up.at(i)->GetBinContent(ibin+1) + h_diboson_up.at(i)->GetBinContent(ibin+1) + h_Vgamma_up.at(i)->GetBinContent(ibin+1) + h_ggf_up.at(i)->GetBinContent(ibin+1)	+ h_vh_up.at(i)->GetBinContent(ibin+1) + h_htt_up.at(i)->GetBinContent(ibin+1) + h_vbf_up.at(i)->GetBinContent(ibin+1);
+    	float total_sum_down = h_Zjets_down.at(i)->GetBinContent(ibin+1) +  h_top_down.at(i)->GetBinContent(ibin+1) + h_diboson_down.at(i)->GetBinContent(ibin+1) + h_Vgamma_down.at(i)->GetBinContent(ibin+1) + h_ggf_down.at(i)->GetBinContent(ibin+1)	+ h_vh_down.at(i)->GetBinContent(ibin+1) + h_htt_down.at(i)->GetBinContent(ibin+1) + h_vbf_down.at(i)->GetBinContent(ibin+1);
+
+      	diff_up += std::pow(total_sum_nom - total_sum_up,2);
+      	diff_down += std::pow(total_sum_nom - total_sum_down,2);
+    }
+    for(int j=0; j<name_Fakes.size(); j++) {
+    	float total_sum_nom = h_Fakes->GetBinContent(ibin+1);
+    	float total_sum_up = h_Fakes_up.at(j)->GetBinContent(ibin+1);
+    	float total_sum_down = h_Fakes_down.at(j)->GetBinContent(ibin+1);
+
+    	diff_up += std::pow(total_sum_nom - total_sum_up , 2);
+    	diff_down += std::pow(total_sum_nom - total_sum_down , 2);
+    }
+
+      total_exp_sys_up.push_back(diff_up);
+      total_exp_sys_down.push_back(diff_down);
+  }
 
 // ===================================================================== //
 
 // ===================== add theory systematics ========================= //
+
   if(addTheo)
   {
-    for(int ibin=0; ibin<m_nbins; ibin++)
+  	float nom_content = 0; 
+    float var_up = 0;
+    float var_down = 0;
+
+  	for(int ibin=0; ibin<m_nbins; ibin++)
     {
-      float vbf_sum_theo_up = 0;
-      float vbf_sum_theo_down = 0;
-      for(int ivbf=0; ivbf<sizeof(v_theo_vbf)/sizeof(v_theo_vbf[0]); ivbf++)
-      {
-        TH1F* h_theo_up = getTheoryHisto("vbf", v_theo_vbf[ivbf], true);
-        
-        float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
-        vbf_sum_theo_up += total_up;
+      float theo_total_nom = 0;
+      float theo_total_up = 0;
+      float theo_total_down = 0;
+    
+      float diff_up = 0;
+      float diff_down = 0;
+      
+      // shower  
+      getTheoryVariations("ggf", v_theo_ggf[0], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up; 
+      theo_total_down += var_down;
 
-        TH1F* h_theo_down = getTheoryHisto("vbf", v_theo_vbf[ivbf], false);
-        
-        float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
-        vbf_sum_theo_down += total_down;
+      getTheoryVariations("vbf", v_theo_vbf[0], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content; 
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("top", v_theo_top[0], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content; 
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("diboson", v_theo_diboson[0], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content; 
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
+      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
+
+      // alphas
+      theo_total_nom = 0;
+      theo_total_up = 0; 
+      theo_total_down = 0;
+
+      getTheoryVariations("vbf", v_theo_vbf[1], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("ggf", v_theo_ggf[1], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("Zjets0", v_theo_Zjets[0], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("diboson", v_theo_diboson[1], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
+      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
+
+      // scale
+      theo_total_nom = 0;
+      theo_total_up = 0; 
+      theo_total_down = 0;
+
+      getTheoryVariations("vbf", v_theo_vbf[2], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("top", v_theo_top[1], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content; 
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("Zjets0", v_theo_Zjets[1], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("diboson", v_theo_diboson[2], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
+      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
+
+      // pdf
+      theo_total_nom = 0;
+      theo_total_up = 0; 
+      theo_total_down = 0;
+
+      getTheoryVariations("top", v_theo_top[2], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content; 
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("Zjets0", v_theo_Zjets[2], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("diboson", v_theo_diboson[3], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
+      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
+
+      // pdflhc4
+      theo_total_nom = 0;
+      theo_total_up = 0; 
+      theo_total_down = 0;
+
+      getTheoryVariations("vbf", v_theo_vbf[3], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("ggf", v_theo_ggf[2], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up; 
+      theo_total_down += var_down;
+
+      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
+      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
+      // generator 
+      theo_total_nom = 0;
+      theo_total_up = 0; 
+      theo_total_down = 0;
+
+      getTheoryVariations("vbf", v_theo_vbf[4], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      getTheoryVariations("Zjets0", v_theo_Zjets[3], ibin, nom_content, var_up, var_down);
+      theo_total_nom += nom_content;
+      theo_total_up += var_up;
+      theo_total_down += var_down;
+
+      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
+      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
+
+      // add separately the rest ggf theo variations
+      for(int iggf=3; iggf<sizeof(v_theo_ggf)/sizeof(v_theo_ggf[0]); iggf++)
+      {
+      	getTheoryVariations("ggf", v_theo_ggf[iggf], ibin, nom_content, var_up, var_down);
+      	diff_up += std::pow(nom_content - var_up, 2);
+      	diff_down += std::pow(nom_content - var_down, 2);
       }
 
-      for(int iggf=0; iggf<sizeof(v_theo_ggf)/sizeof(v_theo_ggf[0]); iggf++)
+      // add the rest top theo variations
+      for(int itop=3; itop<sizeof(v_theo_top)/sizeof(v_theo_top[0]); itop++)
       {
-        TH1F* h_theo_up = getTheoryHisto("ggf", v_theo_ggf[iggf], true);
-        float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
-        vbf_sum_theo_up += total_up;
-
-        TH1F* h_theo_down = getTheoryHisto("ggf", v_theo_ggf[iggf], false);
-        float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
-        vbf_sum_theo_down += total_down;
+      	getTheoryVariations("top", v_theo_top[itop], ibin, nom_content, var_up, var_down);
+      	diff_up += std::pow(nom_content - var_up, 2);
+      	diff_down += std::pow(nom_content - var_down, 2);
       }
 
-      for(int itop=0; itop<sizeof(v_theo_top)/sizeof(v_theo_top[0]); itop++)
+      // and finally add the rest diboson variations
+      for(int idib=4; idib<sizeof(v_theo_diboson)/sizeof(v_theo_diboson[0]); idib++)
       {
-        TH1F* h_theo_up = getTheoryHisto("top", v_theo_top[itop], true);
-        float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
-        vbf_sum_theo_up += total_up;
-
-        TH1F* h_theo_down = getTheoryHisto("top", v_theo_top[itop], false);
-        float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
-        vbf_sum_theo_down += total_down;
+      	getTheoryVariations("diboson", v_theo_diboson[idib], ibin, nom_content, var_up, var_down);
+      	diff_up += std::pow(nom_content - var_up, 2);
+      	diff_down += std::pow(nom_content - var_down, 2);
       }
 
-      for(int izjets=0; izjets<sizeof(v_theo_Zjets)/sizeof(v_theo_Zjets[0]); izjets++)
-      {
-        TH1F* h_theo_up = getTheoryHisto("Zjets0", v_theo_Zjets[izjets], true);
-        float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
-        vbf_sum_theo_up += total_up;
-
-        TH1F* h_theo_down = getTheoryHisto("Zjets0", v_theo_Zjets[izjets], false);
-        float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
-        vbf_sum_theo_down += total_down;
-      }
-
-      for(int idiboson=0; idiboson<sizeof(v_theo_diboson)/sizeof(v_theo_diboson[0]); idiboson++)
-      {
-        TH1F* h_theo_up = getTheoryHisto("diboson", v_theo_diboson[idiboson], true);
-        float total_up = std::pow(h_theo_up->GetBinContent(ibin+1), 2);
-        vbf_sum_theo_up += total_up;
-
-        TH1F* h_theo_down = getTheoryHisto("diboson", v_theo_diboson[idiboson], false);
-        float total_down = std::pow(h_theo_down->GetBinContent(ibin+1), 2);
-        vbf_sum_theo_down += total_down;
-      } 
-      total_theo_up.push_back(std::sqrt(vbf_sum_theo_up));    
-      total_theo_down.push_back(std::sqrt(vbf_sum_theo_down)); 
+      total_theo_up.push_back(diff_up);    
+      total_theo_down.push_back(diff_down); 
       std::cout<<"Bin-"<<ibin<<" "<<total_theo_up.at(ibin)<<" "<<total_theo_down.at(ibin)<<std::endl; 
     }
   }
@@ -392,15 +537,15 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   for(int isys = 0; isys<m_nbins; isys++)
   {
     h_exp_sys_errors->SetPoint(isys,x_stat.at(isys),y_stat.at(isys));
-    if(addTheo) h_exp_sys_errors->SetPointError(isys, h_Fakes->GetBinWidth(isys+1)/2, h_Fakes->GetBinWidth(isys+1)/2, std::sqrt(std::pow(total_exp_sys_up.at(isys),2)+std::pow(total_stat.at(isys),2)+std::pow(total_theo_up.at(isys),2)), std::sqrt(std::pow(total_exp_sys_down.at(isys),2)+std::pow(total_stat.at(isys),2)+std::pow(total_theo_down.at(isys),2)));
-    else h_exp_sys_errors->SetPointError(isys,h_Fakes->GetBinWidth(isys+1)/2,h_Fakes->GetBinWidth(isys+1)/2, std::sqrt(std::pow(total_exp_sys_up.at(isys),2)+std::pow(total_stat.at(isys),2)), std::sqrt(std::pow(total_exp_sys_down.at(isys),2)+std::pow(total_stat.at(isys),2))); 
+    if(addTheo) h_exp_sys_errors->SetPointError(isys, h_Fakes->GetBinWidth(isys+1)/2, h_Fakes->GetBinWidth(isys+1)/2, std::sqrt( total_exp_sys_up.at(isys) + total_stat.at(isys) + total_theo_up.at(isys) ), std::sqrt( total_exp_sys_down.at(isys) + total_stat.at(isys) + total_theo_down.at(isys)) );
+    else h_exp_sys_errors->SetPointError(isys,h_Fakes->GetBinWidth(isys+1)/2,h_Fakes->GetBinWidth(isys+1)/2, std::sqrt(total_exp_sys_up.at(isys) + total_stat.at(isys)) , std::sqrt( total_exp_sys_down.at(isys) + total_stat.at(isys))); 
   }
 
   if(m_regionName == "SR"){
     	h_stack->Add(h_vh); // vh
     	h_stack->Add(h_htt); // htt
     	h_stack->Add(h_ggf);  // ggF
-      h_stack->Add(h_vbf); //vbf
+    	h_stack->Add(h_vbf); //vbf
     	h_stack->Add(h_NonWW); // nonWW + Vgamma
     	h_stack->Add(h_Fakes); // Fakes
     	h_stack->Add(h_singleTop1); // Single Top
@@ -543,8 +688,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   
   for(int i=0; i<m_nbins; i++){
     h_ratio_unc->SetPoint(i,h_ratio->GetBinCenter(i+1),1);
-    if(addTheo) h_ratio_unc->SetPointError(i,h_ratio->GetBinWidth(i+1)/2, h_ratio->GetBinWidth(i+1)/2, (std::sqrt(std::pow(total_exp_sys_up.at(i),2) + std::pow(total_theo_up.at(i),2) + std::pow(total_stat.at(i),2)))/h_data->GetBinContent(i+1), (std::sqrt(std::pow(total_exp_sys_down.at(i),2) + std::pow(total_theo_down.at(i),2) + std::pow(total_stat.at(i),2)))/h_data->GetBinContent(i+1));
-    else h_ratio_unc->SetPointError(i,h_ratio->GetBinWidth(i+1)/2, h_ratio->GetBinWidth(i+1)/2, (std::sqrt(std::pow(total_exp_sys_up.at(i),2) + std::pow(total_stat.at(i),2)))/h_data->GetBinContent(i+1), (std::sqrt(std::pow(total_exp_sys_down.at(i),2) + std::pow(total_stat.at(i),2)))/h_data->GetBinContent(i+1));
+    if(addTheo) h_ratio_unc->SetPointError(i,h_ratio->GetBinWidth(i+1)/2, h_ratio->GetBinWidth(i+1)/2, std::sqrt( total_exp_sys_up.at(i) + total_theo_up.at(i) + total_stat.at(i) )/h_all_bkg->GetBinContent(i+1), std::sqrt( total_exp_sys_down.at(i) + total_theo_down.at(i) + total_stat.at(i) )/h_all_bkg->GetBinContent(i+1));
+    else h_ratio_unc->SetPointError(i,h_ratio->GetBinWidth(i+1)/2, h_ratio->GetBinWidth(i+1)/2, std::sqrt((total_exp_sys_up.at(i) + total_stat.at(i)))/h_all_bkg->GetBinContent(i+1), std::sqrt((total_exp_sys_down.at(i) + total_stat.at(i)))/h_all_bkg->GetBinContent(i+1));
   }
 
   h_ratio_unc->SetFillColor(kGray+2);  

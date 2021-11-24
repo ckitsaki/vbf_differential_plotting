@@ -57,7 +57,7 @@ public:
 
   TH1F* getNominalHisto(std::string sample);
   TH1F* getNominalHisto(std::string sample, std::vector<float> mcChannelNumber);
-  TH1F* getTheoryHisto(std::string sample, std::string theo_sys, bool isUp);
+  void getTheoryVariations(std::string sample, std::string theo_sys, int ibin, float &nom_content, float &var_up, float &var_down);
 
   inline void setBins(bool forPaper);
  
