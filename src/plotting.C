@@ -6,7 +6,7 @@ std::string v_theo_vbf[5] =  	{"theo_vbf_shower", "theo_vbf_alphas", "theo_vbf_s
 
 std::string v_theo_ggf[11] =  	{"theo_ggF_shower", "theo_ggF_alphas", "theo_ggF_pdf4lhc", "theo_ggF_qcd_wg1_mu", "theo_ggF_qcd_wg1_res", "theo_ggF_qcd_wg1_mig01", "theo_ggF_qcd_wg1_mig12", "theo_ggF_qcd_wg1_vbf2j", "theo_ggF_qcd_wg1_vbf3j", "theo_ggF_qcd_wg1_qm_t", "theo_ggF_qcd_wg1_pTH" };
 
-std::string v_theo_top[6] =     {"theo_ttbar_shower", "theo_ttbar_scale", "theo_ttbar_pdf", "theo_ttbar_matching", "theo_ttbar_isr", "theo_ttbar_fsr", };
+std::string v_theo_top[6] =     {"theo_ttbar_shower", "theo_ttbar_scale", "theo_ttbar_pdf", "theo_ttbar_matching", "theo_ttbar_isr", "theo_ttbar_fsr" };
 
 std::string v_theo_Zjets[4] =   {"theo_ztautau_alphas", "theo_ztautau_scale", "theo_ztautau_pdf", "theo_ztautau_generator"};
 
@@ -102,6 +102,7 @@ void plotting::getTheoryVariations(std::string sample, std::string theo_sys, int
 
   var_up = h_theo_var_up->GetBinContent(ibin+1);
   var_down = h_theo_var_down->GetBinContent(ibin+1);
+
 }
 
 void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo)
@@ -331,7 +332,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   	float nom_content = 0; 
     float var_up = 0;
     float var_down = 0;
-
+    
   	for(int ibin=0; ibin<m_nbins; ibin++)
     {
       float theo_total_nom = 0;
@@ -340,7 +341,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     
       float diff_up = 0;
       float diff_down = 0;
-      
+
       // shower  
       getTheoryVariations("ggf", v_theo_ggf[0], ibin, nom_content, var_up, var_down);
       theo_total_nom += nom_content;
@@ -492,7 +493,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
       {
       	getTheoryVariations("top", v_theo_top[itop], ibin, nom_content, var_up, var_down);
       	diff_up += std::pow(nom_content - var_up, 2);
-      	diff_down += std::pow(nom_content - var_down, 2);
+        diff_down += std::pow(nom_content - var_down, 2);
       }
 
       // and finally add the rest diboson variations
