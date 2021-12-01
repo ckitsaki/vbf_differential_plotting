@@ -161,7 +161,7 @@ void plotting::getTheoryVariations(std::string sample, std::string theo_sys, TFi
 
 
   legend->Draw();
-  std::string out_name = "./sys_checks/" + sample + "_" + theo_sys + ".pdf";
+  std::string out_name = "./debugging/sys_checks/" + sample + "_" + theo_sys + ".pdf";
   canvas->SaveAs(out_name.c_str());
   f->cd();
   std::string canv_name = theo_sys + "_" + m_regionName + "_canv"; 
@@ -181,7 +181,7 @@ plotting::plotting(std::string sample, std::string observable, std::string regio
   int v_size;
   std::vector<std::string> lvec;
 
-  std::string filename = "./sys_checks/output_"+sample+"_"+region+"_"+observable+".root";
+  std::string filename = "./debugging/sys_checks/output_"+sample+"_"+region+"_"+observable+".root";
   TFile* out_file = new TFile(filename.c_str(),"RECREATE");
 
   if(sample=="vbf") {
