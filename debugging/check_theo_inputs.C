@@ -101,13 +101,13 @@ void plotting::getTheoryVariations(std::string sample, std::string theo_sys, TFi
   TH1F* h_theo_var_up = (TH1F*)f_theo_file->Get(theo_var_up.c_str());
   TH1F* h_theo_var_down = (TH1F*)f_theo_file->Get(theo_var_down.c_str());
 
+  h_theo_nom->SetMarkerStyle(1);
   TCanvas* canvas = new TCanvas();
   canvas->cd();
+
   h_theo_var_up->SetLineColor(kGreen+2);
   h_theo_nom->SetLineColor(kBlue+2);
   h_theo_var_down->SetLineColor(kRed+2);
-
- //fix this if(m_regionName=="SR") gPad->SetLogy();
 
   int nom_bin_max = h_theo_nom->GetMaximumBin();
   int up_bin_max = h_theo_var_up->GetMaximumBin();
@@ -123,7 +123,8 @@ void plotting::getTheoryVariations(std::string sample, std::string theo_sys, TFi
     if( h_theo_nom->GetBinContent(nom_bin_min)<0 ) min = h_theo_nom->GetBinContent(nom_bin_min)*0.2;
     if( h_theo_var_up->GetBinContent(nom_bin_min)<0 ) min = h_theo_var_up->GetBinContent(up_bin_min)*0.2;
     if( h_theo_var_down->GetBinContent(nom_bin_min)<0 ) min = h_theo_var_down->GetBinContent(down_bin_min)*0.2;
-    h_theo_nom->Draw("hist");
+    
+    h_theo_nom->Draw("histE");
     h_theo_nom->GetYaxis()->SetRangeUser(min, h_theo_nom->GetBinContent(nom_bin_max)*0.2);
     h_theo_var_up->Draw("hist same");
     h_theo_var_down->Draw("hist same");
@@ -134,9 +135,10 @@ void plotting::getTheoryVariations(std::string sample, std::string theo_sys, TFi
     if( h_theo_nom->GetBinContent(nom_bin_min)<0 ) min = h_theo_nom->GetBinContent(nom_bin_min)*1.5;
     if( h_theo_var_up->GetBinContent(nom_bin_min)<0 ) min = h_theo_var_up->GetBinContent(up_bin_min)*1.5;
     if( h_theo_var_down->GetBinContent(nom_bin_min)<0 ) min = h_theo_var_down->GetBinContent(down_bin_min)*1.5;
+
     h_theo_var_up->Draw("hist");
     h_theo_var_up->GetYaxis()->SetRangeUser(min, h_theo_var_up->GetBinContent(up_bin_max)*1.5);
-    h_theo_nom->Draw("hist same");
+    h_theo_nom->Draw("histE same");
     h_theo_var_down->Draw("hist same");
   }
 
@@ -145,9 +147,10 @@ void plotting::getTheoryVariations(std::string sample, std::string theo_sys, TFi
     if( h_theo_nom->GetBinContent(nom_bin_min)<0 ) min = h_theo_nom->GetBinContent(nom_bin_min)*1.5;
     if( h_theo_var_up->GetBinContent(nom_bin_min)<0 ) min = h_theo_var_up->GetBinContent(up_bin_min)*1.5;
     if( h_theo_var_down->GetBinContent(nom_bin_min)<0 ) min = h_theo_var_down->GetBinContent(down_bin_min)*1.5;
+
     h_theo_var_down->Draw("hist");
     h_theo_var_down->GetYaxis()->SetRangeUser(min, h_theo_var_down->GetBinContent(down_bin_max)*1.5);
-    h_theo_nom->Draw("hist same");
+    h_theo_nom->Draw("histE same");
     h_theo_var_up->Draw("hist same");
   }
 
@@ -155,11 +158,10 @@ void plotting::getTheoryVariations(std::string sample, std::string theo_sys, TFi
   legend->SetBorderSize(0);
   legend->SetFillStyle(0);
   legend->SetTextSize(0.);
-  legend->AddEntry(h_theo_nom, "Nominal", "f");
-  legend->AddEntry(h_theo_var_up, "up", "f");
-  legend->AddEntry(h_theo_var_down, "down", "f");
-
-
+  legend->AddEntry(h_theo_nom, Form("#scale[1.]{Nominal %3.0f evnts}",h_theo_nom->Integral()), "f");
+  legend->AddEntry(h_theo_var_up, Form("#scale[1.]{up %3.0f evnts}",h_theo_var_up->Integral()), "f");
+  legend->AddEntry(h_theo_var_down, Form("#scale[1.]{down %3.0f evnts}",h_theo_var_down->Integral()), "f");
+  legend->AddEntry(h_theo_nom, "#scale[1.]{stat unc.}", "le");
   legend->Draw();
   std::string out_name = "./debugging/sys_checks/" + sample + "_" + theo_sys + ".pdf";
   canvas->SaveAs(out_name.c_str());
