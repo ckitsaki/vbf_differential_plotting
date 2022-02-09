@@ -59,14 +59,15 @@ public:
   TH1F* getNominalHisto(std::string sample, std::vector<float> mcChannelNumber);
   void getTheoryVariations(std::string sample, std::string theo_sys, int ibin, float &nom_content, float &var_up, float &var_down);
   void getTheoryVariations(std::string sample, std::string theo_sys, TFile* f);
-  plotting(std::string sample, std::string observable, std::string region);
 
   inline void setBins(bool forPaper);
- 
+  void Plots(std::string region1, std::string region2, std::string observable);
   void PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo);
   void PlotsforPaper(std::string region, std::string observable, bool unblind);
   plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo, bool lxplus); 
-
+  plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool addTheo, bool lxplus, float y_min, float y_max, std::string x_min, float x_max, std::string y_ratio_min, float y_ratio_max);
+  plotting(std::string region1, std::string region2, std::string observable, bool lxplus, float y_min, float y_max, std::string x_min, float x_max, std::string y_ratio_min, float y_ratio_max);
+  plotting(std::string sample, std::string observable, std::string region, bool checkTheory);
 
 private:
   std::string m_obsName;
@@ -79,8 +80,8 @@ private:
   float m_ymaximum;
   float m_xminimum;
   float m_xmaximum;
-  float m_y_ratio_min=0.;
-  float m_y_ratio_max=3.;
+  float m_y_ratio_min;
+  float m_y_ratio_max;
   bool m_lxplus;
   bool m_forPaper;
 
@@ -307,12 +308,12 @@ inline void plotting::setBins(bool forPaper)
     if(m_obsName=="Mll")
     {
       m_nbins = 5;
-      m_binsEdges = new double[m_nbins+1]{10, 20, 30, 40, 55, 200};
+      m_binsEdges = new double[m_nbins+1]{10, 20, 30, 40, 55, 14000};
     }
     if(m_obsName=="Mjj")
     {
       m_nbins = 6;
-      m_binsEdges = new double[m_nbins+1]{450, 700, 950, 1200, 1500, 2200, 2500};
+      m_binsEdges = new double[m_nbins+1]{450, 700, 950, 1200, 1500, 2200, 6000};
     }
     if(m_obsName=="pt_H")
     {
@@ -322,17 +323,17 @@ inline void plotting::setBins(bool forPaper)
     if(m_obsName=="DYll")
     {
       m_nbins = 5;
-      m_binsEdges = new double[m_nbins+1]{0, 0.4, 0.6, 0.8, 1., 9.};
+      m_binsEdges = new double[m_nbins+1]{0, 0.4, 0.6, 0.8, 1., 10};
     }
     if(m_obsName=="DYjj")
     {
       m_nbins = 6;
-      m_binsEdges = new double[m_nbins+1]{2.1, 4.0, 4.375, 5, 5.5, 6.25, 7};
+      m_binsEdges = new double[m_nbins+1]{2.1, 4.0, 4.375, 5, 5.5, 6.25, 9};
     }
     if(m_obsName=="DPhill")
     {
-      m_nbins = 5;
-      m_binsEdges = new double[m_nbins+1]{0, 0.2, 0.4, 0.6, 0.8, 1.4};
+      m_nbins = 6;
+      m_binsEdges = new double[m_nbins+1]{0, 0.2, 0.4, 0.6, 0.8, 1.4, 3.14};
     }
     if(m_obsName == "SignedDPhijj")
     {
@@ -357,7 +358,7 @@ inline void plotting::setBins(bool forPaper)
     if(m_obsName=="jet1_pt")
     {
       m_nbins = 5;
-      m_binsEdges = new double[m_nbins+1]{30, 45, 60, 90, 120, 1400};
+      m_binsEdges = new double[m_nbins+1]{30, 45, 60, 90, 120, 350};
     }
     if(m_obsName=="lep0_pt")
     {

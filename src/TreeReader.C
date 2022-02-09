@@ -29,32 +29,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     
     if(m_sample=="data"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/data.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/data.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/data.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/data.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
             
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/data.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/data.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/data.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/data.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/data.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/data.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/data.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/data.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -85,32 +85,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
 
     if(m_sample=="Zjets"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/Zjets.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/Zjets.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/Zjets.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/Zjets.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
             
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/Zjets.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/Zjets.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/Zjets.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/Zjets.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/Zjets.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/Zjets.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/Zjets.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/Zjets.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -138,32 +138,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     }
     if(m_sample=="diboson1"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/diboson1.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/diboson1.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/diboson1.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/diboson1.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
 
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/diboson1.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/diboson1.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/diboson1.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/diboson1.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/diboson1.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/diboson1.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/diboson1.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/diboson1.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -190,32 +190,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     }
     if(m_sample=="diboson2"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/diboson2.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/diboson2.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/diboson2.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/diboson2.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
 
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/diboson2.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/diboson2.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/diboson2.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/diboson2.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/diboson2.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/diboson2.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/diboson2.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/diboson2.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -242,32 +242,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     }
     if(m_sample=="WWEW"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/EW_WW_MadGraph.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/EW_WW_MadGraph.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/EW_WW_MadGraph.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/EW_WW_MadGraph.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
 
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/EW_WW_MadGraph.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/EW_WW_MadGraph.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/EW_WW_MadGraph.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/EW_WW_MadGraph.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/EW_WW_MadGraph.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/EW_WW_MadGraph.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/EW_WW_MadGraph.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/EW_WW_MadGraph.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -294,32 +294,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     }
     if(m_sample=="Fakes"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/Fakes.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/Fakes.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/Fakes.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/Fakes.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
 
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/Fakes.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/Fakes.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/Fakes.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/Fakes.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/Fakes.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/Fakes.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/Fakes.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/Fakes.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -346,32 +346,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     }
     if(m_sample=="ggf"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/ggf.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/ggf.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/ggf.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/ggf.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
 
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/ggf.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/ggf.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/ggf.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/ggf.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/ggf.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/ggf.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/ggf.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/ggf.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -398,32 +398,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     }
     if(m_sample=="htt"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/htt.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/htt.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/htt.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/htt.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
 
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/htt.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/htt.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/htt.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/htt.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/htt.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/htt.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/htt.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/htt.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -451,32 +451,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     }
     if(m_sample=="top1"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/top1.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/top1.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/top1.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/top1.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
 
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/top1.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/top1.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/top1.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/top1.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/top1.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/top1.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/top1.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/top1.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -503,32 +503,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     }
     if(m_sample=="top2"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/top2.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/top2.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/top2.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/top2.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
 
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/top2.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/top2.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/top2.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/top2.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/top2.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/top2.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/top2.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/top2.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -555,32 +555,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     }
     if(m_sample=="vbf"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/vbf.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/vbf.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/vbf.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/vbf.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
 
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/vbf.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/vbf.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/vbf.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/vbf.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/vbf.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/vbf.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/vbf.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/vbf.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -607,32 +607,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     }
     if(m_sample=="Vgamma"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/Vgamma.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/Vgamma.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/Vgamma.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/Vgamma.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
 
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/Vgamma.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/Vgamma.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/Vgamma.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/Vgamma.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/Vgamma.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/Vgamma.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/Vgamma.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/Vgamma.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -659,32 +659,32 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
     }
     if(m_sample=="vh"){
         if(m_region=="ggFCR3"){
-            f_the_file_c16a_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/vh.root");
+            f_the_file_c16a_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/vh.root");
 
             t_the_tree_c16a_0jet = (TTree*)f_the_file_c16a_0jet->Get(tree_name.data());
             Init(t_the_tree_c16a_0jet);
 
-            f_the_file_c16a_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/vh.root");
+            f_the_file_c16a_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/vh.root");
 
             t_the_tree_c16a_1jet = (TTree*)f_the_file_c16a_1jet->Get(tree_name.data());
             Init(t_the_tree_c16a_1jet);
 
-            f_the_file_c16d_0jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/vh.root");
+            f_the_file_c16d_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/vh.root");
 
             t_the_tree_c16d_0jet = (TTree*)f_the_file_c16d_0jet->Get(tree_name.data());
             Init(t_the_tree_c16d_0jet);
 
-            f_the_file_c16d_1jet = new TFile("/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/vh.root");
+            f_the_file_c16d_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/vh.root");
 
             t_the_tree_c16d_1jet = (TTree*)f_the_file_c16d_1jet->Get(tree_name.data());
             Init(t_the_tree_c16d_1jet);
 
-            f_the_file_c16e_0jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/vh.root");
+            f_the_file_c16e_0jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/vh.root");
 
             t_the_tree_c16e_0jet = (TTree*)f_the_file_c16e_0jet->Get(tree_name.data());
             Init(t_the_tree_c16e_0jet);
 
-            f_the_file_c16e_1jet = new TFile("/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/vh.root");
+            f_the_file_c16e_1jet = new TFile("/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/vh.root");
 
             t_the_tree_c16e_1jet = (TTree*)f_the_file_c16e_1jet->Get(tree_name.data());
             Init(t_the_tree_c16e_1jet);
@@ -721,16 +721,16 @@ TreeReader::TreeReader(std::string region, std::string sample, std::string tree_
 
     if(m_region=="ggFCR3"){ // for ggFCR3 we have the ntuples only on eos. If one wants to run the jobs on spar will need to update the paths.
         if(campaign=="c16a"){
-            path0 = "/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16a/"; 
-            path1 = "/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16a/";
+            path0 = "/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16a/"; 
+            path1 = "/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16a/";
         }
         if(campaign=="c16d"){
-            path0 = "/eos/user/c/chenj/c16d-nTupDumpSpot/0jet/";
-            path1 = "/eos/user/c/chenj/c16d-nTupDumpSpot/1jet/";
+            path0 = "/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16d/";
+            path1 = "/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16d/";
         }
         if(campaign=="c16e"){
-            path0 = "/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/0jet/c16e/";
-            path1 = "/eos/user/s/sagar/ATLAS/DumpednTuples_Systematics/1jet/c16e/";
+            path0 = "/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/0jet/c16e/";
+            path1 = "/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/1jet/c16e/";
         }
     }
     else{
