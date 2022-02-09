@@ -10,7 +10,7 @@ std::string v_theo_top[6] =     {"theo_ttbar_shower", "theo_ttbar_scale", "theo_
 
 std::string v_theo_Zjets[4] =   {"theo_ztautau_alphas", "theo_ztautau_scale", "theo_ztautau_pdf", "theo_ztautau_generator"};
 
-std::string v_theo_diboson[7] = {"theo_ww_shower",  "theo_ww_alphas", "theo_ww_scale", "theo_ww_pdf", "theo_ww_QSF", "theo_ww_CKKW",  "theo_ww_CSSKIN"};
+std::string v_theo_diboson[5] = {"theo_ww_shower",  "theo_ww_alphas", "theo_ww_scale", "theo_ww_pdf", /*"theo_ww_QSF",*/ "theo_ww_CKKW"/*,  "theo_ww_CSSKIN"*/}; // Benedicts comment to remove theo_ww_QSF and theo_ww_CSSKIN to avoid double counting (theo_ww_shower)
 
 TH1F* plotting::getNominalHisto(std::string sample)
 {
@@ -28,6 +28,7 @@ TH1F* plotting::getNominalHisto(std::string sample)
   else h = new TH1F("histo", "histo", m_nbins, m_binsEdges);
 
   std::vector<TTree*> v = treeReader->getTrees();
+  h->Sumw2();
 
   for(int i=0; i<v.size(); i++)
   {
@@ -62,6 +63,7 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
   else h = new TH1F("histo", "histo", m_nbins, m_binsEdges);
 
   std::vector<TTree*> v = treeReader->getTrees();
+  h->Sumw2();
 
   for(int i=0; i<v.size(); i++)
   {
@@ -87,8 +89,8 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
 
 void plotting::getTheoryVariations(std::string sample, std::string theo_sys, int ibin, float &nom_content, float &var_up, float &var_down)
 {
-  std::string theo_filename = "./theo_systematics/" + sample + "_theory_2jets.root";
-  if(m_regionName=="ggFCR3") theo_filename = "./theo_systematics/" + sample + "_theory_1jets.root";
+  std::string theo_filename = "../theo_systematics/" + sample + "_histos_2jets.root"; 
+  if(m_regionName=="ggFCR3") theo_filename = "../theo_systematics/" + sample + "_histos_1jets.root";
   TFile* f_theo_file = new TFile(theo_filename.c_str(), "READ");
   std::string theo_nom = sample + "_" + theo_sys + "__Nom_" + m_regionName + "_" + m_obsName;
   std::string theo_var_up = sample + "_" + theo_sys + "__1up_" + m_regionName + "_" + m_obsName;
@@ -170,9 +172,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_vh->SetLineWidth(1);
 
   std::vector<float> fakes_stat, WW_stat, NonWW_stat, ttbar_stat, singleTop_stat, zjets_stat, vh_stat, htt_stat, ggf_stat, vbf_stat, total_stat, x_stat, y_stat;
-
+ 
   // ================  statistical uncertainties ===================== //
-
   for(int ibin=0; ibin<m_nbins; ibin++)
   {
     fakes_stat.push_back(h_Fakes->GetBinError(ibin+1));
@@ -191,16 +192,17 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     y_stat.push_back(h_Fakes->GetBinContent(ibin+1)+h_WW->GetBinContent(ibin+1)+h_NonWW->GetBinContent(ibin+1)+h_ttbar1->GetBinContent(ibin+1)+h_singleTop1->GetBinContent(ibin+1)+h_Zjets->GetBinContent(ibin+1)+h_vh->GetBinContent(ibin+1)+h_htt->GetBinContent(ibin+1)+h_ggf->GetBinContent(ibin+1)+h_vbf->GetBinContent(ibin+1));  
   }
 
-  for(int istat=0; istat<fakes_stat.size(); istat++)
+  for(int istat=0; istat<m_nbins; istat++)
   {
-    float stat = fakes_stat.at(istat)/2 + WW_stat.at(istat)/2 + NonWW_stat.at(istat)/2 + ttbar_stat.at(istat)/2 + singleTop_stat.at(istat)/2 + zjets_stat.at(istat)/2 + vh_stat.at(istat)/2 + htt_stat.at(istat)/2 + ggf_stat.at(istat)/2 + vbf_stat.at(istat)/2 ; //std::sqrt(std::pow(fakes_stat.at(istat)/2,2)+std::pow(WW_stat.at(istat)/2,2)+std::pow(NonWW_stat.at(istat)/2,2)+std::pow(ttbar_stat.at(istat)/2,2)+std::pow(singleTop_stat.at(istat)/2,2)+std::pow(zjets_stat.at(istat)/2,2)+std::pow(vh_stat.at(istat)/2,2)+std::pow(htt_stat.at(istat)/2,2)+std::pow(ggf_stat.at(istat)/2,2)+std::pow(vbf_stat.at(istat)/2,2));
-    total_stat.push_back(std::pow(stat,2));
+      float stat = std::pow(fakes_stat.at(istat),2)+std::pow(WW_stat.at(istat),2)+std::pow(NonWW_stat.at(istat),2)+std::pow(ttbar_stat.at(istat),2)+std::pow(singleTop_stat.at(istat),2)+std::pow(zjets_stat.at(istat),2)+std::pow(vh_stat.at(istat),2)+std::pow(htt_stat.at(istat),2)+std::pow(ggf_stat.at(istat),2);
+      total_stat.push_back(stat);
   }
+
 // ============================================================= //
 
 
 // =============== add experimental systematics =================================== //
-  std::string sys_path = "./exp_systematics/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_ExpSys.root";
+  std::string sys_path = "../exp_systematics/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_ExpSys.root"; //for submission one dir back
   TFile *f_exp = new TFile(sys_path.c_str());
   size_t size1 = sizeof(v_sys_list)/sizeof(v_sys_list[0]);
   size_t size2 = sizeof(v_sys_MET)/sizeof(v_sys_MET[0]);
@@ -291,7 +293,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   
   }
 
-  std::vector<float> total_exp_sys_up, total_exp_sys_down, total_theo_up, total_theo_down;
+  std::vector<float> total_exp_sys_up, total_exp_sys_down;
 
   for(int ibin =0; ibin<m_nbins; ibin++){
     float total_sum_up = 0;
@@ -325,8 +327,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 // ===================================================================== //
 
 // ===================== add theory systematics ========================= //
+std::vector<float>  total_theo_up, total_theo_down;
 
-// TODO: improve it
   if(addTheo)
   {
   	float nom_content = 0; 
@@ -342,162 +344,39 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
       float diff_up = 0;
       float diff_down = 0;
 
-      // shower  
-      getTheoryVariations("ggf", v_theo_ggf[0], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up; 
-      theo_total_down += var_down;
-
-      getTheoryVariations("vbf", v_theo_vbf[0], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content; 
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("top", v_theo_top[0], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content; 
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("diboson", v_theo_diboson[0], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content; 
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
-      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
-
-      // alphas
-      theo_total_nom = 0;
-      theo_total_up = 0; 
-      theo_total_down = 0;
-
-      getTheoryVariations("vbf", v_theo_vbf[1], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("ggf", v_theo_ggf[1], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("Zjets0", v_theo_Zjets[0], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("diboson", v_theo_diboson[1], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
-      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
-
-      // scale
-      theo_total_nom = 0;
-      theo_total_up = 0; 
-      theo_total_down = 0;
-
-      getTheoryVariations("vbf", v_theo_vbf[2], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("top", v_theo_top[1], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content; 
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("Zjets0", v_theo_Zjets[1], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("diboson", v_theo_diboson[2], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
-      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
-
-      // pdf
-      theo_total_nom = 0;
-      theo_total_up = 0; 
-      theo_total_down = 0;
-
-      getTheoryVariations("top", v_theo_top[2], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content; 
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("Zjets0", v_theo_Zjets[2], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("diboson", v_theo_diboson[3], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
-      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
-
-      // pdflhc4
-      theo_total_nom = 0;
-      theo_total_up = 0; 
-      theo_total_down = 0;
-
-      getTheoryVariations("vbf", v_theo_vbf[3], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("ggf", v_theo_ggf[2], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up; 
-      theo_total_down += var_down;
-
-      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
-      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
-      // generator 
-      theo_total_nom = 0;
-      theo_total_up = 0; 
-      theo_total_down = 0;
-
-      getTheoryVariations("vbf", v_theo_vbf[4], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      getTheoryVariations("Zjets0", v_theo_Zjets[3], ibin, nom_content, var_up, var_down);
-      theo_total_nom += nom_content;
-      theo_total_up += var_up;
-      theo_total_down += var_down;
-
-      diff_up += std::pow(theo_total_nom - theo_total_up, 2);
-      diff_down += std::pow(theo_total_nom - theo_total_down, 2);
-
-      // add separately the rest ggf theo variations
-      for(int iggf=3; iggf<sizeof(v_theo_ggf)/sizeof(v_theo_ggf[0]); iggf++)
+      // add vbf theo variations
+      for(int ivbf=0; ivbf<sizeof(v_theo_vbf)/sizeof(v_theo_vbf[0]); ivbf++)
+      {
+      	getTheoryVariations("vbf", v_theo_vbf[ivbf], ibin, nom_content, var_up, var_down);
+      	diff_up += std::pow(nom_content - var_up, 2);
+      	diff_down += std::pow(nom_content - var_down, 2);
+      }
+      // add ggf theo variations
+      for(int iggf=0; iggf<sizeof(v_theo_ggf)/sizeof(v_theo_ggf[0]); iggf++)
       {
       	getTheoryVariations("ggf", v_theo_ggf[iggf], ibin, nom_content, var_up, var_down);
       	diff_up += std::pow(nom_content - var_up, 2);
       	diff_down += std::pow(nom_content - var_down, 2);
       }
 
-      // add the rest top theo variations
-      for(int itop=3; itop<sizeof(v_theo_top)/sizeof(v_theo_top[0]); itop++)
+      // add top theo variations
+      for(int itop=0; itop<sizeof(v_theo_top)/sizeof(v_theo_top[0]); itop++)
       {
       	getTheoryVariations("top", v_theo_top[itop], ibin, nom_content, var_up, var_down);
       	diff_up += std::pow(nom_content - var_up, 2);
         diff_down += std::pow(nom_content - var_down, 2);
       }
 
-      // and finally add the rest diboson variations
-      for(int idib=4; idib<sizeof(v_theo_diboson)/sizeof(v_theo_diboson[0]); idib++)
+      // add Zjets variations
+      for(int izjets=0; izjets<sizeof(v_theo_Zjets)/sizeof(v_theo_Zjets[0]); izjets++)
+      {
+      	getTheoryVariations("Zjets0", v_theo_Zjets[izjets], ibin, nom_content, var_up, var_down);
+      	diff_up += std::pow(nom_content - var_up, 2);
+      	diff_down += std::pow(nom_content - var_down, 2);
+      }
+
+      // add diboson variations
+      for(int idib=0; idib<sizeof(v_theo_diboson)/sizeof(v_theo_diboson[0]); idib++)
       {
       	getTheoryVariations("diboson", v_theo_diboson[idib], ibin, nom_content, var_up, var_down);
       	diff_up += std::pow(nom_content - var_up, 2);
@@ -509,6 +388,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     }
   }
 // ====================================================================================================== //
+  
   TGraphAsymmErrors* h_exp_sys_errors = new TGraphAsymmErrors();
 
   for(int isys = 0; isys<m_nbins; isys++)
@@ -518,7 +398,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
     else h_exp_sys_errors->SetPointError(isys,h_Fakes->GetBinWidth(isys+1)/2,h_Fakes->GetBinWidth(isys+1)/2, std::sqrt(total_exp_sys_up.at(isys) + total_stat.at(isys)) , std::sqrt( total_exp_sys_down.at(isys) + total_stat.at(isys))); 
   }
 
-  if(m_regionName == "SR"){
+  if(strstr(m_regionName.c_str(),"SR")) {
     	h_stack->Add(h_vh); // vh
     	h_stack->Add(h_htt); // htt
     	h_stack->Add(h_ggf);  // ggF
@@ -546,14 +426,13 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   TCanvas *c = new TCanvas("atlas_square","Canvas title",0.,0.,600,600);
 
   if(unblind) h_data->SetMarkerStyle(8);
-
-  if(unblind){
   pad1 = new TPad("pad1","pad1", 0, 0.35, 1., 1.);
- // pad1->SetLogy();
-  pad1->SetBottomMargin(0.02);
+  if(strstr(m_regionName.c_str(),"SR")) { pad1->SetBottomMargin(0.); pad1->SetLogy();}// logY 
+  else pad1->SetBottomMargin(0.02);
+
   pad1->Draw();
   pad1->cd();
-}
+
 
   h_stack->Draw("hist");
 //  h_vbf->Draw("hist same");
@@ -572,10 +451,11 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_stack->SetMaximum(m_ymaximum);
  
   h_stack->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
-  if(unblind) h_stack->GetXaxis()->SetLabelSize(0);
+  h_stack->GetXaxis()->SetLabelSize(0);
+
 
   if(!unblind){
-  if(m_regionName=="SR") gPad->SetLogy();
+  if(strstr(m_regionName.c_str(),"SR")) pad1->SetLogy(); 
   
   h_stack->GetXaxis()->SetTitle(xAxisTitle(observable).c_str());
   h_stack->GetXaxis()->SetTitleSize(.04);
@@ -583,7 +463,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_stack->GetYaxis()->SetLabelSize(.04);
   h_stack->GetYaxis()->SetTitleSize(.04);
   h_stack->GetYaxis()->SetTitleOffset(2.);
-  if(m_regionName=="SR") h_stack->GetYaxis()->SetTitleOffset(1.5);
+  h_stack->GetXaxis()->SetTitleOffset(2.);
+  if(strstr(m_regionName.c_str(),"SR")) h_stack->GetYaxis()->SetTitleOffset(1.5);
   }
 
   // y-axis label
@@ -597,11 +478,10 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   if(m_obsName=="DPhill") unit = " rad";
   else if(m_obsName=="lep0_eta" || m_obsName=="lep1_eta" || m_obsName=="jet0_eta" || m_obsName=="jet1_eta" || m_obsName=="MT" || m_obsName=="DYll" || m_obsName=="DYjj" || m_obsName=="DPhijj" || m_obsName=="SignedDPhijj" || m_obsName=="costhetastar" || m_obsName=="sumOfCentralitiesL" || m_obsName=="bdt_vbf" || m_obsName=="bdt_TopWWAll" || m_obsName=="bdt_ggFCR1" || m_obsName=="bdt_ggFCR2" || m_obsName=="bdt_ggFCR3") unit="";
   std::string yTitle = "Events / "+ res_to_string + unit;
-  if(m_obsName=="nJets" || binEvt==1) yTitle = "Events";
+  if(m_obsName=="nJets" || binEvt==1 || strstr(m_regionName.c_str(),"SR1") || strstr(m_regionName.c_str(),"SR2")) yTitle = "Events";
   h_stack->GetYaxis()->SetTitle(yTitle.c_str());
 
-  if(unblind) legend = new TLegend(0.55,0.55,0.92,0.9);
-  else legend = new TLegend(0.55,0.65,0.92,0.9); 
+  legend = new TLegend(0.55,0.55,0.92,0.9);
   legend->SetBorderSize(0);
   legend->SetFillStyle(0);
   legend->SetTextSize(0.);
@@ -628,7 +508,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   legAtlas->SetTextSize(0.);
   legAtlas->AddEntry((TObject*)0, "#it{#scale[1.5]{ATLAS}} #font[42]{#scale[1.5]{Internal}}", "");
   legAtlas->AddEntry((TObject*)0, "#bf{#sqrt{#scale[1.]{s}} #scale[1.]{= 13 TeV,} #scale[1.]{#int} #scale[1.]{Ldt = 139 fb^{-1}}}", "");
-  std::string regionLabel = "#bf{e#mu + #mue channel}";//"#bf{"+region+"}";
+  std::string regionLabel = "#bf{"+region+"}";//"#bf{e#mu + #mue channel}";//"#bf{"+region+"}";
   legAtlas->AddEntry((TObject*)0, regionLabel.c_str(),"");
 
   legAtlas->Draw();
@@ -636,14 +516,15 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   if(unblind){
   c->cd();
 
-  
+ // pad1->SetLogx();
   pad2 = new TPad("pad2", "pad2", 0, 0., 1, 0.35);
   pad2->SetTopMargin(0.03);
   pad2->SetBottomMargin(.4);
   pad2->Draw();
   pad2->cd();
   gPad->SetGridy(1);
-  
+ // pad2->SetLogx();
+
   TH1F* h_ratio = (TH1F*) h_data->Clone("ratio");
   TH1F* h_all_bkg = (TH1F*) h_Fakes->Clone("all_bkg");
   h_all_bkg->Add(h_Zjets);
@@ -655,6 +536,8 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_all_bkg->Add(h_htt);
   h_all_bkg->Add(h_ggf);
   h_all_bkg->Add(h_vbf);
+
+
 //  TH1F* h_all_bkg_signal = (TH1F*) h_all_bkg->Clone("all_bkg_signal");
 //  h_all_bkg_signal->Add(h_vbf);
  // TH1F* h_ratio2 = (TH1F*) h_data->Clone("ratio2");
@@ -681,25 +564,71 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 
   h_ratio->GetXaxis()->SetTitle(xAxisTitle(observable).c_str());
   h_ratio->GetXaxis()->SetTitleSize(.09);
- // h_ratio->GetXaxis()->SetTitleOffset(2.5);
   h_ratio->GetXaxis()->SetLabelSize(.09);
   h_ratio->GetYaxis()->SetNdivisions(508);
   h_ratio->GetYaxis()->SetLabelSize(.09);
   h_ratio->GetYaxis()->CenterTitle(true);
   h_ratio->GetYaxis()->SetTitleSize(.09);
-//  h_stack->GetYaxis()->SetLabelSize(.1);
-//  h_stack->GetYaxis()->SetTitleSize(.04);
-//  h_stack->GetYaxis()->SetLabelSize(.04);
   h_ratio->GetYaxis()->SetTitleOffset(.7);
   h_ratio->GetYaxis()->SetTitle("Data / Pred.");
- // h_stack->GetYaxis()->SetTitleOffset(.3);
   h_ratio->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
   h_ratio->GetYaxis()->SetRangeUser(m_y_ratio_min,m_y_ratio_max);
 }
 
-  std::string save_name = "./plots/"+region+"_"+observable+".pdf";
-  c->SaveAs(save_name.c_str());
+if(!unblind){
+  c->cd();
 
+  
+  pad2 = new TPad("pad2", "pad2", 0, 0., 1, 0.35);
+  pad2->SetTopMargin(0.03); 
+  pad2->SetBottomMargin(.4); 
+  pad2->Draw();
+  pad2->cd();
+  gPad->SetGridy(1);
+  
+  TH1F* h_all_bkg = (TH1F*) h_Fakes->Clone("all_bkg");
+  h_all_bkg->Add(h_Zjets);
+  h_all_bkg->Add(h_WW);
+  h_all_bkg->Add(h_NonWW);
+  h_all_bkg->Add(h_ttbar1);
+  h_all_bkg->Add(h_singleTop1);
+  h_all_bkg->Add(h_vh);
+  h_all_bkg->Add(h_htt);
+  h_all_bkg->Add(h_ggf);
+  h_all_bkg->Add(h_vbf);
+
+
+  TGraphAsymmErrors* h_ratio_unc = new TGraphAsymmErrors();
+  std::cout<<"check tot bkg bin content: \n";
+  for(int i=0; i<m_nbins; i++){
+    h_ratio_unc->SetPoint(i,h_all_bkg->GetBinCenter(i+1),1);
+    if(addTheo) h_ratio_unc->SetPointError(i,h_all_bkg->GetBinWidth(i+1)/2, h_all_bkg->GetBinWidth(i+1)/2, std::sqrt( total_exp_sys_up.at(i) + total_theo_up.at(i) + total_stat.at(i) )/h_all_bkg->GetBinContent(i+1), std::sqrt( total_exp_sys_down.at(i) + total_theo_down.at(i) + total_stat.at(i) )/h_all_bkg->GetBinContent(i+1));
+    else h_ratio_unc->SetPointError(i,h_all_bkg->GetBinWidth(i+1)/2, h_all_bkg->GetBinWidth(i+1)/2, std::sqrt((total_exp_sys_up.at(i) + total_stat.at(i)))/h_all_bkg->GetBinContent(i+1), std::sqrt((total_exp_sys_down.at(i) + total_stat.at(i)))/h_all_bkg->GetBinContent(i+1));
+  }
+
+  h_ratio_unc->SetFillColor(kGray+2);  
+  h_ratio_unc->SetFillStyle(3345);
+  h_ratio_unc->Draw("ae2");
+
+  TLine *l=new TLine(m_xminimum,1.0,m_xmaximum,1.0);
+  l->SetLineColor(kRed);
+  l->Draw("same");
+  
+  h_ratio_unc->GetXaxis()->SetTitle(xAxisTitle(observable).c_str());
+  h_ratio_unc->GetXaxis()->SetTitleSize(.07); 
+  h_ratio_unc->GetXaxis()->SetLabelSize(.07);
+  h_ratio_unc->GetYaxis()->SetNdivisions(508);
+  h_ratio_unc->GetYaxis()->SetLabelSize(.07);
+  h_ratio_unc->GetYaxis()->CenterTitle(true);
+  h_ratio_unc->GetYaxis()->SetTitleSize(.07);
+  h_ratio_unc->GetYaxis()->SetTitleOffset(.7);
+  h_ratio_unc->GetYaxis()->SetTitle("Data / Pred.");
+  h_ratio_unc->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
+  h_ratio_unc->GetYaxis()->SetRangeUser(m_y_ratio_min,m_y_ratio_max);
+}
+
+  std::string save_name = "../plots/"+region+"_"+observable+".pdf"; 
+  c->SaveAs(save_name.c_str());
 
 }
 
@@ -708,8 +637,168 @@ void plotting::PlotsforPaper(std::string region, std::string observable, bool un
   std::cout<<"Preparing the plot for the paper.."<<std::endl;
 }
 
+void plotting::Plots(std::string region1, std::string region2, std::string observable)
+{
+  std::cout<<"Preparing the plots.."<<std::endl;
 
-plotting::plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo, bool lxplus=true)
+  setRegionName(region1.c_str());
+  setBins(true);
+  TH1F* h_Zjets_1 = getNominalHisto("Zjets");
+  setRegionName(region2.c_str());
+  setBins(true);
+  TH1F* h_Zjets_2 = getNominalHisto("Zjets");
+
+  //h_Zjets_1->SetFillColorAlpha(kGreen+2, 0.35);
+  h_Zjets_1->SetFillColor(kGreen+2);
+  h_Zjets_1->SetLineColor(kBlack);
+  h_Zjets_1->SetMarkerStyle(0);
+ // h_Zjets_2->SetFillColorAlpha(kGreen, 0.35);
+  h_Zjets_2->SetFillColor(kGreen);
+  h_Zjets_2->SetLineColor(kBlack);
+  h_Zjets_2->SetMarkerStyle(0);
+
+  TCanvas *c = new TCanvas("atlas_square","Canvas title",0.,0.,600,600);
+
+  pad1 = new TPad("pad1","pad1", 0, 0.35, 1., 1.);
+
+  pad1->SetBottomMargin(0.02);
+
+  pad1->Draw();
+  pad1->cd();
+
+  THStack* h_stack = new THStack("h_stack","");
+  h_stack->Add(h_Zjets_1);
+  h_stack->Add(h_Zjets_2);
+
+  h_stack->Draw("histE");
+
+  h_stack->SetMinimum(m_yminimum);
+  h_stack->SetMaximum(m_ymaximum);
+ 
+  h_stack->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
+  h_stack->GetXaxis()->SetLabelSize(0);
+
+  h_stack->GetXaxis()->SetTitle(xAxisTitle(observable).c_str());
+  h_stack->GetXaxis()->SetTitleSize(.0);
+  h_stack->GetXaxis()->SetLabelSize(.0);
+  h_stack->GetYaxis()->SetLabelSize(.04);
+  h_stack->GetYaxis()->SetTitleSize(.04);
+  h_stack->GetYaxis()->SetTitleOffset(1.5);
+  h_stack->GetXaxis()->SetTitleOffset(2.);
+
+  // y-axis label
+  float binEvt = (h_stack->GetXaxis()->GetXmax() - h_stack->GetXaxis()->GetXmin())/m_nbins;
+  char res[10];
+  int digit = 0;
+  if (binEvt<1) digit = 2;
+  ftoa(binEvt, res, digit);
+  std::string res_to_string = res;
+  std::string unit=" GeV";
+  if(m_obsName=="DPhill") unit = " rad";
+  else if(m_obsName=="lep0_eta" || m_obsName=="lep1_eta" || m_obsName=="jet0_eta" || m_obsName=="jet1_eta" || m_obsName=="MT" || m_obsName=="DYll" || m_obsName=="DYjj" || m_obsName=="DPhijj" || m_obsName=="SignedDPhijj" || m_obsName=="costhetastar" || m_obsName=="sumOfCentralitiesL" || m_obsName=="bdt_vbf" || m_obsName=="bdt_TopWWAll" || m_obsName=="bdt_ggFCR1" || m_obsName=="bdt_ggFCR2" || m_obsName=="bdt_ggFCR3") unit="";
+  std::string yTitle = "Events / "+ res_to_string + unit;
+  if(m_obsName=="nJets" || binEvt==1 ) yTitle = "Events";
+  h_stack->GetYaxis()->SetTitle(yTitle.c_str());
+
+  legend = new TLegend(0.55,0.55,0.92,0.9);
+  legend->SetBorderSize(0);
+  legend->SetFillStyle(0);
+  legend->SetTextSize(0.);
+  legend->SetNColumns(2);
+ 
+  std::string leg1 = Form("Zjets in %s", region1.c_str());
+  std::string leg2 = Form("Zjets in %s", region2.c_str());
+  legend->AddEntry(h_Zjets_1, Form("#scale[1.]{Zjets in %s}",region1.c_str()), "f");
+  legend->AddEntry(h_Zjets_2, Form("#scale[1.]{Zjets in %s}",region2.c_str()), "f");
+  legend->AddEntry((TObject*)0, Form("#scale[1.]{%3.0f evnts}",h_Zjets_1->Integral()), "");
+  legend->AddEntry((TObject*)0, Form("#scale[1.]{%3.0f evnts}",h_Zjets_2->Integral()), "");
+ 
+  
+  legend->Draw();
+
+  auto legAtlas = new TLegend(0.075,0.7,0.52,0.92);
+  legAtlas->SetBorderSize(0);
+  legAtlas->SetFillStyle(0);
+  legAtlas->SetTextSize(0.);
+  legAtlas->AddEntry((TObject*)0, "#it{#scale[1.5]{ATLAS}} #font[42]{#scale[1.5]{Internal}}", "");
+  legAtlas->AddEntry((TObject*)0, "#bf{#sqrt{#scale[1.]{s}} #scale[1.]{= 13 TeV,} #scale[1.]{#int} #scale[1.]{Ldt = 139 fb^{-1}}}", "");
+  std::string regionLabel = "#bf{"+region1+" / "+ region2+"}";//"#bf{e#mu + #mue channel}";//"#bf{"+region+"}";
+  legAtlas->AddEntry((TObject*)0, regionLabel.c_str(),"");
+
+  legAtlas->Draw();
+
+  c->cd();
+  pad2 = new TPad("pad2", "pad2", 0, 0., 1, 0.35);
+  pad2->SetTopMargin(0.03);
+  pad2->SetBottomMargin(.4);
+  pad2->Draw();
+  pad2->cd();
+  gPad->SetGridy(1);
+
+  TH1F* h_ratio = (TH1F*) h_Zjets_1->Clone("ratio");
+  
+  h_ratio->Divide(h_Zjets_2);
+
+  h_ratio->Draw("pe");
+
+  TLine *l=new TLine(m_xminimum,1.0,m_xmaximum,1.0);
+  l->SetLineColor(kRed);
+  l->Draw("same");
+  h_ratio->Draw("pe same");
+
+  h_ratio->GetXaxis()->SetTitle(xAxisTitle(observable).c_str());
+  h_ratio->GetXaxis()->SetTitleSize(.09);
+  h_ratio->GetXaxis()->SetLabelSize(.09);
+  h_ratio->GetYaxis()->SetNdivisions(508);
+  h_ratio->GetYaxis()->SetLabelSize(.09);
+  h_ratio->GetYaxis()->CenterTitle(true);
+  h_ratio->GetYaxis()->SetTitleSize(.09);
+  h_ratio->GetYaxis()->SetTitleOffset(.7);
+  h_ratio->SetMarkerStyle(20);
+
+  h_ratio->GetYaxis()->SetTitle("Zjets^{SR}/Zjets^{DYCR}");
+  h_ratio->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
+  h_ratio->GetYaxis()->SetRangeUser(m_y_ratio_min,m_y_ratio_max);
+
+  std::string save_name = "../plots/"+region1+"_"+region2+"_"+observable+".pdf"; 
+  c->SaveAs(save_name.c_str());
+
+}
+
+plotting::plotting(std::string region1, std::string region2, std::string observable, bool lxplus, float y_min, float y_max, std::string x_min, float x_max, std::string y_ratio_min, float y_ratio_max)
+{
+  gROOT->SetBatch(kTRUE);
+  SetAtlasStyle();
+
+  clock_t tStart = clock();
+  auto t_start = std::chrono::high_resolution_clock::now();
+  workOnLxplus(lxplus);
+  setObsName(observable);
+  
+  if(x_min.find(")") != string::npos) x_min.erase(0,1);
+  if(y_ratio_min.find(")") != string::npos) y_ratio_min.erase(0,1);
+
+    float xmin = std::stof(x_min);
+    setXMin(xmin);
+    setXMax(x_max);
+    float yratiomin = std::stof(y_ratio_min);
+    setYMin(y_min);
+    setYMax(y_max);
+    
+
+    setYminRatio(yratiomin);
+    setYmaxRatio(y_ratio_max);
+
+    Plots(region1, region2, observable);
+
+  clock_t tEnd = clock();
+  auto t_end = std::chrono::high_resolution_clock::now();
+
+  std::cout<<"Time taken: "<<(double)(tEnd - tStart)/CLOCKS_PER_SEC<<"s\n";
+  std::cout<<"Wall clock time passed: "<<std::chrono::duration<double, std::milli>(t_end-t_start).count()<<"ms\n ";
+}
+
+plotting::plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo, bool lxplus)
 {
   gROOT->SetBatch(kTRUE);
   SetAtlasStyle();
@@ -737,19 +826,18 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
     std::cout<<"Set X-axis maximum ";
     std::cin>>x_maximum;
     
-    if (unblind)
-    {
-      float y_ratio_min, y_ratio_max;
-      std::cout<<"==== Limits for the bottom panel ====\n";
-      std::cout<<"y-axis min value \n";
-      std::cin>>y_ratio_min;
-      std::cout<<"y-axis max value \n";
-      std::cin>>y_ratio_max;
 
-      setYminRatio(y_ratio_min);
-      setYmaxRatio(y_ratio_max);
+    float y_ratio_min, y_ratio_max;
+    std::cout<<"==== Limits for the bottom panel ====\n";
+    std::cout<<"y-axis min value \n";
+    std::cin>>y_ratio_min;
+    std::cout<<"y-axis max value \n";
+    std::cin>>y_ratio_max;
 
-    }
+    setYminRatio(y_ratio_min);
+    setYmaxRatio(y_ratio_max);
+
+
     setYMin(y_minimum);
     setYMax(y_maximum);
     setXMin(x_minimum);
@@ -770,4 +858,37 @@ plotting::plotting(std::string region, std::string observable, bool unblind, boo
   std::cout<<"Time taken: "<<(double)(tEnd - tStart)/CLOCKS_PER_SEC<<"s\n";
   std::cout<<"Wall clock time passed: "<<std::chrono::duration<double, std::milli>(t_end-t_start).count()<<"ms\n ";
 
+}
+
+plotting::plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool addTheo, bool lxplus, float y_min, float y_max, std::string x_min, float x_max, std::string y_ratio_min, float y_ratio_max)
+{
+	gROOT->SetBatch(kTRUE);
+  	SetAtlasStyle();
+
+  	workOnLxplus(lxplus);
+
+  	setObsName(observable);
+  	setRegionName(region);
+
+  	plotsForPaper(forPaper);
+  	setBins(forPaper);
+
+    if(x_min.find(")") != string::npos) x_min.erase(0,1);
+    if(y_ratio_min.find(")") != string::npos) y_ratio_min.erase(0,1);
+
+    float xmin = std::stof(x_min);
+    setXMin(xmin);
+    setXMax(x_max);
+    float yratiomin = std::stof(y_ratio_min);
+  	setYMin(y_min);
+    setYMax(y_max);
+    
+
+    setYminRatio(yratiomin);
+    setYmaxRatio(y_ratio_max);
+
+    if(forPaper) PlotsforNote(m_regionName, m_obsName, unblind, addTheo);
+    else PlotsforNote(m_regionName, m_obsName, unblind, addTheo);
+
+    std::cout<<"Plot for "<<observable<<" in "<<region<<" done!\n";
 }
