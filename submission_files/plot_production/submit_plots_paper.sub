@@ -1,0 +1,235 @@
+executable = submit_plots.sh
+
+output = output/$(ClusterId).$(ProcId).out
+error = error/$(ClusterId).$(ProcId).err
+log = log/$(ClusterId).$(ProcId).log
+
+#############################
+# options for JobFlavour
+#############################
+#espresso     = 20 minutes
+#microcentury = 1 hour
+#longlunch    = 2 hours
+#workday      = 8 hours
+#tomorrow     = 1 day
+#testmatch    = 3 days
+#nextweek     = 1 week
+############################
+
+region = SR1
+
+observable = lep0_pt
+y_min = 10e-04
+y_max = 10e+07
+x_min = 22.
+x_max = 500
+y_ratio_min = 0.5
+y_ratio_max = 1.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = SR2
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = SR1
+observable = lep1_pt
+y_min = 10e-04
+y_max = 10e+07
+x_min = 15e+00
+x_max = 10e+03
+y_ratio_min = 0.5
+y_ratio_max = 1.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = SR2
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR1
+observable = Ptll
+x_min = 0.
+x_max = 10000.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR1
+observable = costhetastar
+x_max = 1.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR1
+observable = pt_H
+x_max = 850.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR1
+observable = bdt_vbf
+x_min = 0.5
+x_max = 1.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2
+observable = bdt_TopWWAll
+x_min = )-1.
+x_max = 1.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR1Mjj
+observable = Mjj
+x_min = 450.
+x_max = 6000.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2Mjj
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+
+region = SR1Mll
+observable = Mll
+y_min = 10e-04
+y_max = 10e+07
+x_min = 10e+00
+x_max = 10e+03
+y_ratio_min = 0.5
+y_ratio_max = 1.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2Mll
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR1Mll
+observable = Mll
+y_min = 10e-04
+y_max = 10e+07
+x_min = 10e+00
+x_max = 10e+03
+y_ratio_min = 0.5
+y_ratio_max = 1.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2Mll
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR1DYjj
+observable = DYjj
+x_min = 2.1
+x_max = 9.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2DYjj
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR1DYll
+observable = DYll
+x_min = 0.
+x_max = 2.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2DYll
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+
+region = SR1DPhijj
+observable = SignedDPhijj
+y_min = 10e-01
+y_max = 10e+10
+x_min = )-3.
+x_max = 3.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2DPhijj
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR1DPhill
+observable = DPhill
+y_min = 10e-04
+y_max = 10e+07
+x_min = 0.
+x_max = 3.14
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2DPhill
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR1jet0_pt
+observable = jet0_pt
+x_min = 30.
+x_max = 700.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2jet0_pt
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR1jet1_pt
+observable = jet1_pt
+x_max = 350.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1
+
+region = SR2jet1_pt
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1

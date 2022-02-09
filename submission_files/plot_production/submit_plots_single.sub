@@ -1,0 +1,118 @@
+executable = submit_plots.sh
+
+output = output/$(ClusterId).$(ProcId).out
+error = error/$(ClusterId).$(ProcId).err
+log = log/$(ClusterId).$(ProcId).log
+
+#############################
+# options for JobFlavour
+#############################
+#espresso     = 20 minutes
+#microcentury = 1 hour
+#longlunch    = 2 hours
+#workday      = 8 hours
+#tomorrow     = 1 day
+#testmatch    = 3 days
+#nextweek     = 1 week
+############################
+
+region = DYCR_ptH_bin0
+
+
+observable = MT
+x_min = 40.
+x_max = 150.
+y_min = 0.
+y_max = 200.
+y_ratio_min = 0.
+y_ratio_max = 2.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = DYCR_ptH_bin1
+y_max = 150.
+y_ratio_min = 0. 
+y_ratio_max = 2.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = DYCR_ptH_bin2
+y_max = 100.
+y_ratio_min = 0.
+y_ratio_max = 2.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = DYCR_ptH_bin3
+y_max = 60.
+y_ratio_min = 0.
+y_ratio_max = 2.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = DYCR_ptH_bin4
+y_max = 50.
+y_ratio_min = 0.
+y_ratio_max = 5.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = DYCR_ptH_bin5
+y_max = 60.
+y_ratio_min = 0.
+y_ratio_max = 2.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = DYCR_Mjj_bin0
+y_max = 300.
+y_ratio_min = 0.
+y_ratio_max = 2.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = DYCR_Mjj_bin1
+y_max = 120
+y_ratio_min = 0.
+y_ratio_max = 2.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = DYCR_Mjj_bin2
+y_max = 60.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = DYCR_Mjj_bin3
+y_max = 30.
+y_ratio_min = 0.
+y_ratio_max = 2.5
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = DYCR_Mjj_bin4
+y_max = 30
+y_ratio_min = )-1.
+y_ratio_max = 7.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
+region = DYCR_Mjj_bin5
+y_max = 15.
+y_ratio_min = 0.
+y_ratio_max = 2.
+arguments = $(region) $(observable) $(y_min) $(y_max) $(x_min) $(x_max) $(y_ratio_min) $(y_ratio_max)
++JobFlavour = "microcentury"
+queue 1 
+
