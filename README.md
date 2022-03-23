@@ -1,10 +1,11 @@
-vbf_differential_plotting Repository
-====================================
+# vbf_differential_plotting Repository
+
 This repository is used to produce the kinematic distributions at reconstruction level including the theory and experimental uncertainties as error bands for the needs of the VBF HWW analysis. 
 The inputs are the ntuples produced by the [HWWAnalysisCode](https://gitlab.cern.ch/atlas-physics/higgs/hww/HWWAnalysisCode). 
 
-Experimental uncertainties 
---------------------------
+## Uncertainties
+The user can include the experimental and the theory uncertainties to the error bands of the final plot. 
+### Experimental uncertainties 
 In order to add the experimental uncertainties as error bands, for a given observable and region of interest, histograms for each experimental systematic are dumped and saved in a .root file which is then used by the plotting tool to produce the final plot. This procedure needs to be submitted through condor.
 
 Usage:
@@ -22,6 +23,9 @@ root -l
 checkFiles()
 ``` 
 * The histogram binning can be changed in the `GetSystematics::setBins(bool forPaper)` function which is declared in `src/GetSystematics.h`. Notice that the same changes need to be passed in `plotting::setBins(bool forPaper)` function which is declared in `src/plotting.h`.
+### Theory uncertainties
+This tool does not calculate theory uncertainties. Theory uncertainties are given as histograms (for Nominal and Up/Down variations) in root files which are found under `theo_systematics` folder. 
+A debugging tool has been developed with the aim to be used to identify any problems with the theory inputs (it can be used for the experimental systematics checks too). For each systematic the nominal, up and down variations are plotted along with the total number of events for each component.
 
 Produce the final plot
 ----------------------
