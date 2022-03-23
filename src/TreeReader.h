@@ -341,8 +341,8 @@ inline std::string xAxisTitle(std::string observable)
   if(observable == "jet0_pt") title = "leading jet #it{p}_{T} [GeV]";
   if(observable == "jet1_pt") title = "subleading jet #it{p}_{T} [GeV]";
   if(observable == "jet2_pt") title = "third jet #it{p}_{T} [GeV]";
-  if(observable == "bdt_vbf") title = "BDT output VBF vs Top+WW";
-  if(observable == "bdt_TopWWAll") title = "BDT output Top+WW";
+  if(observable == "bdt_vbf") title = "#it{D}_{VBF}";
+  if(observable == "bdt_TopWWAll") title = "#it{D}_{top+VV}";//"BDT output Top+WW";
   if(observable == "costhetastar") title = "|cos#theta^{*}|";
   if(observable == "ptTot") title = "#it{p}_{T}^{Tot} [GeV]";
   if(observable == "pt_H") title = "#it{p}_{T}^{H} [GeV]";
@@ -367,7 +367,6 @@ inline std::string xAxisTitle(std::string observable)
   if(observable == "bdt_ggFCR1") title = "BDT output ggF CR1";
   if(observable == "bdt_ggFCR2") title = "BDT output ggF VR2";
   if(observable == "bdt_ggFCR3") title = "BDT output ggF VR3";
-  if(observable == "bdt_TopWWAll") title = "BDT output Top+WW";
 
   return title;
 }

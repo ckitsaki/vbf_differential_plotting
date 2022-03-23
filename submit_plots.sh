@@ -9,7 +9,7 @@ ulimit -n 2048
 # choose among SR, WWCR, TopCR, DYCR, ggFCR1, ggFCR2, ggFCR3
 unblind=true # lep0_pt, lep1_pt, Ptll, lep0_eta, lep1_eta, Mll, nJets, jet0_pt, jet1_pt, jet2_pt, Mjj, jet0_eta, jet1_eta, Ml0j0, Ml0j1, Ml1j0, Ml1j1, MET, MT, DYll, DYjj, DPhill, DPhijj, SignedDPhijj, costhetastar, ptTot, pt_H, sumOfCentralitiesL
 forPaper=false
-addTheo=false
+addTheo=true
 lxplus=false
 
 region=$1
@@ -42,3 +42,4 @@ root -b -q -l "plotting.C(\"$region\", \"$observable\", $unblind, $forPaper, $ad
 #cd $dir
 #echo '==== plot production ===='
 #root -b -q -l "plotting.C(\"$region1\", \"$region2\", \"$observable\", $lxplus, $y_min, $y_max, \"$x_min\", $x_max, \"$y_ratio_min\", $y_ratio_max)"
+
