@@ -11,7 +11,7 @@ std::string v_theo_top[6] =     {"theo_ttbar_shower", "theo_ttbar_scale", "theo_
 
 std::string v_theo_Zjets[4] =   {"theo_ztautau_alphas", "theo_ztautau_scale", "theo_ztautau_pdf", "theo_ztautau_generator"};
 
-std::string v_theo_diboson[7] = {"theo_ww_shower",  "theo_ww_alphas", "theo_ww_scale", "theo_ww_pdf", "theo_ww_QSF", "theo_ww_CKKW",  "theo_ww_CSSKIN"};
+std::string v_theo_diboson[5] = {"theo_ww_shower",  "theo_ww_alphas", "theo_ww_scale", "theo_ww_pdf", "theo_ww_CKKW"};
 
 TH1F* plotting::getNominalHisto(std::string sample)
 {
@@ -84,9 +84,9 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
 
 void plotting::getTheoryVariations(std::string sample, std::string theo_sys, TFile* f)
 {
-
-  std::string theo_filename = "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_2jets.root";//"./theo_systematics/" + sample + "_histos_2jets.root";
-  if(m_regionName=="ggFCR3") theo_filename = "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_1jets.root";//"./theo_systematics/" + sample + "_histos_1jets.root";
+//1Feb itan to proigoumeno
+  std::string theo_filename = "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+sample+"_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_2jets.root";//"./theo_systematics/" + sample + "_histos_2jets.root";
+  if(m_regionName=="ggFCR3") theo_filename = "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_1jets.root";//"./theo_systematics/" + sample + "_histos_1jets.root";
   TFile* f_theo_file = new TFile(theo_filename.c_str(), "READ");
   std::string theo_nom = sample + "_" + theo_sys + "__Nom_" + m_regionName + "_" + m_obsName;
   std::string theo_var_up = sample + "_" + theo_sys + "__1up_" + m_regionName + "_" + m_obsName;
@@ -143,7 +143,7 @@ if(checkTheory) {
   int v_size;
   std::vector<std::string> lvec;
 
-  std::string filename = "./debugging/sys_checks/exp_sys/output_"+sample+"_"+region+"_"+observable+".root";
+  std::string filename = "./debugging/sys_checks/theo/output_"+sample+"_"+region+"_"+observable+".root";
   TFile* out_file = new TFile(filename.c_str(),"RECREATE");
 
   if(sample=="vbf") {
@@ -180,7 +180,7 @@ if(checkTheory) {
   workOnLxplus(false);
   plotsForPaper(false);
   setBins(false);
-  std::string exp_filename = "./exp_systematics/"+region+"/"+observable+"_"+region+"_ExpSys.root";//"./sys_files/systematics.root"; //"./exp_systematics/"+region+"/"+observable+"_"+region+"_ExpSys.root";
+  std::string exp_filename = "./debugging/sys_checks/exp_systematics/"+region+"/"+observable+"_"+region+"_ExpSys.root";//"./sys_files/systematics.root"; //"./exp_systematics/"+region+"/"+observable+"_"+region+"_ExpSys.root";
   TFile* f_expsys_file = new TFile(exp_filename.c_str(), "READ");
 
   TDirectory *current_sourcedir = gDirectory;
