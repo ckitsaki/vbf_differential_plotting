@@ -364,7 +364,7 @@ inline std::string xAxisTitle(std::string observable)
   if(observable == "lep0_eta") title = "leading lepton #it{#eta}";
   if(observable == "lep1_eta") title = "subleading lepton #it{#eta}";
   if(observable == "Ptll") title = "P_{t}^{ll} [GeV]";
-  if(observable == "bdt_ggFCR1") title = "BDT output ggF CR1";
+  if(observable == "bdt_ggFCR1") title = "#it{D}_{ggF-CR}";
   if(observable == "bdt_ggFCR2") title = "BDT output ggF VR2";
   if(observable == "bdt_ggFCR3") title = "BDT output ggF VR3";
 

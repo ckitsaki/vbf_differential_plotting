@@ -89,7 +89,7 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
 
 void plotting::getTheoryVariations(std::string sample, std::string theo_sys, int ibin, float &nom_content, float &var_up, float &var_down)
 {
-  std::string theo_filename =  "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+sample+"_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_2jets.root";//"../theo_systematics/" + sample + "_theory_2jets.root"; //for submission one dir back
+  std::string theo_filename =   "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+sample+"_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_2jets.root";//"../theo_systematics/" + sample + "_theory_2jets.root"; //for submission one dir back
   if(m_regionName=="ggFCR3") theo_filename = "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_1jets.root";//"../theo_systematics/" + sample + "_theory_1jets.root";
   TFile* f_theo_file = new TFile(theo_filename.c_str(), "READ");
   std::string name;
@@ -1007,22 +1007,22 @@ std::vector<float>  total_theo_up, total_theo_down;
   
   legend->Draw();
 
-  auto legAtlas = new TLegend(0.1,0.6,0.55,0.9);
+  auto legAtlas = new TLegend(0.15,0.6,0.5,0.9);
   legAtlas->SetBorderSize(0);
   legAtlas->SetFillStyle(0);
   legAtlas->SetTextSize(0.);
-  legAtlas->AddEntry((TObject*)0, "#it{#scale[1.2]{ATLAS}}",""); //"#font[42]{#scale[1.2]{Internal}}", "");
+  legAtlas->AddEntry((TObject*)0, "#it{#scale[1.2]{ATLAS}} #bf{Internal}",""); //"#font[42]{#scale[1.2]{Internal}}", "");
   //legAtlas->AddEntry((TObject*)0, "", "");
-  legAtlas->AddEntry((TObject*)0, "#bf{#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{#int} #scale[.8]{Ldt = 139 fb^{-1}}}", "");
+  legAtlas->AddEntry((TObject*)0, "#bf{#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV, 139 fb^{-1}}}", "");
   std::string reg = region;
-  if(strstr(m_regionName.c_str(),"SR")) reg = "Signal Region";
-  if(strstr(m_regionName.c_str(),"SR1")) reg = "Signal Region - 1";
-  if(strstr(m_regionName.c_str(),"SR2")) reg = "Signal Region - 2";
+  if(strstr(m_regionName.c_str(),"SR")) reg = "SR";
+  if(strstr(m_regionName.c_str(),"SR1")) reg = "SR1";
+  if(strstr(m_regionName.c_str(),"SR2")) reg = "SR2";
   if(strstr(m_regionName.c_str(),"ggFCR3")) reg = "ggF-VR3";
   if(strstr(m_regionName.c_str(),"ggFCR2")) reg = "ggF-VR2";
-  if(strstr(m_regionName.c_str(),"ggFCR1")) reg = "ggF Control Region";
-  if(strstr(m_regionName.c_str(),"DYCR")) reg = "Drell-Yan Control Region";
-  if(strstr(m_regionName.c_str(),"WWCR")) reg = "WW Validation Region";
+  if(strstr(m_regionName.c_str(),"ggFCR1")) reg = "ggF CR";
+  if(strstr(m_regionName.c_str(),"DYCR")) reg = "Z+jets CR";
+  if(strstr(m_regionName.c_str(),"WWCR")) reg = "WW VR";
   if(strstr(m_regionName.c_str(),"TopCR")) reg = "Top VR";
   std::string regionLabel = "#bf{#scale[.8]{"+reg+"}}";//"#bf{e#mu + #mue channel}";//"#bf{"+region+"}";
  // legAtlas->AddEntry((TObject*)0, "", "");

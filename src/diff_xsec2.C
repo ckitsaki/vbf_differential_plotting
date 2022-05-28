@@ -25,7 +25,7 @@ std::string getAxisTitle(std::string observable="Mjj")
   if(observable=="DYjj") title_obs = "#it{#Deltay}_{jj}"; 
   if(observable=="Mll")  title_obs = "#it{m}_{ll}";
   if(observable=="Mjj")  title_obs = "#it{m}_{jj}";
-  if(observable=="costhetastar") title_obs = "#it{cos#theta*}";
+  if(observable=="costhetastar") title_obs = "#it{cos#theta}*";
   if(observable=="DYll") title_obs = "#it{#Deltay}_{ll}";
   if(observable=="DPhill") title_obs = "#it{#Delta#phi}_{ll}";
   if(observable=="SignedDPhijj") title_obs = "#it{#Delta#phi}_{jj}";
@@ -297,31 +297,47 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   
   std::string y_title = "d#it{#sigma}/d" + getAxisTitle(observable) + getUnits(observable);
   gr_powpy8_0->GetYaxis()->SetTitle(y_title.c_str());
-  gr_powpy8_0->GetYaxis()->SetLabelSize(.04);
+  gr_powpy8_0->GetYaxis()->SetLabelSize(.035);
+  gr_powpy8_0->GetYaxis()->SetTitleOffset(1.);
+  if(observable=="Ptll" || observable=="lep0_pt" || observable=="lep1_pt" || observable=="jet0_pt" || observable=="jet1_pt" || observable=="pt_H" || observable=="Mjj") gr_powpy8_0->GetYaxis()->SetTitleOffset(1.2);
+  gr_powpy8_0->GetYaxis()->SetTitleSize(.04);
 
-  TLegend *legend = new TLegend(0.63,0.5,0.84,0.9);
+  TLegend *legend = new TLegend(0.48,0.7,0.9,0.92);
   if(latexOneColumn) legend = new TLegend(0.58, 0.32, 0.82, .74);
+  legend->SetNColumns(2);
   legend->SetBorderSize(0);
   legend->SetFillStyle(0);
-  legend->SetTextSize(0.04);
+  legend->SetTextSize(0.033);
  
-  legend->AddEntry(gr_data_stat_only, "#bf{Data}", "p");
-  //legend->AddEntry((TObject*)0, "", "");
-  legend->AddEntry(gr_statistical, "#bf{Data Stat. Unc.}", "f");
-  legend->AddEntry(gr_data_tot, "#bf{Data Total Unc.}", "f");
+  std::string data_legend="#bf{Data}";
+  std::string stat_legend="#bf{Data Stat. Unc.}";
+  std::string tot_legend="#bf{Data Total Unc.}";
+  if(datatype=="Asimov"){
+   data_legend = "#bf{Asimov}";
+   stat_legend="#bf{Asimov Stat. Unc.}";
+   tot_legend="#bf{Asimov Total Unc.}";
+ }
+
+  legend->AddEntry(gr_data_stat_only, data_legend.c_str(), "p");
   legend->AddEntry(gr_powpy8_0,"#bf{Powheg+Pythia8}", "p");
+  //legend->AddEntry((TObject*)0, "", "");
+  legend->AddEntry(gr_statistical, stat_legend.c_str(), "f");
   legend->AddEntry(gr_powh7_0,"#bf{Powheg+Herwig7}", "p");
-  legend->AddEntry(gr_vbfnlopy8_0, "#bf{VBFNLO@LO+Pythia8}", "p"); 
+  legend->AddEntry(gr_data_tot, tot_legend.c_str(), "f");
+  
+  
+  legend->AddEntry(gr_vbfnlopy8_0, "#bf{VBFNLO@LO+Pythia8}", "p");
+  legend->AddEntry((TObject*)0, "", "");
   legend->AddEntry(gr_vbfnlonlo_0, "#bf{VBFNLO@NLO}", "p"); 
   
   legend->Draw();
 
-  auto legAtlas = new TLegend(0.1,0.73,0.55,0.9);
+  auto legAtlas = new TLegend(0.1,0.78,0.5,0.92);
   if(latexOneColumn) legAtlas = new TLegend(0.48, 0.74, .94, .9);
   legAtlas->SetBorderSize(0);
   legAtlas->SetFillStyle(0);
   legAtlas->SetTextSize(0.);
-  legAtlas->AddEntry((TObject*)0, "#it{#scale[1.1]{ATLAS} #bf{Internal}}", "");
+  legAtlas->AddEntry((TObject*)0, "#it{#scale[1.1]{ATLAS} #bf{#it{Internal}}}", "");
   legAtlas->AddEntry((TObject*)0, "#bf{#sqrt{#scale[.7]{#it{s}}} #scale[.7]{= 13 TeV, 139 fb^{-1}}  }", "");
   legAtlas->Draw();
  /*
@@ -667,15 +683,15 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   else if(observable=="DYjj" || observable=="DYll" || observable=="costhetastar") xtit = getAxisTitle(observable);
   else  xtit = getAxisTitle(observable) + " [GeV]";
   gr_ratio_data_tot->GetXaxis()->SetTitle(xtit.c_str());
-  gr_ratio_data_tot->GetXaxis()->SetTitleSize(.09);
-  gr_ratio_data_tot->GetXaxis()->SetLabelSize(.08);
-  gr_ratio_data_tot->GetXaxis()->SetLabelOffset(.04);
+  gr_ratio_data_tot->GetXaxis()->SetTitleSize(.07);
+  gr_ratio_data_tot->GetXaxis()->SetLabelSize(.065);
+  gr_ratio_data_tot->GetXaxis()->SetLabelOffset(.02);
   gr_ratio_data_tot->GetYaxis()->SetNdivisions(508);
-  gr_ratio_data_tot->GetYaxis()->SetLabelSize(.08);
+  gr_ratio_data_tot->GetYaxis()->SetLabelSize(.065);
   gr_ratio_data_tot->GetYaxis()->CenterTitle(true);
-  gr_ratio_data_tot->GetYaxis()->SetTitleSize(.08);
-  gr_ratio_data_tot->GetYaxis()->SetTitleOffset(.8);
-  gr_ratio_data_tot->GetYaxis()->SetTitle("Prediction / Data");
+  gr_ratio_data_tot->GetYaxis()->SetTitleSize(.07);
+  gr_ratio_data_tot->GetYaxis()->SetTitleOffset(.6);
+  gr_ratio_data_tot->GetYaxis()->SetTitle("Prediction / Data"); //#left|Data#right|");
 
   gr_ratio_data_tot->GetXaxis()->SetTickLength(.05);
   gPad->RedrawAxis(); //to avoid the overlapping of error bands with axis ticks
@@ -688,7 +704,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
     if(observable=="DYll")
     {
     	gr_ratio_data_tot->GetXaxis()->ChangeLabel(8,-1,0,-1,-1,-1,"");
-      	gr_ratio_data_tot->GetXaxis()->ChangeLabel(7,-1,0,-1,-1,-1,""); 
+      gr_ratio_data_tot->GetXaxis()->ChangeLabel(7,-1,0,-1,-1,-1,""); 
       	//gr_ratio_data_tot->GetXaxis()->ChangeLabel(6,-1,0,-1,-1,-1,""); 
       	labelname="#infty";
       	lab_minus=.28;
@@ -703,7 +719,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
       minus = .1;
       plus = .1;
       x_lab = 0.58;
-      lab_minus=.32;
+      lab_minus=.2;
       //ratio_ymin=0.2;
 
     }
@@ -728,7 +744,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
       gr_ratio_data_tot->GetXaxis()->ChangeLabel(11,-1,0,-1,-1,-1,"");
       labelname="#infty";
       x_lab=98;
-      lab_minus = 0.7;
+      lab_minus = 0.5;
       minus = .2;
       plus = .2;
       x1=1.;
@@ -742,7 +758,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
       gr_ratio_data_tot->GetXaxis()->ChangeLabel(6,-1,0,-1,-1,-1,""); 
       labelname = "700";
       x_lab = 410;
-      lab_minus=0.38;
+      lab_minus=0.35;
       minus = 0.15;
       plus = .15;
       x1 =1.5;
@@ -759,7 +775,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
      // gr_ratio_data_tot->GetXaxis()->ChangeLabel(6,-1,0,-1,-1,-1,""); 
       labelname = "350";
       x_lab = 178;
-      lab_minus = 0.38;
+      lab_minus = 0.35;
       minus = 0.1;
       plus = 0.15;
       x1 = 1.;
@@ -775,7 +791,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
       gr_ratio_data_tot->GetXaxis()->ChangeLabel(9,-1,0,-1,-1,-1,"");
       labelname = "1000";
       x_lab = 220;
-      lab_minus = 0.35;
+      lab_minus = 0.25;
       minus = 0.15;
       plus = 0.15;
       x1 = 1.7;
@@ -791,7 +807,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
       gr_ratio_data_tot->GetXaxis()->ChangeLabel(7,-1,0,-1,-1,-1,"");
       labelname="500";
       x_lab = 185;
-      lab_minus = 0.7;
+      lab_minus = 0.6;
       minus=0.2;
       plus=0.2;
       x1 = 1.;
@@ -809,7 +825,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   
       labelname="200";
       x_lab = 98;
-      lab_minus = 0.35;
+      lab_minus = 0.3;
       minus=0.2;
       plus=0.25;
       x1 = .6;
@@ -824,9 +840,9 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
       gr_ratio_data_tot->GetXaxis()->ChangeLabel(7,-1,0,-1,-1,-1,"");
       labelname="850";
       x_lab = 390;
-      lab_minus=0.73;
+      lab_minus=0.45;
       minus = 0.2;
-      plus = 0.4;
+      plus = 0.49;
       x1 = 1.;
       x2 = 1.8; 
       x3 = 3.7;
@@ -834,7 +850,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
     }
 
     TLatex latex;
-    latex.SetTextSize(.08);
+    latex.SetTextSize(.065);
     if(observable=="Mll") latex.SetTextSize(.1);
     latex.DrawLatex(x_lab,ratio_ymin-lab_minus,labelname.c_str());
     TLine* line1 = new TLine(x_start, ratio_ymin, x_end, ratio_ymin);
