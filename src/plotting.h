@@ -169,9 +169,12 @@ inline void plotting::setBins(bool forPaper)
     }
     if(m_obsName=="MT")
     {
-      m_nbins = 10;
-      m_xmin = 0;
-      m_xmax = 250;
+      m_nbins = 5;
+      m_xmin = 40; 
+      m_xmax = 150;
+    //  m_nbins = 10;
+    //  m_xmin = 0;
+    //  m_xmax = 250;
     }
     if(m_obsName=="sumOfCentralitiesL")
     {
@@ -312,8 +315,10 @@ inline void plotting::setBins(bool forPaper)
     }
     if(m_obsName=="Mjj")
     {
-      m_nbins = 6;
-      m_binsEdges = new double[m_nbins+1]{450, 700, 950, 1200, 1500, 2200, 6000};
+      m_nbins = 5;
+      m_binsEdges = new double[m_nbins+1]{450, 950, 1200, 1500, 2200, 6000};
+      //m_nbins = 6;
+      //m_binsEdges = new double[m_nbins+1]{450, 700, 950, 1200, 1500, 2200, 6000};
       //m_nbins = 10;
       //m_binsEdges = new double[m_nbins+1]{0.,100.,200.,300.,400.,500.,600.,700.,800.,900.,1000.};
     }
@@ -329,8 +334,10 @@ inline void plotting::setBins(bool forPaper)
     }
     if(m_obsName=="DYjj")
     {
-      m_nbins = 6;
-      m_binsEdges = new double[m_nbins+1]{2.1, 4.0, 4.375, 5, 5.5, 6.25, 9};
+      m_nbins = 5;
+      m_binsEdges = new double[m_nbins+1]{2.1, 4.0, 5, 5.5, 6.25, 9};
+      //m_nbins = 6;
+      //m_binsEdges = new double[m_nbins+1]{2.1, 4.0, 4.375, 5, 5.5, 6.25, 9};
      // m_nbins = 9;
      // m_binsEdges = new double[m_nbins+1]{0,1.,2.,3.,4.,5.,6.,7.,8.,9.};
     }

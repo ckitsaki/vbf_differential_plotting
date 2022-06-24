@@ -12,6 +12,8 @@ std::string v_theo_Zjets[4] =   {"theo_ztautau_alphas", "theo_ztautau_scale", "t
 
 std::string v_theo_diboson[5] = {"theo_ww_shower",  "theo_ww_alphas", "theo_ww_scale", "theo_ww_pdf", "theo_ww_CKKW"};
 
+std::string v_theo_diboson_EW[5] = {"theo_ewww_scale", "theo_ewww_alphas", "theo_ewww_pdf", "theo_ewww_shower", "theo_ewww_EWscale"};
+
 TH1F* plotting::getNominalHisto(std::string sample)
 {
   std::string tree_name = getSampleName(sample) + "_nominal";
@@ -88,14 +90,16 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
 }
 
 void plotting::getTheoryVariations(std::string sample, std::string theo_sys, int ibin, float &nom_content, float &var_up, float &var_down)
-{
-  std::string theo_filename =   "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+sample+"_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_2jets.root";//"../theo_systematics/" + sample + "_theory_2jets.root"; //for submission one dir back
+{ 
+  std::string theo_filename =  "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/"+sample+"_histos_SR.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+sample+"_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_2jets.root";//"../theo_systematics/" + sample + "_theory_2jets.root"; //for submission one dir back
+  if(sample=="diboson-ewk"){theo_filename = "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/MiscStackPlots/diboson_histos_paper.root"; }
   if(m_regionName=="ggFCR3") theo_filename = "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_1jets.root";//"../theo_systematics/" + sample + "_theory_1jets.root";
   TFile* f_theo_file = new TFile(theo_filename.c_str(), "READ");
   std::string name;
   if(strstr(m_regionName.c_str(),"SR1")) name = "SR1";
   else if(strstr(m_regionName.c_str(),"SR2")) name = "SR2";
   else name = m_regionName;
+  if(sample=="diboson-ewk") sample = "diboson";
   std::string theo_nom = sample + "_" + theo_sys + "__Nom_" + name + "_" + m_obsName;
   std::string theo_var_up = sample + "_" + theo_sys + "__1up_" + name + "_" + m_obsName;
   std::string theo_var_down = sample + "_" + theo_sys + "__1down_" + name + "_" + m_obsName;
@@ -222,7 +226,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
 
 
 // =============== add experimental systematics =================================== //
-  std::string sys_path = "../exp_systematics/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_ExpSys.root"; //for submission one dir back
+  std::string sys_path = "../exp_systematics/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_ExpSys.root";//"../exp_systematics/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_ExpSys.root"; //for submission one dir back
   TFile *f_exp = new TFile(sys_path.c_str());
   size_t size1 = sizeof(v_sys_list)/sizeof(v_sys_list[0]);
   size_t size2 = sizeof(v_sys_MET)/sizeof(v_sys_MET[0]);
@@ -745,7 +749,7 @@ void plotting::PlotsforPaper(std::string region, std::string observable, bool ad
 
 
 // =============== add experimental systematics =================================== //
-  std::string sys_path = "../exp_systematics/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_ExpSys.root"; //for submission one dir back
+  std::string sys_path = "../exp_systematics/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_ExpSys.root";//"../exp_systematics/"+m_regionName+"/"+m_obsName+"_"+m_regionName+"_ExpSys.root"; //for submission one dir back
   TFile *f_exp = new TFile(sys_path.c_str());
   size_t size1 = sizeof(v_sys_list)/sizeof(v_sys_list[0]);
   size_t size2 = sizeof(v_sys_MET)/sizeof(v_sys_MET[0]);
@@ -924,6 +928,10 @@ std::vector<float>  total_theo_up, total_theo_down;
         getTheoryVariations("diboson", v_theo_diboson[idib], ibin, nom_content, var_up, var_down);
         diff_up += std::pow(nom_content - var_up, 2);
         diff_down += std::pow(nom_content - var_down, 2);
+        getTheoryVariations("diboson-ewk", v_theo_diboson_EW[idib], ibin, nom_content, var_up, var_down);
+        diff_up += std::pow(nom_content - var_up, 2);
+        diff_down += std::pow(nom_content - var_down, 2);
+
       }
 
       total_theo_up.push_back(diff_up);    
@@ -953,8 +961,10 @@ std::vector<float>  total_theo_up, total_theo_down;
   h_data->SetMarkerStyle(8);
   pad1 = new TPad("pad1","pad1", 0, 0.35, 1., 1.);
   pad1->SetBottomMargin(0.02);
+ // pad1->SetLogy();
   pad1->Draw();
   pad1->cd();
+
 
   h_stack->Draw("hist");
 //  h_vbf->Draw("hist same");
@@ -966,12 +976,14 @@ std::vector<float>  total_theo_up, total_theo_down;
 
   h_data->Draw("pe same");
 
+
   h_stack->SetMinimum(m_yminimum);
   h_stack->SetMaximum(m_ymaximum);
  
   h_stack->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
   h_stack->GetXaxis()->SetLabelSize(0);
 
+  
 
   // y-axis label
   float binEvt = (h_stack->GetXaxis()->GetXmax() - h_stack->GetXaxis()->GetXmin())/m_nbins;
