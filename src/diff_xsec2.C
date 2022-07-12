@@ -25,7 +25,7 @@ std::string getAxisTitle(std::string observable="Mjj")
   if(observable=="DYjj") title_obs = "#it{#Deltay}_{jj}"; 
   if(observable=="Mll")  title_obs = "#it{m}_{ll}";
   if(observable=="Mjj")  title_obs = "#it{m}_{jj}";
-  if(observable=="costhetastar") title_obs = "#it{cos#theta}*";
+  if(observable=="costhetastar") title_obs = "#it{cos#theta}_{#eta}*";
   if(observable=="DYll") title_obs = "#it{#Deltay}_{ll}";
   if(observable=="DPhill") title_obs = "#it{#Delta#phi}_{ll}";
   if(observable=="SignedDPhijj") title_obs = "#it{#Delta#phi}_{jj}";
@@ -114,6 +114,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   std::string vbfnlonlo_filename = "../predictions_for_diff_xsec_plots/VBFNLO-LO-theo-hist-fineBin_remerged_rebin.root";
   std::string powh7_filename     = "../predictions_for_diff_xsec_plots/PowH7-theo-hist-fineBin_remerged_rebin.root";
   std::string vbfnlolo_filename  = "../predictions_for_diff_xsec_plots/VBFNLO-NLO-theo-hist-fineBin_remerged_rebin.root";
+  std::string MGH7_filename  = "../predictions_for_diff_xsec_plots/MGH7-only_tgraph.root";
 
   if(!merged) {
   	powpy8_filename    = "../predictions_for_diff_xsec_plots/PowPy8-theo-hist-fineBin_rebin.root";
@@ -135,12 +136,16 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   TFile* f_vbfnlolo = new TFile(vbfnlolo_filename.c_str(),"READ");
   TGraphAsymmErrors* gr_vbfnlopy8_obs  = getHistogram(f_vbfnlolo, observable);
   gROOT->cd();
+  TFile* f_mgh7 = new TFile(MGH7_filename.c_str(),"READ");
+  TGraphAsymmErrors* gr_mgh7_obs  = getHistogram(f_mgh7, observable);
+  gROOT->cd();
 
   if(observable=="DPhijj") observable = "SignedDPhijj";
   TGraphAsymmErrors *gr_ratio_powpy8 = 		new TGraphAsymmErrors();
   TGraphAsymmErrors *gr_ratio_vbfnlonlo =  	new TGraphAsymmErrors();
   TGraphAsymmErrors *gr_ratio_powh7 = 		new TGraphAsymmErrors();
   TGraphAsymmErrors *gr_ratio_vbfnlopy8 = 	new TGraphAsymmErrors();
+  TGraphAsymmErrors *gr_ratio_mgh7 =   new TGraphAsymmErrors();
   TGraphAsymmErrors *gr_ratio_data_stat = 	new TGraphAsymmErrors();
   TGraphAsymmErrors *gr_ratio_data_tot = 	new TGraphAsymmErrors();
 
@@ -151,6 +156,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   TGraphAsymmErrors *gr_vbfnlonlo_0 =  	new TGraphAsymmErrors();
   TGraphAsymmErrors *gr_powh7_0 = 		new TGraphAsymmErrors();
   TGraphAsymmErrors *gr_vbfnlopy8_0 = 	new TGraphAsymmErrors();
+  TGraphAsymmErrors *gr_mgh7_0 =   new TGraphAsymmErrors();
 
   TH1F* h_up = new TH1F("h_up", " ", h_data_test->GetNbinsX(), h_data_test->GetBinLowEdge(1), h_data_test->GetBinLowEdge(h_data_test->GetNbinsX()+1) );
   TGraphAsymmErrors* gr_statistical = new TGraphAsymmErrors();
@@ -160,11 +166,12 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   	float bin_low_edge = h_data_test->GetBinLowEdge(ibin+1);
   	float bin_upper_edge = h_data_test->GetBinLowEdge(ibin+1) + h_data_test->GetBinWidth(ibin+1);
 
-  	gr_powpy8_0->SetPointX(ibin, bin_low_edge+3*inc-inc/2);
-  	gr_vbfnlonlo_0->SetPointX(ibin, bin_low_edge+3*inc-inc);
+  	gr_powpy8_0->SetPointX(ibin, bin_low_edge+3*inc-inc); //bin_low_edge+3*inc-inc/2);
+  	gr_vbfnlonlo_0->SetPointX(ibin, bin_low_edge+3*inc+inc);//bin_low_edge+3*inc-inc);
   	gr_data_stat_only->SetPointX(ibin, bin_low_edge+3*inc);
-  	gr_powh7_0->SetPointX(ibin, bin_low_edge+3*inc+inc/2);
-  	gr_vbfnlopy8_0->SetPointX(ibin, bin_low_edge+3*inc+inc);
+  	gr_powh7_0->SetPointX(ibin, bin_low_edge+3*inc-inc/2);//bin_low_edge+3*inc+inc/2);
+  	gr_vbfnlopy8_0->SetPointX(ibin, bin_low_edge+3*inc+inc/2);//bin_low_edge+3*inc+inc);
+    gr_mgh7_0->SetPointX(ibin,bin_low_edge+3*inc+2*inc);
   	
   	gr_data_stat_only->SetPointY(ibin, gr_data_stat->GetPointY(ibin));
     gr_statistical->SetPointX(ibin, bin_low_edge+3*inc);
@@ -175,22 +182,31 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
 
   	gr_powpy8_0->SetPointY(ibin, gr_powpy8_obs->GetPointY(ibin));
   	//gr_powpy8_0->SetPointError(ibin, h_data_test->GetBinWidth(ibin+1)/2 - inc/2, h_data_test->GetBinWidth(ibin+1)/2 + inc/2, gr_powpy8_obs->GetErrorYlow(ibin), gr_powpy8_obs->GetErrorYhigh(ibin));
-    gr_powpy8_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 - inc/2)/12, (h_data_test->GetBinWidth(ibin+1)/2 - inc/2)/12, gr_powpy8_obs->GetErrorYlow(ibin), gr_powpy8_obs->GetErrorYhigh(ibin));
+    //gr_powpy8_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 - inc/2)/12, (h_data_test->GetBinWidth(ibin+1)/2 - inc/2)/12, gr_powpy8_obs->GetErrorYlow(ibin), gr_powpy8_obs->GetErrorYhigh(ibin));
+    gr_powpy8_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 - inc)/12, (h_data_test->GetBinWidth(ibin+1)/2 - inc)/12, gr_powpy8_obs->GetErrorYlow(ibin), gr_powpy8_obs->GetErrorYhigh(ibin));
 
 
   	gr_vbfnlonlo_0->SetPointY(ibin, gr_vbfnlonlo_obs->GetPointY(ibin));
   	//gr_vbfnlonlo_0->SetPointError(ibin, h_data_test->GetBinWidth(ibin+1)/2 - inc, h_data_test->GetBinWidth(ibin+1)/2 + inc, gr_vbfnlonlo_obs->GetErrorYlow(ibin), gr_vbfnlonlo_obs->GetErrorYhigh(ibin));
-    gr_vbfnlonlo_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 - inc)/12, (h_data_test->GetBinWidth(ibin+1)/2 - inc)/12, gr_vbfnlonlo_obs->GetErrorYlow(ibin), gr_vbfnlonlo_obs->GetErrorYhigh(ibin));
+  //  gr_vbfnlonlo_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 - inc)/12, (h_data_test->GetBinWidth(ibin+1)/2 - inc)/12, gr_vbfnlonlo_obs->GetErrorYlow(ibin), gr_vbfnlonlo_obs->GetErrorYhigh(ibin));
+    gr_vbfnlonlo_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 +inc/2)/12, (h_data_test->GetBinWidth(ibin+1)/2 +inc/2)/12, gr_vbfnlonlo_obs->GetErrorYlow(ibin), gr_vbfnlonlo_obs->GetErrorYhigh(ibin));
 
 
   	gr_powh7_0->SetPointY(ibin, gr_powh7_obs->GetPointY(ibin));
   //	gr_powh7_0->SetPointError(ibin, h_data_test->GetBinWidth(ibin+1)/2 +inc/2, h_data_test->GetBinWidth(ibin+1)/2 - inc/2, gr_powh7_obs->GetErrorYlow(ibin), gr_powh7_obs->GetErrorYhigh(ibin));
-    gr_powh7_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 +inc/2)/12, (h_data_test->GetBinWidth(ibin+1)/2 +inc/2)/12, gr_powh7_obs->GetErrorYlow(ibin), gr_powh7_obs->GetErrorYhigh(ibin));
+  //  gr_powh7_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 +inc/2)/12, (h_data_test->GetBinWidth(ibin+1)/2 +inc/2)/12, gr_powh7_obs->GetErrorYlow(ibin), gr_powh7_obs->GetErrorYhigh(ibin));
+    gr_powh7_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 - inc/2)/12, (h_data_test->GetBinWidth(ibin+1)/2 - inc/2)/12, gr_powh7_obs->GetErrorYlow(ibin), gr_powh7_obs->GetErrorYhigh(ibin));
 
 
   	gr_vbfnlopy8_0->SetPointY(ibin, gr_vbfnlopy8_obs->GetPointY(ibin));
   	//gr_vbfnlopy8_0->SetPointError(ibin, h_data_test->GetBinWidth(ibin+1)/2 +inc, h_data_test->GetBinWidth(ibin+1)/2 - inc, gr_vbfnlopy8_obs->GetErrorYlow(ibin), gr_vbfnlopy8_obs->GetErrorYhigh(ibin));
-    gr_vbfnlopy8_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 +inc)/12, (h_data_test->GetBinWidth(ibin+1)/2 +inc)/12, gr_vbfnlopy8_obs->GetErrorYlow(ibin), gr_vbfnlopy8_obs->GetErrorYhigh(ibin));
+   // gr_vbfnlopy8_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 +inc)/12, (h_data_test->GetBinWidth(ibin+1)/2 +inc)/12, gr_vbfnlopy8_obs->GetErrorYlow(ibin), gr_vbfnlopy8_obs->GetErrorYhigh(ibin));
+    gr_vbfnlopy8_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 +inc/2)/12, (h_data_test->GetBinWidth(ibin+1)/2 +inc/2)/12, gr_vbfnlopy8_obs->GetErrorYlow(ibin), gr_vbfnlopy8_obs->GetErrorYhigh(ibin));
+
+
+    gr_mgh7_0->SetPointY(ibin, gr_mgh7_obs->GetPointY(ibin));
+    //gr_vbfnlopy8_0->SetPointError(ibin, h_data_test->GetBinWidth(ibin+1)/2 +inc, h_data_test->GetBinWidth(ibin+1)/2 - inc, gr_vbfnlopy8_obs->GetErrorYlow(ibin), gr_vbfnlopy8_obs->GetErrorYhigh(ibin));
+    gr_mgh7_0->SetPointError(ibin, (h_data_test->GetBinWidth(ibin+1)/2 + 2*inc)/12, (h_data_test->GetBinWidth(ibin+1)/2 +inc)/12, 0, 0);
 
  // 	gr_vbfnlopy8_obs->SetPointEXlow(ibin, h_data_test->GetBinWidth(ibin+1)/2);
 
@@ -205,6 +221,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   	gr_ratio_vbfnlonlo->SetPointX(ibin, gr_vbfnlonlo_0->GetPointX(ibin));
   	gr_ratio_powh7->SetPointX(ibin, gr_powh7_0->GetPointX(ibin));
   	gr_ratio_vbfnlopy8->SetPointX(ibin, gr_vbfnlopy8_0->GetPointX(ibin));
+    gr_ratio_mgh7->SetPointX(ibin, gr_mgh7_0->GetPointX(ibin));
   	gr_ratio_data_stat->SetPointX(ibin, gr_data_stat_only->GetPointX(ibin));
   	gr_ratio_data_tot->SetPointX(ibin, gr_data_tot->GetPointX(ibin));
 
@@ -243,6 +260,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   gr_powh7_0->SetMarkerSize(1.2);
   //gr_powh7_0->SetLineWidth(2.);
   gr_vbfnlopy8_0->SetMarkerSize(1.2);
+  gr_mgh7_0->SetMarkerSize(1.6);
   //gr_vbfnlopy8_0->SetLineWidth(2.);
   gr_powpy8_0->SetMarkerColor(kAzure+2);
   gr_powpy8_0->SetFillColorAlpha(kAzure+2,.35);
@@ -252,14 +270,18 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   gr_powh7_0->SetFillColorAlpha(kOrange+2,.35);
   gr_vbfnlopy8_0->SetMarkerColor(kGreen+2);
   gr_vbfnlopy8_0->SetFillColorAlpha(kGreen+2,.35);
+  gr_mgh7_0->SetMarkerColor(kPink+5);
+  gr_mgh7_0->SetFillColorAlpha(kPink+5,.35);
   gr_powpy8_0->SetLineColor(kAzure+2);
   gr_vbfnlonlo_0->SetLineColor(kRed+2);
   gr_powh7_0->SetLineColor(kOrange+2);
+  gr_powh7_0->SetLineColor(kPink+5);
   gr_vbfnlopy8_0->SetLineColor(kGreen+2);
   gr_powpy8_0->SetMarkerStyle(21);
   gr_vbfnlonlo_0->SetMarkerStyle(33);
   gr_powh7_0->SetMarkerStyle(22);
   gr_vbfnlopy8_0->SetMarkerStyle(23);
+  gr_mgh7_0->SetMarkerStyle(29);
 
   gr_powpy8_0->Draw("AP");
   gr_data_tot->SetFillColor(kGray);
@@ -283,6 +305,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   gr_vbfnlonlo_0->Draw("pe2 same");
   gr_powh7_0->Draw("pe2 same");
   gr_vbfnlopy8_0->Draw("pe2 same");
+  gr_mgh7_0->Draw("pe2 same");
   gr_data_stat_only->Draw("pe2 same");
   
   
@@ -329,6 +352,8 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   legend->AddEntry(gr_vbfnlopy8_0, "#bf{VBFNLO@LO+Pythia8}", "p");
   legend->AddEntry((TObject*)0, "", "");
   legend->AddEntry(gr_vbfnlonlo_0, "#bf{VBFNLO@NLO}", "p"); 
+  legend->AddEntry((TObject*)0, "", "");
+  legend->AddEntry(gr_mgh7_0, "#bf{MG5+Herwig7}", "p"); 
   
   legend->Draw();
 
@@ -535,6 +560,10 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
 //  	gr_ratio_vbfnlopy8->SetPointError(ipoint, h_data_test->GetBinWidth(ipoint+1)/2+inc, h_data_test->GetBinWidth(ipoint+1)/2-inc, error_vbfnlopy8, error_vbfnlopy8);
     gr_ratio_vbfnlopy8->SetPointError(ipoint, (h_data_test->GetBinWidth(ipoint+1)/2+inc)/12, (h_data_test->GetBinWidth(ipoint+1)/2+inc)/12, error_vbfnlopy8, error_vbfnlopy8);
 
+    gr_ratio_mgh7->SetPointY(ipoint, gr_mgh7_0->GetPointY(ipoint)/gr_data_stat->GetPointY(ipoint));
+//    gr_ratio_vbfnlopy8->SetPointError(ipoint, h_data_test->GetBinWidth(ipoint+1)/2+inc, h_data_test->GetBinWidth(ipoint+1)/2-inc, error_vbfnlopy8, error_vbfnlopy8);
+    gr_ratio_mgh7->SetPointError(ipoint, (h_data_test->GetBinWidth(ipoint+1)/2+2*inc)/12, (h_data_test->GetBinWidth(ipoint+1)/2+inc)/12, 0, 0);
+
     //if(ipoint==gr_ratio_data_tot->GetN()-1) gr_ratio_data_stat->GetXaxis()->
   }
 
@@ -576,6 +605,13 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   gr_ratio_vbfnlopy8->SetFillColorAlpha(kGreen+2,.35);
   gr_ratio_vbfnlopy8->SetMarkerStyle(23);
 
+  gr_ratio_mgh7->SetMarkerSize(1.6);
+  gr_ratio_mgh7->SetLineWidth(2.);
+  gr_ratio_mgh7->SetMarkerColor(kPink+5);
+  gr_ratio_mgh7->SetLineColor(kPink+5);
+  gr_ratio_mgh7->SetFillColorAlpha(kPink+5,.35);
+  gr_ratio_mgh7->SetMarkerStyle(29);
+
   TLine* line_ratio = new TLine(first, 1, last, 1);
   line_ratio->SetLineColor(kBlack);
  // line_ratio->SetLineStyle(kDashed);
@@ -586,6 +622,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   gr_ratio_vbfnlonlo->Draw("pe2 same");
   gr_ratio_powh7->Draw("pe2 same");
   gr_ratio_vbfnlopy8->Draw("pe2 same");
+  gr_ratio_mgh7->Draw("pe2 same");
 
   float div_min, div_max;
 
@@ -672,6 +709,21 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
          ar_pow_min->SetFillColor(kWhite);
          ar_pow_min->Draw();
     }
+    if(gr_ratio_mgh7->GetPointY(ipoint) > ratio_ymax) {
+         TArrow *ar_pow_up = new TArrow(gr_ratio_mgh7->GetPointX(ipoint),ratio_ymax-div_min,gr_ratio_mgh7->GetPointX(ipoint),ratio_ymax-div_max,0.01,">");
+         ar_pow_up->SetLineWidth(2);
+         ar_pow_up->SetLineColor(kPink+5);
+         ar_pow_up->SetFillColor(kWhite);
+         ar_pow_up->Draw();
+    }
+    if(gr_ratio_mgh7->GetPointY(ipoint) < ratio_ymin) {
+         TArrow *ar_pow_min = new TArrow(gr_ratio_mgh7->GetPointX(ipoint),ratio_ymin+div_max,gr_ratio_mgh7->GetPointX(ipoint),ratio_ymin+div_min,0.01,"<");
+         ar_pow_min->SetLineWidth(2);
+         ar_pow_min->SetLineColor(kPink+5);
+         ar_pow_min->SetFillColor(kWhite);
+         ar_pow_min->Draw();
+    }
+
   }
 
 
@@ -691,7 +743,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   gr_ratio_data_tot->GetYaxis()->CenterTitle(true);
   gr_ratio_data_tot->GetYaxis()->SetTitleSize(.07);
   gr_ratio_data_tot->GetYaxis()->SetTitleOffset(.6);
-  gr_ratio_data_tot->GetYaxis()->SetTitle("Prediction / Data"); //#left|Data#right|");
+  gr_ratio_data_tot->GetYaxis()->SetTitle("Pred. / Data"); //#left|Data#right|");
 
   gr_ratio_data_tot->GetXaxis()->SetTickLength(.05);
   gPad->RedrawAxis(); //to avoid the overlapping of error bands with axis ticks
@@ -867,7 +919,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
     line3->Draw("same");
   }
 
-  std::string savefile = "../plots/paper/" + observable + "diffXS_" + datatype +".pdf";
+  std::string savefile = "../plots/paper/diffXS/" + observable + "diffXS_" + datatype +".pdf";
   c->SaveAs(savefile.c_str());
 }
   

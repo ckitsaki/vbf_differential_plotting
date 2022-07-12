@@ -1,0 +1,160 @@
+executable = submit_plots_diffXS.sh
+
+output = output/$(ClusterId).$(ProcId).out
+error = error/$(ClusterId).$(ProcId).err
+log = log/$(ClusterId).$(ProcId).log
+
+#############################
+# options for JobFlavour
+#############################
+#espresso     = 20 minutes
+#microcentury = 1 hour
+#longlunch    = 2 hours
+#workday      = 8 hours
+#tomorrow     = 1 day
+#testmatch    = 3 days
+#nextweek     = 1 week
+############################
+
+observable = Ptll
+y_min = )-0.003
+ymax = 0.037
+y_ratio_min = 0
+ratio_ymax = 2.05
+merged = true
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = Mll
+y_min = )-0.01
+ymax = 0.13
+y_ratio_min = )-.5
+ratio_ymax = 3.5
+merged = true
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = Mjj
+y_min = )-0.0015
+ymax = .005
+y_ratio_min = 0.
+ratio_ymax = 2.5
+merged = true
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = lep0_pt
+y_min = )-0.015
+ymax = .065
+y_ratio_min = )-1.2
+ratio_ymax = 3.5
+merged = true
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = lep1_pt
+y_min = )-0.01
+ymax = 0.14
+y_ratio_min = 0.
+ratio_ymax = 2.5
+merged = true
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = jet0_pt
+y_min = )-0.002
+ymax = .025
+y_ratio_min = )-0.2
+ratio_ymax = 2.5
+merged = true
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = SignedDPhijj
+y_min = 0
+ymax = .9
+y_ratio_min = 0.4
+ratio_ymax = 1.8
+merged = false
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = DYll
+y_min = )-1.2
+ymax = 5.
+y_ratio_min = 0.
+ratio_ymax = 2.
+merged = true
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = DPhill
+y_min = 0
+ymax = 4.5
+y_ratio_min = 0.2
+ratio_ymax = 2.
+merged = false
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = DYjj
+y_min = )-0.05
+ymax = 1.3
+y_ratio_min = 0.
+ratio_ymax = 2.5
+merged = true
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = pt_H
+y_min = )-0.003
+ymax = 0.035
+y_ratio_min = )-1
+ratio_ymax = 3.
+merged = true
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = costhetastar
+y_min = )-1.5
+ymax = 12
+y_ratio_min = 0.3
+ratio_ymax = 2.
+merged = false
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
+
+observable = jet1_pt
+y_min = )-0.005
+ymax = .07
+y_ratio_min = )-0.2
+ratio_ymax = 2.5
+merged = true
+
+arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
++JobFlavour = "microcentury"
+queue 1 
