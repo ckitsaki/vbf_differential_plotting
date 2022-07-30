@@ -49,7 +49,7 @@ std::string getUnits(std::string observable="Mjj")
   return title_obs;
 }
 
-void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string datatype="Asimov", std::string y_min="0", float ymax=5, std::string y_ratio_min=")-10", float ratio_ymax=10, bool latexOneColumn=false)
+void diff_xsec(std::string observable="Mjj", bool merged=false, std::string datatype="Asimov", std::string y_min="0", float ymax=5, std::string y_ratio_min=")-10", float ratio_ymax=10, bool latexOneColumn=false)
 {
   gROOT->SetBatch(kTRUE);
   SetAtlasStyle();
@@ -62,8 +62,8 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
 
 
 // Get the binning ==========================================
-  std::string bin_file = "../predictions_for_diff_xsec_plots/binning_postmerging.txt";
-  if(!merged) bin_file = "../predictions_for_diff_xsec_plots/binning_premerging.txt";
+  std::string bin_file = "../../predictions_for_diff_xsec_plots/binning_postmerging.txt";
+  if(!merged) bin_file = "../../predictions_for_diff_xsec_plots/binning_premerging.txt";
   std::ifstream binning_f(bin_file.c_str());
 
   std::string binning;
@@ -110,17 +110,17 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
   gROOT->cd();
 
   // access prediction histos 
-  std::string powpy8_filename    = "../predictions_for_diff_xsec_plots/PowPy8-theo-hist-fineBin_remerged_rebin.root";
-  std::string vbfnlonlo_filename = "../predictions_for_diff_xsec_plots/VBFNLO-LO-theo-hist-fineBin_remerged_rebin.root";
-  std::string powh7_filename     = "../predictions_for_diff_xsec_plots/PowH7-theo-hist-fineBin_remerged_rebin.root";
-  std::string vbfnlolo_filename  = "../predictions_for_diff_xsec_plots/VBFNLO-NLO-theo-hist-fineBin_remerged_rebin.root";
-  std::string MGH7_filename  = "../predictions_for_diff_xsec_plots/MGH7-only_tgraph.root";
+  std::string powpy8_filename    = "../../predictions_for_diff_xsec_plots/PowPy8-theo-hist-fineBin_remerged_rebin.root";
+  std::string vbfnlonlo_filename = "../../predictions_for_diff_xsec_plots/VBFNLO-LO-theo-hist-fineBin_remerged_rebin.root";
+  std::string powh7_filename     = "../../predictions_for_diff_xsec_plots/PowH7-theo-hist-fineBin_remerged_rebin.root";
+  std::string vbfnlolo_filename  = "../../predictions_for_diff_xsec_plots/VBFNLO-NLO-theo-hist-fineBin_remerged_rebin.root";
+  std::string MGH7_filename  = "../../predictions_for_diff_xsec_plots/MGH7-only_tgraph.root";
 
   if(!merged) {
-  	powpy8_filename    = "../predictions_for_diff_xsec_plots/PowPy8-theo-hist-fineBin_rebin.root";
-  	vbfnlonlo_filename = "../predictions_for_diff_xsec_plots/VBFNLO-LO-theo-hist-fineBin_rebin.root";
-  	powh7_filename     = "../predictions_for_diff_xsec_plots/PowH7-theo-hist-fineBin_rebin.root";
-  	vbfnlolo_filename  = "../predictions_for_diff_xsec_plots/VBFNLO-NLO-theo-hist-fineBin_rebin.root ";
+  	powpy8_filename    = "../../predictions_for_diff_xsec_plots/PowPy8-theo-hist-fineBin_rebin.root";
+  	vbfnlonlo_filename = "../../predictions_for_diff_xsec_plots/VBFNLO-LO-theo-hist-fineBin_rebin.root";
+  	powh7_filename     = "../../predictions_for_diff_xsec_plots/PowH7-theo-hist-fineBin_rebin.root";
+  	vbfnlolo_filename  = "../../predictions_for_diff_xsec_plots/VBFNLO-NLO-theo-hist-fineBin_rebin.root ";
   }
 
   if(observable=="SignedDPhijj") observable="DPhijj";
@@ -919,7 +919,7 @@ void diff_xsec2(std::string observable="Mjj", bool merged=false, std::string dat
     line3->Draw("same");
   }
 
-  std::string savefile = "../plots/paper/diffXS/" + observable + "diffXS_" + datatype +".pdf";
+  std::string savefile = "../../plots/paper/diffXS/" + observable + "diffXS_" + datatype +".pdf";
   c->SaveAs(savefile.c_str());
 }
   

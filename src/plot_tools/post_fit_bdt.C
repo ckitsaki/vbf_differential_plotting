@@ -1258,6 +1258,7 @@ void post_fit(std::string input="Mjj", int Nbins_SR1=5, int Nbins_SR2=5, bool do
   subpadsr1->SetLeftMargin(0.1);
   subpadsr1->Draw();
   subpadsr1->cd();
+  gPad->SetGridy(1);
 
   TH1D* h_ratio_SR1_all = (TH1D*) h_data_all_SR1->Clone("ratio");
   TH1D* h_all_bkg_SR1_all = (TH1D*) h_zjets_all_SR1->Clone("all_bkg");
@@ -1374,6 +1375,7 @@ void post_fit(std::string input="Mjj", int Nbins_SR1=5, int Nbins_SR2=5, bool do
   ratiopad2ggfcr->SetRightMargin(0.15);
   ratiopad2ggfcr->Draw();
   ratiopad2ggfcr->cd();
+  gPad->SetGridy(1);
 
 
   TH1D* h_ratio_CRGGF_all = (TH1D*) h_data_CRGGF->Clone("ratio_all_ggfcr");
@@ -1568,6 +1570,7 @@ void post_fit(std::string input="Mjj", int Nbins_SR1=5, int Nbins_SR2=5, bool do
   subpadsr2->SetLeftMargin(0.1);
   subpadsr2->Draw();
   subpadsr2->cd();
+  gPad->SetGridy(1);
 
   TH1D* h_ratio_SR2_all = (TH1D*) h_data_all_SR2->Clone("ratio_sr2");
   TH1D* h_all_bkg_SR2_all = (TH1D*) h_zjets_all_SR2->Clone("all_bkg_sr2");
@@ -1713,6 +1716,7 @@ void post_fit(std::string input="Mjj", int Nbins_SR1=5, int Nbins_SR2=5, bool do
   ratiopad4dycr->SetTopMargin(0.08);
   ratiopad4dycr->Draw();
   ratiopad4dycr->cd();
+  gPad->SetGridy(1);
   TH1D* h_ratio_DYCR_all = (TH1D*) h_data_DYCR->Clone("ratio_DYCR_all");
   TH1D* h_all_bkg_DYCR_all = (TH1D*) h_Zjets_DYCR->Clone("all_bkg_DYCR_all");
   h_all_bkg_DYCR_all->Add(h_Fakes_DYCR);
@@ -1771,7 +1775,7 @@ void post_fit(std::string input="Mjj", int Nbins_SR1=5, int Nbins_SR2=5, bool do
   atlastex.DrawLatex(.8, 0.96, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}");
 
 
-  std::string outfilename = "chara_"+input+".pdf";
+  std::string outfilename = "post_fit_bdt_"+input+".pdf";
   chara->SaveAs(outfilename.c_str());
 
 

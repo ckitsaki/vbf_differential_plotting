@@ -257,6 +257,36 @@ inline float TreeReader::getCut()
   if(m_region=="SR1jet1_pt") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_jet1_pt>=0.5);
   if(m_region=="SR2jet1_pt") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_jet1_pt<0.5);
 
+ // if(m_region=="SR1Mll_0") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf>=0.5 && Mll>=10 && Mll<30);
+ // if(m_region=="SR1Mll_1") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf>=0.5 && Mll>=30 && Mll<40);
+ // if(m_region=="SR1Mll_2") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf>=0.5 && Mll>=40 && Mll<55);
+ // if(m_region=="SR1Mll_3") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf>=0.5 && Mll>=55 && Mll<=200);
+
+  if(m_region=="SR1DPhill_0") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_DPhill>=0.5 && DPhill>=0 && DPhill<.2);
+  if(m_region=="SR1DPhill_1") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_DPhill>=0.5 && DPhill>=.2 && DPhill<.4);
+  if(m_region=="SR1DPhill_2") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_DPhill>=0.5 && DPhill>=.4 && DPhill<.6);
+  if(m_region=="SR1DPhill_3") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_DPhill>=0.5 && DPhill>=.6 && DPhill<=.8);
+  if(m_region=="SR1DPhill_4") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_DPhill>=0.5 && DPhill>=.8 && DPhill<=1.4);
+
+  if(m_region=="SR2DPhill_0") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_DPhill<0.5 && DPhill>=0 && DPhill<.2);
+  if(m_region=="SR2DPhill_1") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_DPhill<0.5 && DPhill>=.2 && DPhill<.4);
+  if(m_region=="SR2DPhill_2") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_DPhill<0.5 && DPhill>=.4 && DPhill<.6);
+  if(m_region=="SR2DPhill_3") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_DPhill<0.5 && DPhill>=.6 && DPhill<=.8);
+  if(m_region=="SR2DPhill_4") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_DPhill<0.5 && DPhill>=.8 && DPhill<=1.4);
+
+  if(m_region=="SR1Mjj_0") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_Mjj>=0.5 && Mjj/1000>=450 && Mjj/1000<950);
+  if(m_region=="SR1Mjj_1") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_Mjj>=0.5 && Mjj/1000>=950 && Mjj/1000<1200);
+  if(m_region=="SR1Mjj_2") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_Mjj>=0.5 && Mjj/1000>=1200 && Mjj/1000<1500);
+  if(m_region=="SR1Mjj_3") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_Mjj>=0.5 && Mjj/1000>=1500 && Mjj/1000<=2200);
+  if(m_region=="SR1Mjj_4") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_Mjj>=0.5 && Mjj/1000>=2200 && Mjj/1000<=6000);
+
+  if(m_region=="SR2Mjj_0") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_Mjj<0.5 && Mjj/1000>=450 && Mjj/1000<950);
+  if(m_region=="SR2Mjj_1") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_Mjj<0.5 && Mjj/1000>=950 && Mjj/1000<1200);
+  if(m_region=="SR2Mjj_2") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_Mjj<0.5 && Mjj/1000>=1200 && Mjj/1000<1500);
+  if(m_region=="SR2Mjj_3") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_Mjj<0.5 && Mjj/1000>=1500 && Mjj/1000<=2200);
+  if(m_region=="SR2Mjj_4") cut = weight*(inSR==1 && Mjj/1000 > 450 && DPhill < 1.4 && bdt_vbf_Mjj<0.5 && Mjj/1000>=2200 && Mjj/1000<=6000);
+
+
   if(m_region=="WWCR") cut = weight*(inWWCR==1);
   if(m_region=="TopCR") cut = weight*(inTopCR==1);
   if(m_region=="DYCR") cut = weight*(inZjetsCR == 1 && Mjj/1000 > 450);

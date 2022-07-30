@@ -163,5 +163,5 @@ void fidxsec(float central_value=1.68, float stat_up=0.33, float stat_down=0.32,
   legend->AddEntry(h_tot_unc_band, "#bf{stat. + syst.}","f");
   legend->Draw();
   
-  c->SaveAs("../plots/paper/fid_xsec.pdf");
+  c->SaveAs("../../plots/paper/fid_xsec.pdf");
 }

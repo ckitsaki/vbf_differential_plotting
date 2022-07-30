@@ -1,0 +1,110 @@
+executable = submit_prefit_bdt.sh
+
+output = output/$(ClusterId).$(ProcId).out
+error = error/$(ClusterId).$(ProcId).err
+log = log/$(ClusterId).$(ProcId).log
+
+#############################
+# options for JobFlavour
+#############################
+#espresso     = 20 minutes
+#microcentury = 1 hour
+#longlunch    = 2 hours
+#workday      = 8 hours
+#tomorrow     = 1 day
+#testmatch    = 3 days
+#nextweek     = 1 week
+############################
+
+forPaper=true
+
+region = SR2Mjj_0
+observable = bdt_TopWWAll
+obsBins = 0
+x_min = )-1.
+x_max = 1.
+y_min = 0
+y_max = 400.
+y_ratio_min = 0.
+y_ratio_max = 2.
+pad_xmin = 0
+pad_xmax = 0.12
+pad_ymin = .68
+pad_ymax = 1.
+ratiopad_ymin = 0.0025
+ratiopad_ymax = .2
+mult_factor=1
+arguments = $(region) $(observable) $(obsBins) $(x_min) $(x_max) $(y_min) $(y_max) $(y_ratio_min) $(y_ratio_max) $(pad_xmin) $(pad_xmax) $(pad_ymin) $(pad_ymax) $(ratiopad_ymin) $(ratiopad_ymax) $(forPaper) $(mult_factor)
++JobFlavour = "microcentury"
+queue 1 
+
+region = SR2Mjj_1
+obsBins = 1
+pad_xmin = 0.12
+pad_xmax = 0.24
+mult_factor = 6
+arguments = $(region) $(observable) $(obsBins) $(x_min) $(x_max) $(y_min) $(y_max) $(y_ratio_min) $(y_ratio_max) $(pad_xmin) $(pad_xmax) $(pad_ymin) $(pad_ymax) $(ratiopad_ymin) $(ratiopad_ymax) $(forPaper) $(mult_factor)
++JobFlavour = "microcentury"
+queue 1 
+
+region = SR2Mjj_2
+obsBins = 2
+pad_xmin = 0.24
+pad_xmax = 0.36
+mult_factor = 10
+arguments = $(region) $(observable) $(obsBins) $(x_min) $(x_max) $(y_min) $(y_max) $(y_ratio_min) $(y_ratio_max) $(pad_xmin) $(pad_xmax) $(pad_ymin) $(pad_ymax) $(ratiopad_ymin) $(ratiopad_ymax) $(forPaper) $(mult_factor)
++JobFlavour = "microcentury"
+queue 1 
+
+region = SR2Mjj_3
+obsBins = 3
+pad_xmin = 0.36
+pad_xmax = 0.48
+arguments = $(region) $(observable) $(obsBins) $(x_min) $(x_max) $(y_min) $(y_max) $(y_ratio_min) $(y_ratio_max) $(pad_xmin) $(pad_xmax) $(pad_ymin) $(pad_ymax) $(ratiopad_ymin) $(ratiopad_ymax) $(forPaper) $(mult_factor)
++JobFlavour = "microcentury"
+queue 1 
+
+region = SR2Mjj_4
+obsBins = 4
+pad_xmin = 0.48
+pad_xmax = 0.6
+mult_factor = 20
+arguments = $(region) $(observable) $(obsBins) $(x_min) $(x_max) $(y_min) $(y_max) $(y_ratio_min) $(y_ratio_max) $(pad_xmin) $(pad_xmax) $(pad_ymin) $(pad_ymax) $(ratiopad_ymin) $(ratiopad_ymax) $(forPaper) $(mult_factor)
++JobFlavour = "microcentury"
+queue 1 
+
+
+#region = ggFCR1
+#observable = bdt_ggFCR1
+#obsBins = 0
+#x_min = )-1.
+#x_max = 1.
+#y_min = 0
+#y_max = 10000.
+#y_ratio_min = 0.8
+#y_ratio_max = 1.2
+#pad_xmin = 0.56
+#pad_xmax = 1.
+#pad_ymin = .68
+#pad_ymax = 1.
+#ratiopad_ymin = 0.505
+#ratiopad_ymax = .68
+#mult_factor=)-1
+#arguments = $(region) $(observable) $(obsBins) $(x_min) $(x_max) $(y_min) $(y_max) $(y_ratio_min) $(y_ratio_max) $(pad_xmin) $(pad_xmax) $(pad_ymin) $(pad_ymax) $(ratiopad_ymin) $(ratiopad_ymax) $(forPaper) $(mult_factor)
+#+JobFlavour = "microcentury"
+#queue 1 
+
+#forPaper = false
+#region = DYCR
+#observable = MT
+#obsBins = 0
+#x_min = 40
+#x_max = 150.
+#y_min = 0
+#y_max = 350.
+#y_ratio_min = 0.2
+#y_ratio_max = 1.5
+#arguments = $(region) $(observable) $(obsBins) $(x_min) $(x_max) $(y_min) $(y_max) $(y_ratio_min) $(y_ratio_max) $(pad_xmin) $(pad_xmax) $(pad_ymin) $(pad_ymax) $(ratiopad_ymin) $(ratiopad_ymax) $(forPaper) $(mult_factor)
+#+JobFlavour = "microcentury"
+#queue 1 
+
