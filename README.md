@@ -72,20 +72,28 @@ Additional info:
 
 ### Pre-fit BDTs for each observable bin
 Experimental systematic bands:
+
 Step 1: Add the cut, e.g SR1Mjj_0 for Mjj in SR1 and bin-0, in `TreeReader::getCut()` function of `src/TreeReader.h` file.
+
 Step 2: Define the region (e.g SR1Mjj_0) and observable (Mjj) in the script `submit_systematics.sh`
+
 Step 3: Run `./submit_jobs_exp_sys.sh`
+
 Step 4: Modify accordingly the hadd_sys_files.sh file and run `./hadd_sys_files.sh`. Rename (i.e name format: observable_region_ExpSys.root) and move the produced file under exp_systematics folder where a new folder with the name of the region already specified need to be created.
+
 Once the experimental systematic band file is present the next step is to produce the pads to be combined, independently:
+
 Step 1: Modify accordingly the `./submission_files/plot_production/submit_plots_prefit_BDT.sub` 
+
 Step 2: Make sure that the correct configuration file is linked in submit_jobs_plots.sh and run `./submit_jobs_plots.sh`. The outputs are saved in prefit_bdt_inputs folder
-Step 3: `cd src/plot_tools`. Open a root session 
+
+Step 3: `cd src/plot_tools` and open a root session 
 ```
 root -l
 .L pre_fit_bdt.cpp
-make_pre_fit_plot(int binSR1, std::string observable, bool setRatioLimits=false)
+make_pre_fit_plot(binSR1,observable,setRatioLimits)
 ```
 Arguments:
 * binSR1 (int): total number of observable's bins in SR1 (and SR2)
 * observable (string): the observable name
-* setRatioLimits (bool): if set to True the ratio limits can be monitored on real time by the user.
+* setRatioLimits (bool): default is False. If set to True the ratio limits can be monitored on real time by the user. 
