@@ -13,7 +13,7 @@ ymax=$3
 y_ratio_min=$4
 ratio_ymax=$5
 merged=$6
-dir=/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/src
+dir=/usatlas/u/ckitsaki/usatlasdata/supNote/vbf_differential_plotting/src/plot_tools
 cd $dir
 echo '==== plot production ===='
-root -b -q -l "diff_xsec2.C(\"$observable\", $merged, \"$datatype\", \"$y_min\", $ymax, \"$y_ratio_min\", $ratio_ymax)"
+root -b -q -l "diff_xsec.C(\"$observable\", $merged, \"$datatype\", \"$y_min\", $ymax, \"$y_ratio_min\", $ratio_ymax)"
