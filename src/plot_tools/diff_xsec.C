@@ -1,4 +1,4 @@
-#include "Style/AtlasStyle.C"
+#include "../Style/AtlasStyle.C"
 #include <fstream>
 #include <stdio.h>
 #include <string.h>
@@ -919,7 +919,7 @@ void diff_xsec(std::string observable="Mjj", bool merged=false, std::string data
     line3->Draw("same");
   }
 
-  std::string savefile = "../../plots/paper/diffXS/" + observable + "diffXS_" + datatype +".pdf";
+  std::string savefile = "./" + observable + "diffXS_" + datatype +".pdf";
   c->SaveAs(savefile.c_str());
 }
   

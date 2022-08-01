@@ -1,4 +1,4 @@
-#include "Style/AtlasStyle.C"
+#include "../Style/AtlasStyle.C"
 
 TCanvas* DumpCanvasFromFile(std::string input, std::string canvasName)
 {

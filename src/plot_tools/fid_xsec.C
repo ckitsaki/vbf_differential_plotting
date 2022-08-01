@@ -1,5 +1,5 @@
 
-#include "Style/AtlasStyle.C"
+#include "../Style/AtlasStyle.C"
 
 void fidxsec(float central_value=1.68, float stat_up=0.33, float stat_down=0.32, float sys_up=0.23, float sys_down=0.21, float lumi=11, float powpy8 = 2.07, float vbfnlopy8=2.01, float vbfnlo = 2.18, float madher7 = 2.16, float powher7=1.93, float vbfnlolo=2.69)
 {
@@ -163,5 +163,5 @@ void fidxsec(float central_value=1.68, float stat_up=0.33, float stat_down=0.32,
   legend->AddEntry(h_tot_unc_band, "#bf{stat. + syst.}","f");
   legend->Draw();
   
-  c->SaveAs("../../plots/paper/fid_xsec.pdf");
+  c->SaveAs("./fid_xsec.pdf");
 }
