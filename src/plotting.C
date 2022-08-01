@@ -696,7 +696,7 @@ if(!unblind){
   h_ratio_unc->GetYaxis()->SetRangeUser(m_y_ratio_min,m_y_ratio_max);
 }
 
-  std::string save_name = "../plots/updates/"+region+"_"+observable+".pdf"; // for submission one dir back
+  std::string save_name = "../plots/"+region+"_"+observable+".pdf"; // for submission one dir back
   c->SaveAs(save_name.c_str());
 
 }
@@ -1131,7 +1131,7 @@ std::vector<float>  total_theo_up, total_theo_down;
   h_ratio->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
   h_ratio->GetYaxis()->SetRangeUser(m_y_ratio_min,m_y_ratio_max);
 
-  std::string save_name = "../plots/paper/"+region+"_"+observable+".pdf"; // for submission one dir back
+  std::string save_name = "../plots/"+region+"_"+observable+".pdf"; // for submission one dir back
   c->SaveAs(save_name.c_str());
 
 }
@@ -1568,7 +1568,7 @@ std::vector<float>  total_theo_up, total_theo_down;
   ratio_pad->SetName(pad_name.c_str());
   ratio_pad->Write();
 
-  std::string save_name = "../plots/paper/"+region+"_"+observable+"_"+binNum+".pdf"; 
+  std::string save_name = "../plots/"+region+"_"+observable+"_"+binNum+".pdf"; 
   c->SaveAs(save_name.c_str());
 
 }
@@ -1714,7 +1714,7 @@ void plotting::Plots(std::string region1, std::string region2, std::string obser
   h_ratio->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
   h_ratio->GetYaxis()->SetRangeUser(m_y_ratio_min,m_y_ratio_max);
 
-  std::string save_name = "../plots/submission/"+region1+"_"+region2+"_"+observable+".pdf"; // for submission one dir back
+  std::string save_name = "../plots/"+region1+"_"+region2+"_"+observable+".pdf"; // for submission one dir back
   c->SaveAs(save_name.c_str());
 
 }
