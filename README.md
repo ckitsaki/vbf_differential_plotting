@@ -42,10 +42,10 @@ The experimental and theory systematics need to be available as histograms store
 Usage:
 1. `mkdir plots`. The requested plot will be saved under `plots` directory.
 Run locally: 
-2. Open root session in order to use the plotting tool.
+2. `cd ./src`. Start a root session in order to use the plotting tool.
 ```
 root -l 
-.L src/plotting.C
+.L plotting.C
 plotting("region","observable",unblind,forPaper,setAxesLimits,addTheo,lxplus)
 OR
 plotting("region", "observable",unblind,forPaper,addTheo,lxplus,y_min,y_max,"x_min",x_max,"y_ratio_min",y_ratio_max)
