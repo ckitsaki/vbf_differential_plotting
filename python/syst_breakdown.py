@@ -290,6 +290,7 @@ def main(args):
 		for i in range(len(bins_c)-1):
 			character = "#scale[.7]{" + char(bins_c[i]) + "}"
 			latex.DrawLatex(bins_c[i]-0.01,6.5e-01,character)
+		latex.DrawLatex(bins_c[len(bins_c)-1]-0.01,6.5e-01,"#infty")
 	legend = TLegend(0.2,0.6,.92,0.85);
 	legend.SetBorderSize(0)
 	legend.SetFillStyle(0)
@@ -369,4 +370,4 @@ if __name__ == "__main__":
 	bins = args.bins
 	ymax = args.ymax
 	logY = args.logY
-	main(args);
+	main(args)
