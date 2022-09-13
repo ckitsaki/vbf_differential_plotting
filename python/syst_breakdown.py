@@ -13,7 +13,6 @@ import numpy as np
 # $ setupATLAS
 # $ lsetup "root 6.26.04-x86_64-centos7-gcc11-opt"
 
-
 def setXaxisTitle(observable):
 	xaxistitle = ''
 	if(observable=='Mjj'):
@@ -39,7 +38,7 @@ def setXaxisTitle(observable):
 	if(observable=='Ptll'):
 		xaxistitle = '#it{p}_{T}^{ll} [GeV]'
 	if(observable=='costhetastar'):
-		xaxistitle = '#it{cos}#theta_{#eta}*'
+		xaxistitle = '#it{cos#theta}_{#eta}*'
 	if(observable=='SignedDPhijj'):
 		xaxistitle = '#it{#Delta#phi}_{jj} [rad]'
 	return xaxistitle
@@ -197,116 +196,100 @@ def main(args):
 	h_lumi.GetXaxis().SetLabelSize(.035)
 	h_lumi.GetXaxis().SetTitleSize(.035)
 	h_lumi.GetYaxis().SetTitleSize(.035)
-	h_lumi.GetXaxis().SetLabelOffset(.01)
+	h_lumi.GetXaxis().SetLabelOffset(10)
 	h_lumi.GetYaxis().SetLabelOffset(.01)
 	h_lumi.GetYaxis().SetTitleOffset(1.5)
 
+	h_lumi.GetXaxis().SetTickLength(0)
 	h_lumi.SetLineColor(peelOrange)
 	h_fakes.SetLineColor(kCyan)
-	h_signal_model.SetLineColor(kRed+2)
-	h_signal_pshower.SetLineColor(kRed-7)
-	h_lepton_model.SetLineColor(robinBlue)
+	h_signal_model.SetLineColor(kRed+1)
+	h_signal_pshower.SetLineColor(kRed+1)
+	h_signal_pshower.SetLineStyle(kDotted)
+	h_lepton_model.SetLineColor(kAzure+2)
 	h_jetmet.SetLineColor(darkGreen)
-	h_bkg_model.SetLineColor(kMagenta-5)#(kTeal-8)
-	h_btag.SetLineColor(lightAtlasBlue)
-	#h_MCstat.SetLineColor(kGray+2)
-	h_statUnc.SetLineColor(kGray+2)
+	h_bkg_model.SetLineColor(kOrange-8)
+	h_bkg_model.SetLineStyle(kDashed)
+	h_btag.SetLineColor(kPink+1)
+	h_statUnc.SetLineColor(kGray+1)
 	h_totUnc.SetLineColor(kBlack)
-	h_totUnc.SetLineStyle(kDashed)
+	h_fakes.SetLineStyle(kDashed)
 
 	if(logY==True):
 		gPad.SetLogy()
 	h_lumi.Draw()
-	h_fakes.Draw("same")
 	h_signal_model.Draw("same")
-	h_signal_pshower.Draw("same")
 	h_lepton_model.Draw("same")
 	h_jetmet.Draw("same")
-	h_bkg_model.Draw("same")
 	h_btag.Draw("same")
-	#h_MCstat.Draw("same")
+	h_fakes.Draw("same")
 	h_statUnc.Draw("same")
 	h_totUnc.Draw("same")
+	h_bkg_model.Draw("same")
+	h_signal_pshower.Draw("same")
 
 	latex = TLatex()
 	if(observable=="Mjj"):
-		h_lumi.GetXaxis().ChangeLabel(6,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(5,-1,0,-1,-1,-1,"")
-		if(logY==True):
-			latex.DrawLatex(3050,5.5e-01,"#scale[.7]{6000}")
-		else: 
-			latex.DrawLatex(3050,-20.5,"#scale[.7]{6000}")
+		for i in range(len(bins_c)-1):
+			character = "#scale[.7]{" + char(int(bins_c[i])) + "}"
+			latex.DrawLatex(bins_c[i]-50,5.5e-01,character)
+		latex.DrawLatex(3100,5.5e-01,"#scale[.7]{6000}")
 	if(observable=="Mll"):
-		h_lumi.GetXaxis().ChangeLabel(10,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(9,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(8,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(7,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(6,-1,0,-1,-1,-1,"")
-		if(logY==True):
-			latex.DrawLatex(98,5.5e-01,"#scale[.9]{#infty}")
-		else: 
-			latex.DrawLatex(98,-20.5,"#scale[.9]{#infty}")
+		for i in range(len(bins_c)-1):
+			character = "#scale[.7]{" + char(int(bins_c[i])) + "}"
+			latex.DrawLatex(bins_c[i]-1,5.5e-01,character)
+		latex.DrawLatex(98,5.5e-01,"#infty")
 	if(observable=="Ptll"):
-		h_lumi.GetXaxis().ChangeLabel(12,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(11,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(10,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(9,-1,0,-1,-1,-1,"")
-		if(logY==True):
-			latex.DrawLatex(220,6.5e-01,"#scale[.7]{1000}")
-		else: 
-			latex.DrawLatex(220,-20.5,"#scale[.7]{1000}")
+		for i in range(len(bins_c)-1):
+			character = "#scale[.7]{" + char(int(bins_c[i])) + "}"
+			latex.DrawLatex(bins_c[i]-3,6.5e-01,character)
+		latex.DrawLatex(220,6.5e-01,"#scale[.7]{1000}")
 	if(observable=="jet0_pt"):
-		h_lumi.GetXaxis().ChangeLabel(8,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(7,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(6,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(5,-1,0,-1,-1,-1,"")
-		if(logY==True):
-			latex.DrawLatex(410,6.5e-01,"#scale[.7]{700}")
-		else: 
-			latex.DrawLatex(410,-20.5,"#scale[.7]{700}")
+		for i in range(len(bins_c)-1):
+			character = "#scale[.7]{" + char(int(bins_c[i])) + "}"
+			latex.DrawLatex(bins_c[i]-5,6.5e-01,character)
+		latex.DrawLatex(410,6.5e-01,"#scale[.7]{700}")
 	if(observable=="jet1_pt"):
-		h_lumi.GetXaxis().ChangeLabel(8,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(7,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(6,-1,0,-1,-1,-1,"")
-		if(logY==True):
-			latex.DrawLatex(175,6.e-01,"#scale[.7]{350}")
-		else: 
-			latex.DrawLatex(175,-20.5,"#scale[.7]{350}")
+		for i in range(len(bins_c)-1):
+			character = "#scale[.7]{" + char(int(bins_c[i])) + "}"
+			latex.DrawLatex(bins_c[i]-2,6.5e-01,character)
+		latex.DrawLatex(175,6.5e-01,"#scale[.7]{350}")		
 	if(observable=="lep0_pt"):
-		h_lumi.GetXaxis().ChangeLabel(8,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(7,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(6,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(5,-1,0,-1,-1,-1,"")
-		if(logY==True):
-			latex.DrawLatex(185,6.e-01,"#scale[.7]{350}")
-		else: 
-			latex.DrawLatex(185,-20.5,"#scale[.7]{350}")
+		for i in range(len(bins_c)-1):
+			character = "#scale[.7]{" + char(int(bins_c[i])) + "}"
+			latex.DrawLatex(bins_c[i]-1,6.e-01,character)
+		latex.DrawLatex(185,6.e-01,"#scale[.7]{350}")
 	if(observable=="lep1_pt"):
-		h_lumi.GetXaxis().ChangeLabel(9,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(8,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(7,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(6,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(5,-1,0,-1,-1,-1,"")
-		if(logY==True):
-			latex.DrawLatex(97,6.e-01,"#scale[.7]{200}")
-		else: 
-			latex.DrawLatex(97,-20.5,"#scale[.7]{200}")
+		for i in range(len(bins_c)-1):
+			character = "#scale[.7]{" + char(int(bins_c[i])) + "}"
+			latex.DrawLatex(bins_c[i]-1,6.5e-01,character)
+		latex.DrawLatex(97,6.5e-01,"#scale[.7]{200}")
 	if(observable=="pt_H"):
-		h_lumi.GetXaxis().ChangeLabel(9,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(8,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(7,-1,0,-1,-1,-1,"")
-		if(logY==True):
-			latex.DrawLatex(380,6.e-01,"#scale[.7]{850}")
-		else: 
-			latex.DrawLatex(380,-20.5,"#scale[.7]{850}")
+		for i in range(len(bins_c)-1):
+			character = "#scale[.7]{" + char(int(bins_c[i])) + "}"
+			latex.DrawLatex(bins_c[i]-5,6.5e-01,character)
+		latex.DrawLatex(380,6.e-01,"#scale[.7]{850}")
+	if(observable=="DYjj"):
+		for i in range(len(bins_c)):
+			character = "#scale[.7]{" + char(bins_c[i]) + "}"
+			latex.DrawLatex(bins_c[i]-0.1,6.5e-01,character)
 	if(observable=="costhetastar"):
-		h_lumi.GetXaxis().ChangeLabel(7,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(6,-1,0,-1,-1,-1,"")
-		h_lumi.GetXaxis().ChangeLabel(5,-1,0,-1,-1,-1,"")
-		if(logY==True):
-			latex.DrawLatex(0.595,6.5e-01,"#scale[.7]{1}")
-		else: 
-			latex.DrawLatex(0.6,-20.5,"#scale[.7]{1}")
+		for i in range(len(bins_c)-1):
+			character = "#scale[.7]{" + char(round(bins_c[i],2)) + "}"
+			latex.DrawLatex(bins_c[i]-0.01,6.5e-01,character)
+		latex.DrawLatex(0.58,6.5e-01,"#scale[.7]{1.0}")
+	if(observable=="SignedDPhijj"):
+		for i in range(len(bins_c)):
+			character = "#scale[.7]{" + char(round(bins_c[i],2)) + "}"
+			latex.DrawLatex(bins_c[i]-0.2,6.5e-01,character)
+	if(observable=="DPhill"):
+		for i in range(len(bins_c)):
+			character = "#scale[.7]{" + char(bins_c[i]) + "}"
+			latex.DrawLatex(bins_c[i]-0.05,6.5e-01,character)
+	if(observable=="DYll"):
+		for i in range(len(bins_c)-1):
+			character = "#scale[.7]{" + char(bins_c[i]) + "}"
+			latex.DrawLatex(bins_c[i]-0.01,6.5e-01,character)
 	legend = TLegend(0.2,0.6,.92,0.85);
 	legend.SetBorderSize(0)
 	legend.SetFillStyle(0)
@@ -326,18 +309,52 @@ def main(args):
 
 	atlastex = TLatex()
 	atlastex.SetTextSize(.04)
-	#print(bins_c[0])
+
 	if(logY==True):
-	#	atlastex.DrawLatex( bins_c[0] + 0.7*bins_c[0], 0.3*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
-	#	atlastex.DrawLatex(bins_c[bins] - .7*bins_c[bins-1], 0.3*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
-		atlastex.DrawLatex( 2.5, 0.4*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
-		atlastex.DrawLatex(6.2, 0.4*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="Mll"):
+			atlastex.DrawLatex( 15, 0.35*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( 60, 0.35*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="Mjj"):
+			atlastex.DrawLatex( 600, 0.35*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex(2100, 0.35*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="Ptll"):
+			atlastex.DrawLatex( 15, 0.5*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( 140, 0.5*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="lep0_pt"):
+			atlastex.DrawLatex( 30, 0.4*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( 120, 0.4*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="lep1_pt"):
+			atlastex.DrawLatex( 20, 0.5*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( 60, 0.5*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="pt_H"):
+			atlastex.DrawLatex( 20, 0.4*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( 220, 0.4*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="jet0_pt"):
+			atlastex.DrawLatex( 60, 0.4*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( 260, 0.4*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="jet1_pt"):
+			atlastex.DrawLatex( 40, 0.4*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( 120, 0.4*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="DYjj"):
+			atlastex.DrawLatex( 2.5, 0.4*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( 6.15, 0.4*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="costhetastar"):
+			atlastex.DrawLatex( 0.05, 0.4*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( .34, 0.4*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="SignedDPhijj"):
+			atlastex.DrawLatex( -2.7, 0.4*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( 0.6, 0.4*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="DPhill"):
+			atlastex.DrawLatex( 0.1, 0.4*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( 0.85, 0.4*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+		if(observable=="DYll"):
+			atlastex.DrawLatex( 0.05, 0.5*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
+			atlastex.DrawLatex( 0.45, 0.5*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
+
 	else :
 		atlastex.DrawLatex( bins_c[0] + 0.3*bins_c[0], 0.9*ymax, "#it{#bf{#scale[1.2]{ATLAS}}}  Internal")
 		atlastex.DrawLatex(bins_c[bins-1] - 0.1*bins_c[bins-1], 0.9*ymax, "#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV,} #scale[.8]{139 fb^{-1}}")
 
-	print(lumi)
-	print(ggf_model)
 	canvas.SaveAs(str(observable)+"_sys_breakdown.pdf")
 
 if __name__ == "__main__":
