@@ -3,7 +3,7 @@
 This repository can be used to produce the kinematic distributions at reconstruction level including the theory and experimental uncertainties as error bands for the needs of the VBF HWW analysis. 
 The inputs are the ntuples produced by the [HWWAnalysisCode](https://gitlab.cern.ch/atlas-physics/higgs/hww/HWWAnalysisCode). 
 
-Scripts for the pre and post-fit discriminants, correlation matrices, normalisation parameters and differential XS results are also provided.
+Scripts for the pre and post-fit discriminants, correlation matrices, normalisation parameters, breakdown of relative experimental uncertainties and differential XS results are also provided.
 
 This repo is still under development.
 
