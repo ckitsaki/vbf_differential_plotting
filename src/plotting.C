@@ -1112,7 +1112,7 @@ std::vector<float>  total_theo_up, total_theo_down;
   h_ratio->Draw("pe");
 
   TLine *l=new TLine(m_xminimum,1.0,m_xmaximum,1.0);
-  l->SetLineColor(kRed);
+  l->SetLineColor(kBlack);
   l->Draw("same");
   h_ratio_unc->Draw("e2 same");
   h_ratio->Draw("pe same");
