@@ -58,17 +58,16 @@ public:
 
   TH1F* getNominalHisto(std::string sample);
   TH1F* getNominalHisto(std::string sample, std::vector<float> mcChannelNumber);
-  void getTheoryVariations(std::string sample, std::string theo_sys, int ibin, float &nom_content, float &var_up, float &var_down);
-  void getTheoryVariations(std::string sample, std::string theo_sys, TFile* f);
+  void getTheoryVariations(std::string sample, std::string theo_sys, int ibin, float &nom_content, float &var_up, float &var_down, bool binwidth);
   void getTheoForBDTs(std::string sample, std::string binNum, std::string theo_sys, int ibin, float &nom_content, float &var_up, float &var_down);
 
   inline void setBins(bool forPaper);
   void Plots(std::string region1, std::string region2, std::string observable);
   void PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo);
-  void PlotsforPaper(std::string region, std::string observable, bool addTheo);
+  void PlotsforPaper(std::string region, std::string observable, bool addTheo, bool binwidth);
   void prefit_bdts(std::string region, std::string observable, std::string binNum, TPad* &main_pad, TPad* &ratio_pad, TFile* outputfile, float mult_factor);
-  plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo, bool lxplus); 
-  plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool addTheo, bool lxplus, float y_min, float y_max, std::string x_min, float x_max, std::string y_ratio_min, float y_ratio_max);
+  plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool setAxesLimits, bool addTheo, bool lxplus, bool binwidth); 
+  plotting(std::string region, std::string observable, bool unblind, bool forPaper, bool addTheo, bool lxplus, float y_min, float y_max, std::string x_min, float x_max, std::string y_ratio_min, float y_ratio_max, bool binwidth);
   plotting(std::string region1, std::string region2, std::string observable, bool lxplus, float y_min, float y_max, std::string x_min, float x_max, std::string y_ratio_min, float y_ratio_max);
   plotting(std::string sample, std::string observable, std::string region, bool checkTheory);
   plotting(std::string region, std::string observable, int obsBins, bool binPaper, float y_min, float y_max, std::string x_min, float x_max, std::string y_ratio_min, float y_ratio_max, float pad_xmin, float pad_xmax, float pad_ymin, float pad_ymax, float ratiopad_ymin, float ratiopad_ymax,  std::string mult_factor);
