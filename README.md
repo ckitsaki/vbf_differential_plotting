@@ -46,9 +46,9 @@ Run locally:
 ```
 root -l 
 .L plotting.C
-plotting("region","observable",unblind,forPaper,setAxesLimits,addTheo,lxplus)
+plotting("region","observable",unblind,forPaper,setAxesLimits,addTheo,lxplus,binwidth)
 OR
-plotting("region", "observable",unblind,forPaper,addTheo,lxplus,y_min,y_max,"x_min",x_max,"y_ratio_min",y_ratio_max)
+plotting("region", "observable",unblind,forPaper,addTheo,lxplus,y_min,y_max,"x_min",x_max,"y_ratio_min",y_ratio_max,binwidth)
 ```
 Arguments:
 * region (string): choose among SR, TopCR, DYCR, WWCR, ggFCR1, ggFCR2, ggFCR3
@@ -61,6 +61,7 @@ Arguments:
 * y_min and y_max (float): main pad y-axis limits
 * x_min (string) and x_max (float): main and ratio pads x-axis limits
 * y_ratio_min (string) and y_ratio (float): ratio pad y_axis limits
+* binwidth (bool): divide the bin content with the bin width
 
 Job submission:
 2. Modify the `submit_plots.sh`, `submit_jobs_plots.sh` and the corresponding configuration file under the path `./submission_files/plot_production/`and then run `./submit_jobs_plots.sh`. 
