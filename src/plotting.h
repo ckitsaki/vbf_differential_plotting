@@ -172,12 +172,12 @@ inline void plotting::setBins(bool forPaper)
     }
     if(m_obsName=="MT")
     {
-      m_nbins = 5;
-      m_xmin = 40; 
-      m_xmax = 150;
-    //  m_nbins = 10;
-    //  m_xmin = 0;
-    //  m_xmax = 250;
+     // m_nbins = 5;
+     // m_xmin = 40; 
+     // m_xmax = 150;
+      m_nbins = 10;
+      m_xmin = 0;
+      m_xmax = 250;
     }
     if(m_obsName=="sumOfCentralitiesL")
     {

@@ -93,8 +93,8 @@ TH1F* plotting::getNominalHisto(std::string sample, std::vector<float> mcChannel
 
 void plotting::getTheoryVariations(std::string sample, std::string theo_sys, int ibin, float &nom_content, float &var_up, float &var_down, bool binwidth)
 { 
-  std::string theo_filename =  "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/"+ sample + "_histos_SR.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/"+sample+"_histos_SR.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+sample+"_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_2jets.root";//"../theo_systematics/" + sample + "_theory_2jets.root"; //for submission one dir back
-  if(sample=="diboson-ewk"){theo_filename = "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/diboson-ewk_histos_SR.root";}//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/diboson-ewk_histos_2jets.root";}//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/diboson-ewk_histos_SR.root";}//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/MiscStackPlots/diboson_histos_paper.root"; }
+  std::string theo_filename =  "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/"+sample+"_histos_SR.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_UnfBin_FullSR_11Mar2022/" + sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+ sample + "_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_SR12/"+sample+"_histos_SR12.root";//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_2jets.root";//"../theo_systematics/" + sample + "_theory_2jets.root"; //for submission one dir back
+  if(sample=="diboson-ewk"){theo_filename = "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/diboson-ewk_histos_2jets.root";}//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/diboson-ewk_histos_SR12.root";}//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/diboson-ewk_histos_2jets.root";}//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/diboson-ewk_histos_SR.root";}//"/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/MiscStackPlots/diboson_histos_paper.root"; }
   if(m_regionName=="ggFCR3") theo_filename = "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_1Feb2022/"+ sample + "_histos_1jets.root";//"../theo_systematics/" + sample + "_theory_1jets.root";
   TFile* f_theo_file = new TFile(theo_filename.c_str(), "READ");
   std::string name;
@@ -739,16 +739,13 @@ void plotting::PlotsforPaper(std::string region, std::string observable, bool ad
   h_ggf->Add(h_htt);
 
 if(binwidth) {
-  for(int ibin=0; ibin<h_Fakes->GetNbinsX(); ibin++)
-  {
-    h_Fakes->SetBinContent(ibin+1, h_Fakes->GetBinContent(ibin+1)/h_Fakes->GetBinWidth(ibin+1));
-    h_WW->SetBinContent(ibin+1, h_WW->GetBinContent(ibin+1)/h_WW->GetBinWidth(ibin+1));
-    h_Zjets->SetBinContent(ibin+1, h_Zjets->GetBinContent(ibin+1)/h_Zjets->GetBinWidth(ibin+1));
-    h_top1->SetBinContent(ibin+1, h_top1->GetBinContent(ibin+1)/h_top1->GetBinWidth(ibin+1));
-    h_vbf->SetBinContent(ibin+1, h_vbf->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1));
-    h_ggf->SetBinContent(ibin+1, h_ggf->GetBinContent(ibin+1)/h_ggf->GetBinWidth(ibin+1));
-    h_data->SetBinContent(ibin+1, h_data->GetBinContent(ibin+1)/h_data->GetBinWidth(ibin+1));
-  }
+    h_Fakes->Scale(1,"width");
+    h_WW->Scale(1,"width");
+    h_Zjets->Scale(1,"width");
+    h_top1->Scale(1,"width");
+    h_vbf->Scale(1,"width");
+    h_ggf->Scale(1,"width");
+    h_data->Scale(1,"width");
 }
 
   h_Fakes->SetFillColor(kCyan-7); //Mis-Id
@@ -1034,7 +1031,8 @@ std::vector<float>  total_theo_up, total_theo_down;
   pad1 = new TPad("pad1","pad1", 0, 0.35, 1., 1.);
   pad1->SetBottomMargin(0.02);
 
-  //pad1->SetLogy();
+// comment out to show the y-axis in log scale
+//  pad1->SetLogy();
   pad1->Draw();
   pad1->cd();
 
@@ -1081,7 +1079,7 @@ std::vector<float>  total_theo_up, total_theo_down;
   legend->SetTextSize(0.);
   legend->SetNColumns(2);
  
-  legend->AddEntry(h_data, "#bf{#scale[.8]{Data}}", "p");
+  legend->AddEntry(h_data, "#bf{#scale[.8]{Data}}", "pe");
   legend->AddEntry(h_exp_sys_errors, "#bf{#scale[.8]{Uncertainty}}", "f");
   legend->AddEntry(h_vbf,"#bf{#scale[.8]{H_{VBF}}}", "f");
   legend->AddEntry(h_ggf, "#bf{#scale[.8]{H_{other}}}", "f");
