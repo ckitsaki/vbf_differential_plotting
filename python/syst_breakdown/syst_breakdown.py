@@ -119,7 +119,7 @@ def main(args):
 	tab = Table.read(table_file)
 	rows = tab.pformat_all()
 
-	tab.pprint()
+	#tab.pprint()
 	
 	columns_to_read = []
 	for ibin in range(bins):
