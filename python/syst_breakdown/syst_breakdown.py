@@ -13,7 +13,7 @@ import numpy as np
 # $ setupATLAS
 # $ lsetup "root 6.26.04-x86_64-centos7-gcc11-opt"
 # $ python3 sys_breakdown.py --observable SignedDPhijj --ymax 4e+03 --logY True --bins 4
-# $ python3 sys_breakdown.py --observable DPhijj --ymax 4e+03 --logY True --bins 4
+# $ python3 sys_breakdown.py --observable pt_H --ymax 2e+04 --logY True --bins 4
 # $ python3 sys_breakdown.py --observable DYjj --ymax 4e+03 --logY True --bins 5
 # $ python3 sys_breakdown.py --observable Mjj --ymax 1e+05 --logY True --bins 5
 # $ python3 sys_breakdown.py --observable jet1_pt --ymax 2e+04 --logY True --bins 4
@@ -229,16 +229,23 @@ def main(args):
 	h_fakes.SetLineColor(kCyan)
 	h_signal_model.SetLineColor(kRed+1)
 	h_signal_pshower.SetLineColor(kRed+1)
-	h_signal_pshower.SetLineStyle(kDotted)
 	h_lepton_model.SetLineColor(kAzure+2)
 	h_jetmet.SetLineColor(darkGreen)
 	h_bkg_model.SetLineColor(kOrange-8)
-	h_bkg_model.SetLineStyle(kDashed)
 	h_btag.SetLineColor(kPink+1)
-	h_MCstat.SetLineColor(lavender)
-	h_statUnc.SetLineColor(kGray+1)
+	h_MCstat.SetLineColor(15)
+	h_statUnc.SetLineColor(15)
 	h_totUnc.SetLineColor(kBlack)
-	h_fakes.SetLineStyle(kDashed)
+
+	h_signal_model.SetLineStyle(2)
+	h_signal_pshower.SetLineStyle(3)
+	h_bkg_model.SetLineStyle(4)
+	h_fakes.SetLineStyle(5)
+	h_jetmet.SetLineStyle(6)
+	h_btag.SetLineStyle(7)
+	h_lepton_model.SetLineStyle(8)
+	h_lumi.SetLineStyle(9)
+	h_MCstat.SetLineStyle(kDashed)
 
 	if(logY==True):
 		gPad.SetLogy()
