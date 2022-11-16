@@ -78,13 +78,13 @@ def changeName(poi):
     if poi=="mu_wwTop_CRGGF":
     	name="N^{Data} / N^{MC} VV+Top ggF"
     if poi=="mu_wwTop_SR":
-		name="N^{Data} / N^{MC} VV+Top"
+    	name="N^{Data} / N^{MC} VV+Top"
     if poi=="mu_ggf":
-		name="N^{Data} / N^{MC} ggF"
+    	name="N^{Data} / N^{MC} ggF"
     if poi=="mu_Zjets_CRGGF1":
-		name="N^{Data} / N^{MC} Z+jets ggF"
+    	name="N^{Data} / N^{MC} Z+jets ggF"
     if poi=="mu_wwTop_CRGGF":
-		name="N^{Data} / N^{MC} VV+Top ggF"
+    	name="N^{Data} / N^{MC} VV+Top ggF"
 
     return name
 ##################################################
@@ -96,6 +96,9 @@ def main(args):
 		output="../plots/corMatrix_triang_" + observable + ".pdf"
 	else:
 		output="../plots/corMatrix.pdf"
+
+	filename = 'corMatrix_' + observable + '.root'
+	rootfile = TFile(filename,'RECREATE')
 
 
 	##################
@@ -126,7 +129,8 @@ def main(args):
 	wb = xlrd.open_workbook(inputs)
 	sheet = wb.sheet_by_index(0)
 
-	corrMatrix = TH2D("correlationMatrix", "correlationMatrix", sheet.nrows-1, 0, sheet.nrows-1, sheet.ncols-1, 0, sheet.ncols-1)
+	histoname = 'corMatrix_' + observable
+	corrMatrix = TH2D(histoname, observable, sheet.nrows-1, 0, sheet.nrows-1, sheet.ncols-1, 0, sheet.ncols-1)
 	labels = []
 	for ilabel in range(sheet.ncols):
 		if not ilabel==0:
@@ -144,7 +148,7 @@ def main(args):
 			if icol!=0 and irow!=0:
 				if triangular:
 					if irow <= icol:
-						print(irow,icol)
+						#print(irow,icol)
 						corrMatrix.SetBinContent(irow,sheet.ncols-icol,sheet.cell_value(irow,icol))
 				else:
 					corrMatrix.SetBinContent(irow,sheet.ncols-icol,sheet.cell_value(irow,icol))
@@ -198,6 +202,8 @@ def main(args):
 		myText(0.738,0.955,1,"#it{H} #rightarrow #it{WW}* #rightarrow #it{e#nu#mu#nu}",0.018)
 
 	canvas.Print(output)
+	rootfile.cd()
+	corrMatrix.Write()
 
 
 if __name__ == "__main__":
@@ -209,5 +215,5 @@ if __name__ == "__main__":
 	triangular = args.triangular
 	observable = args.observable
 	if triangular==True:
-		print "Creating a triangular matrix...\n"
+		print("Creating a triangular matrix...\n")
 	main(args);
