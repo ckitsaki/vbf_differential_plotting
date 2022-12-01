@@ -31,10 +31,10 @@ std::string getAxisTitle(std::string observable="Mjj")
   if(observable=="SignedDPhijj") title_obs = "#it{#Delta#phi}_{jj}";
   if(observable=="pt_H") title_obs = "#it{p}_{T}^{H}";
   if(observable=="Ptll") title_obs = "#it{p}_{T}^{ll}";
-  if(observable=="lep0_pt") title_obs = "#it{p}_{T}^{lep_{0}}";
-  if(observable=="lep1_pt") title_obs = "#it{p}_{T}^{lep_{1}}";
-  if(observable=="jet0_pt") title_obs = "#it{p}_{T}^{jet_{0}}";
-  if(observable=="jet1_pt") title_obs = "#it{p}_{T}^{jet_{1}}";
+  if(observable=="lep0_pt") title_obs = "#it{p}_{T}^{l1}";
+  if(observable=="lep1_pt") title_obs = "#it{p}_{T}^{l2}";
+  if(observable=="jet0_pt") title_obs = "#it{p}_{T}^{j1}";
+  if(observable=="jet1_pt") title_obs = "#it{p}_{T}^{j2}";
 
   return title_obs;
 }
