@@ -98,7 +98,7 @@ y_min = )-1.2
 ymax = 5.
 y_ratio_min = 0.
 ratio_ymax = 2.
-merged = true
+merged = false 
 
 arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
 +JobFlavour = "microcentury"
