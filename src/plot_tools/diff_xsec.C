@@ -919,7 +919,14 @@ void diff_xsec(std::string observable="Mjj", bool merged=false, std::string data
     line3->Draw("same");
   }
 
-  std::string savefile = "./" + observable + "diffXS_" + datatype +".pdf";
+  std::string savefile =  observable + "diffXS_" + datatype +".pdf";
   c->SaveAs(savefile.c_str());
+  std::cout<<"here\n";
+  savefile =  observable + "diffXS_" + datatype +".eps";  
+  c->SaveAs(savefile.c_str());
+  std::cout<<"here\n";
+  savefile =  observable + "diffXS_" + datatype +".png"; 
+  c->SaveAs(savefile.c_str()); 
+  std::cout<<"here\n";
 }
   
