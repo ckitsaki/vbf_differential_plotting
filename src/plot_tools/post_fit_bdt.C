@@ -93,10 +93,10 @@ std::string obs_title(std::string observable)
 	if(observable=="Mll") return "#it{m}_{ll}";
 	if(observable=="DYll") return "#it{#Deltay}_{ll}";
 	if(observable=="DYjj") return "#it{#Deltay}_{jj}";
-	if(observable=="lep0_pt") return "#it{p}_{T}^{lep_{0}}";
-	if(observable=="lep1_pt") return "#it{p}_{T}^{lep_{1}}";
-	if(observable=="jet0_pt") return "#it{p}_{T}^{jet_{0}}";
-	if(observable=="jet1_pt") return "#it{p}_{T}^{jet_{1}}";
+	if(observable=="lep0_pt") return "#it{p}_{T}^{l1}";
+	if(observable=="lep1_pt") return "#it{p}_{T}^{l2}";
+	if(observable=="jet0_pt") return "#it{p}_{T}^{j1}";
+	if(observable=="jet1_pt") return "#it{p}_{T}^{j2}";
 	if(observable=="SignedDPhijj") return "#it{#Delta#phi}_{jj}";
 	if(observable=="DPhill") return "#it{#Delta#phi}_{ll}";
 	if(observable=="costhetastar") return "#it{cos}#theta*";
@@ -1777,6 +1777,9 @@ void post_fit(std::string input="Mjj", int Nbins_SR1=5, int Nbins_SR2=5, bool do
 
   std::string outfilename = "post_fit_bdt_"+input+".pdf";
   chara->SaveAs(outfilename.c_str());
-
+  outfilename = "pos_fit_bdt_"+input+".eps";
+  chara->SaveAs(outfilename.c_str());
+  outfilename = "pos_fit_bdt_"+input+".png";
+  chara->SaveAs(outfilename.c_str());
 
 }
