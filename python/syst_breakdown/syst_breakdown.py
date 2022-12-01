@@ -39,13 +39,13 @@ def setXaxisTitle(observable):
 	if(observable=="Mll"):
 		xaxistitle = '#it{m}_{ll} [GeV]'
 	if(observable=='jet0_pt'):
-		xaxistitle = '#it{p}_{T}^{jet_{0}} [GeV]'
+		xaxistitle = '#it{p}_{T}^{j1} [GeV]'
 	if(observable=='jet1_pt'):
-		xaxistitle = '#it{p}_{T}^{jet_{1}} [GeV]'
+		xaxistitle = '#it{p}_{T}^{j2} [GeV]'
 	if(observable=='lep0_pt'):
-		xaxistitle = '#it{p}_{T}^{lep_{0}} [GeV]'
+		xaxistitle = '#it{p}_{T}^{l1} [GeV]'
 	if(observable=='lep1_pt'):
-		xaxistitle = '#it{p}_{T}^{lep_{1}} [GeV]'
+		xaxistitle = '#it{p}_{T}^{l2} [GeV]'
 	if(observable=='pt_H'):
 		xaxistitle = '#it{p}_{T}^{H} [GeV]'
 	if(observable=='Ptll'):
