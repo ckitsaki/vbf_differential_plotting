@@ -93,13 +93,13 @@ std::string obs_title(std::string observable)
 	if(observable=="Mll") return "#it{m}_{ll}";
 	if(observable=="DYll") return "#it{#Deltay}_{ll}";
 	if(observable=="DYjj") return "#it{#Deltay}_{jj}";
-	if(observable=="lep0_pt") return "#it{p}_{T}^{l1}";
-	if(observable=="lep1_pt") return "#it{p}_{T}^{l2}";
-	if(observable=="jet0_pt") return "#it{p}_{T}^{j1}";
-	if(observable=="jet1_pt") return "#it{p}_{T}^{j2}";
+	if(observable=="lep0_pt") return "#it{p}_{T}^{l_{1}}";
+	if(observable=="lep1_pt") return "#it{p}_{T}^{l_{2}}";
+	if(observable=="jet0_pt") return "#it{p}_{T}^{j_{1}}";
+	if(observable=="jet1_pt") return "#it{p}_{T}^{j_{2}}";
 	if(observable=="SignedDPhijj") return "#it{#Delta#phi}_{jj}";
 	if(observable=="DPhill") return "#it{#Delta#phi}_{ll}";
-	if(observable=="costhetastar") return "#it{cos}#theta*";
+	if(observable=="costhetastar") return "#it{#theta}_{#eta}*";
 	if(observable=="Ptll") return "#it{p}_{T}^{ll}";
 	if(observable=="pt_H") return "#it{p}_{T}^{H}";
 
