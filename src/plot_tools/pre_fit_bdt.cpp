@@ -14,6 +14,7 @@ std::string xAxisTitle(std::string region)
 std::string getObsName(std::string observable)
 {
 	if(observable=="DPhill") return "#it{#Delta#phi}_{ll}";
+	if(observable=="Mjj") return "#it{m}_{jj}";
 	
 	return " ";
 }
@@ -254,7 +255,22 @@ void make_pre_fit_plot(int binSR1, std::string observable, bool setRatioLimits=f
    			labeltext.DrawLatex(.08 + ibin*0.1-0.03, .485, labelname_down.c_str());
 
   	}
+/*
+  	TArrow *ar = new TArrow(.23,.6,.23,.61, .007,">");
+  	ar->SetLineColor(kRed);
+  	ar->SetFillColor(kWhite);
+  	ar->Draw();
 
+  	ar = new TArrow(.27,.51,.27,.52, .007,"<");
+  	ar->SetLineColor(kRed);
+  	ar->SetFillColor(kWhite);
+  	ar->Draw();
+
+  	ar = new TArrow(.525,.6,.525,.61, .007,">");
+  	ar->SetLineColor(kRed);
+  	ar->SetFillColor(kWhite);
+  	ar->Draw();
+*/
 // GGFCR panel
 	region= "ggFCR1";
 	std::string padName = "main_pad_bdt_ggFCR1_ggFCR1";
@@ -375,7 +391,12 @@ void make_pre_fit_plot(int binSR1, std::string observable, bool setRatioLimits=f
    		else
    			labeltext.DrawLatex(.08 + ibin*0.1-0.03, 0.04, labelname_down.c_str());
   	}
-
+/*
+  	ar6 = new TArrow(.36,.15,.36,.16, .007,">");
+  	ar6->SetLineColor(kRed);
+  	ar6->SetFillColor(kWhite);
+  	ar6->Draw();
+*/
 	k->cd();
 	TLatex atlastex;
   	atlastex.SetTextSize(.02);
