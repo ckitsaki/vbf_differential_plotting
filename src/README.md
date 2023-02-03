@@ -1,4 +1,6 @@
-# How to make the detector level plots pre-fit we have in the paper:  
+# How to make the detector level plots pre-fit we have in the paper: 
+
+you should work inside the `src` dir.
 ```
 cd src
 root -l
