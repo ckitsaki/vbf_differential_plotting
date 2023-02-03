@@ -38,12 +38,14 @@ plotting("SR","DPhill",1,1,1,0,0,1500,"0",1.4,"0.6",1.3,true)
 
 plotting("SR","DYjj",1,1,1,0,0,600,"2.1",9,"0.6",1.3,true)
 
-// comment out L-1051 in plotting.C
+- We show Mjj in log scale comment out [this line](https://gitlab.cern.ch/ckitsaki/vbf_differential_plotting/-/blob/master/src/plotting.C#L1063)
+
 plotting("SR","Mjj",1,1,1,0,1e-04,1e+04,"450",6000,"0.6",1.3,true)
 
-======> BDT_VBF
+### BDT_VBF
 theory unc files to be used
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/"+ sample + "_histos_SR12.root";
+
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/diboson-ewk_histos_SR12.root";
 
 plotting("SR1","bdt_vbf",1,1,1,0,0,2500,"0.5",1,"0.7",1.3,true)
@@ -52,6 +54,7 @@ plotting("SR2","bdt_TopWWAll",1,1,1,0,0,800,")-1",1,"0.7",1.3,false)
 
 ### GGFCR
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";
+
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/diboson-ewk_histos_2jets.root";
 
 plotting("ggFCR1","MT",1,0,1,0,0,6000,"0",250,"0.8",1.2,false) // CHECK THE CORRECT BINNING IN plotting.h
@@ -66,6 +69,7 @@ plotting("ggFCR1","jet1_pt",1,0,1,0,0,11000,"0",210,"0.6",1.4,false)
 
 ### Z+JETS CR
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";
+
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/diboson-ewk_histos_2jets.root";
 
 plotting("DYCR","MT",1,0,1,0,0,520,"40",150,"0.",2,false)
