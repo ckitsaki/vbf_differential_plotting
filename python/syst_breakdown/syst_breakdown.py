@@ -31,11 +31,11 @@ def setXaxisTitle(observable):
 	if(observable=='Mjj'):
 		xaxistitle = '#it{m}_{jj} [GeV]'
 	if(observable=='DYll'):
-		xaxistitle = '#it{#Delta y}_{ll}'
+		xaxistitle = '|#it{#Delta y}_{ll}|'
 	if(observable=="DYjj"):
-		xaxistitle = '#it{#Delta y}_{jj}'
+		xaxistitle = '|#it{#Delta y}_{jj}|'
 	if(observable=="DPhill"):
-		xaxistitle = '#it{#Delta#phi}_{ll} [rad]'
+		xaxistitle = '|#it{#Delta#phi}_{ll}| [rad]'
 	if(observable=="Mll"):
 		xaxistitle = '#it{m}_{ll} [GeV]'
 	if(observable=='jet0_pt'):
@@ -51,7 +51,7 @@ def setXaxisTitle(observable):
 	if(observable=='Ptll'):
 		xaxistitle = '#it{p}_{T}^{ll} [GeV]'
 	if(observable=='costhetastar'):
-		xaxistitle = '#it{cos#theta}_{#eta}*'
+		xaxistitle = '#it{cos(#theta}_{#eta}*#it{)}'
 	if(observable=='SignedDPhijj'):
 		xaxistitle = '#it{#Delta#phi}_{jj} [rad]'
 	return xaxistitle
