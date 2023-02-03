@@ -154,9 +154,21 @@ void plotting::getTheoForBDTs(std::string sample, std::string binNum, std::strin
   TH1F* h_theo_nom = (TH1F*)f_theo_file->Get(theo_nom.c_str());
   TH1F* h_theo_var_up = (TH1F*)f_theo_file->Get(theo_var_up.c_str());
   TH1F* h_theo_var_down = (TH1F*)f_theo_file->Get(theo_var_down.c_str());
-  nom_content = h_theo_nom->GetBinContent(ibin+1);
-  var_up = h_theo_var_up->GetBinContent(ibin+1);
-  var_down = h_theo_var_down->GetBinContent(ibin+1);
+
+  if(m_regionName=="SR1DPhill_0" || m_regionName=="SR1DPhill_1" || m_regionName=="SR1DPhill_2" || m_regionName=="SR1DPhill_3" || m_regionName=="SR1DPhill_4" || 
+    m_regionName=="SR1Mjj_0" || m_regionName=="SR1Mjj_1" || m_regionName=="SR1Mjj_2" || m_regionName=="SR1Mjj_3" || m_regionName=="SR1Mjj_4") 
+  {
+    nom_content = h_theo_nom->GetBinContent(ibin+1)/(m_binsEdges[ibin+1]-m_binsEdges[ibin]);
+    var_up = h_theo_var_up->GetBinContent(ibin+1)/(m_binsEdges[ibin+1]-m_binsEdges[ibin]);
+    var_down = h_theo_var_down->GetBinContent(ibin+1)/(m_binsEdges[ibin+1]-m_binsEdges[ibin]);
+  }
+  else
+  {
+    nom_content = h_theo_nom->GetBinContent(ibin+1);
+    var_up = h_theo_var_up->GetBinContent(ibin+1);
+    var_down = h_theo_var_down->GetBinContent(ibin+1);
+  }
+ 
 }
 
 void plotting::PlotsforNote(std::string region, std::string observable, bool unblind, bool addTheo)
@@ -226,7 +238,7 @@ void plotting::PlotsforNote(std::string region, std::string observable, bool unb
   h_Zjets->SetLineColor(kBlack);
   h_vh->SetFillColor(kViolet-8);
   h_vh->SetLineColor(kBlack);
-  h_htt->SetFillColor(kOrange+3);
+  h_htt->SetFillColor(kOrange+1);
   h_htt->SetLineColor(kBlack);
 
   h_vbf->SetLineWidth(1);
@@ -557,7 +569,7 @@ std::vector<float>  total_theo_up, total_theo_down;
   legend->SetTextSize(0.);
   legend->SetNColumns(2);
  
-  if(unblind) legend->AddEntry(h_data, "#bf{Data}", "pe");
+  if(unblind) legend->AddEntry(h_data, "#bf{Data}", "p");
   legend->AddEntry(h_exp_sys_errors, "#bf{Uncertainty}", "f");
   legend->AddEntry(h_vbf,"#bf{H_{VBF}}", "f");
   legend->AddEntry(h_ggf, "#bf{H_{ggF}}", "f");
@@ -738,6 +750,14 @@ void plotting::PlotsforPaper(std::string region, std::string observable, bool ad
   h_ggf->Add(h_vh);
   h_ggf->Add(h_htt);
 
+  std::cout<<h_vbf->Integral()<<" VBF\n";
+  std::cout<<h_WW->Integral()<<" WW\n";
+  std::cout<<h_Zjets->Integral()<<" Zjets\n";
+  std::cout<<h_top1->Integral()<<" Top\n";
+  std::cout<<h_ggf->Integral()<<" ggF\n";
+  std::cout<<h_Fakes->Integral()<<" Fakes\n";
+  std::cout<<h_data->Integral()<<" DATA\n";
+
 if(binwidth) {
     h_Fakes->Scale(1,"width");
     h_WW->Scale(1,"width");
@@ -747,6 +767,14 @@ if(binwidth) {
     h_ggf->Scale(1,"width");
     h_data->Scale(1,"width");
 }
+  std::cout<<"after scaling\n";
+  std::cout<<h_vbf->Integral()<<" VBF\n";
+  std::cout<<h_WW->Integral()<<" WW\n";
+  std::cout<<h_Zjets->Integral()<<" Zjets\n";
+  std::cout<<h_top1->Integral()<<" Top\n";
+  std::cout<<h_ggf->Integral()<<" ggF\n";
+  std::cout<<h_Fakes->Integral()<<" Fakes\n";
+  std::cout<<h_data->Integral()<<" DATA\n";
 
   h_Fakes->SetFillColor(kCyan-7); //Mis-Id
   h_Fakes->SetLineColor(kBlack);
@@ -760,7 +788,7 @@ if(binwidth) {
   h_vbf->SetLineColor(kBlack); //VBF
   h_vbf->SetFillColor(kRed+1);
 
-  h_ggf->SetFillColor(kOrange+3); //Other Higgs
+  h_ggf->SetFillColor(kOrange+1); //Other Higgs
   h_ggf->SetLineColor(kBlack);
   
   h_Zjets->SetFillColor(kGreen+2); //Zgamma*+jets
@@ -1029,7 +1057,7 @@ std::vector<float>  total_theo_up, total_theo_down;
 
   h_data->SetMarkerStyle(8);
   pad1 = new TPad("pad1","pad1", 0, 0.35, 1., 1.);
-  pad1->SetBottomMargin(0.02);
+  pad1->SetBottomMargin(0.03);
 
 // comment out to show the y-axis in log scale
 //  pad1->SetLogy();
@@ -1070,33 +1098,34 @@ std::vector<float>  total_theo_up, total_theo_down;
  // if(m_obsName=="DPhill" || m_obsName=="DYjj" || m_obsName=="Mjj" || m_obsName=="MT") yTitle = "Events";
   if(binwidth) yTitle = "Events / bin width";
   h_stack->GetYaxis()->SetTitle(yTitle.c_str());
-  h_stack->GetYaxis()->SetLabelSize(.045);
+  h_stack->GetYaxis()->SetLabelSize(.06);
   h_stack->GetYaxis()->SetLabelOffset(.004);
+  h_stack->GetYaxis()->SetTitleSize(.06);
 
-  legend = new TLegend(0.58,0.6,0.9,0.9);
+  legend = new TLegend(0.57,0.58,0.91,0.9);
   legend->SetBorderSize(0);
   legend->SetFillStyle(0);
   legend->SetTextSize(0.);
   legend->SetNColumns(2);
  
-  legend->AddEntry(h_data, "#bf{#scale[.8]{Data}}", "pe");
-  legend->AddEntry(h_exp_sys_errors, "#bf{#scale[.8]{Uncertainty}}", "f");
-  legend->AddEntry(h_vbf,"#bf{#scale[.8]{H_{VBF}}}", "f");
-  legend->AddEntry(h_ggf, "#bf{#scale[.8]{H_{other}}}", "f");
-  legend->AddEntry(h_top1, "#bf{#scale[.8]{Top}}","f");
-  legend->AddEntry(h_WW, "#bf{#scale[.8]{VV}}", "f");
-  legend->AddEntry(h_Zjets, "#bf{#scale[.8]{Z/#scale[1.1]{#gamma}*+jets}}", "f");
-  legend->AddEntry(h_Fakes, "#bf{#scale[.8]{Mis-Id}}", "f");
+  legend->AddEntry(h_data, "#bf{#scale[1.]{Data}}", "p");
+  legend->AddEntry(h_exp_sys_errors, "#bf{#scale[1.]{Uncertainty}}", "f");
+  legend->AddEntry(h_vbf,"#bf{#scale[1.]{H_{VBF}}}", "f");
+  legend->AddEntry(h_ggf, "#bf{#scale[1.]{H_{other}}}", "f");
+  legend->AddEntry(h_top1, "#bf{#scale[1.]{Top}}","f");
+  legend->AddEntry(h_WW, "#bf{#scale[1.]{VV}}", "f");
+  legend->AddEntry(h_Zjets, "#bf{#scale[1.]{Z/#scale[1.1]{#gamma}*+jets}}", "f");
+  legend->AddEntry(h_Fakes, "#bf{#scale[1.]{Mis-Id}}", "f");
   
   legend->Draw();
 
-  auto legAtlas = new TLegend(0.15,0.6,0.5,0.9);
+  auto legAtlas = new TLegend(0.11,0.6,0.52,0.9);
   legAtlas->SetBorderSize(0);
   legAtlas->SetFillStyle(0);
   legAtlas->SetTextSize(0.);
-  legAtlas->AddEntry((TObject*)0, "#it{#scale[1.2]{ATLAS}} #bf{Internal}",""); //"#font[42]{#scale[1.2]{Internal}}", "");
+  legAtlas->AddEntry((TObject*)0, "#it{#scale[2.]{ATLAS}} #bf{#scale[1.9]{Internal}}",""); //"#font[42]{#scale[1.2]{Internal}}", "");
   //legAtlas->AddEntry((TObject*)0, "", "");
-  legAtlas->AddEntry((TObject*)0, "#bf{#sqrt{#scale[.8]{s}} #scale[.8]{= 13 TeV, 139 fb^{-1}}}", "");
+  legAtlas->AddEntry((TObject*)0, "#bf{#sqrt{#scale[1.5]{s}} #scale[1.5]{= 13 TeV, 139 fb^{-1}}}", "");
   std::string reg = region;
   if(strstr(m_regionName.c_str(),"SR")) reg = "Signal Region";
   if(strstr(m_regionName.c_str(),"SR1")) reg = "SR1";
@@ -1107,7 +1136,7 @@ std::vector<float>  total_theo_up, total_theo_down;
   if(strstr(m_regionName.c_str(),"DYCR")) reg = "Z+jets CR";
   if(strstr(m_regionName.c_str(),"WWCR")) reg = "WW VR";
   if(strstr(m_regionName.c_str(),"TopCR")) reg = "Top VR";
-  std::string regionLabel = "#bf{#scale[.8]{"+reg+"}}";//"#bf{e#mu + #mue channel}";//"#bf{"+region+"}";
+  std::string regionLabel = "#bf{#scale[1.5]{"+reg+"}}";//"#bf{e#mu + #mue channel}";//"#bf{"+region+"}";
  // legAtlas->AddEntry((TObject*)0, "", "");
   legAtlas->AddEntry((TObject*)0, regionLabel.c_str(),"");
   legAtlas->Draw();
@@ -1115,7 +1144,7 @@ std::vector<float>  total_theo_up, total_theo_down;
   c->cd();
 
   pad2 = new TPad("pad2", "pad2", 0, 0., 1, 0.35);
-  pad2->SetTopMargin(0.03);
+  pad2->SetTopMargin(0.05);
   pad2->SetBottomMargin(.4);
   pad2->Draw();
   pad2->cd();
@@ -1148,16 +1177,22 @@ std::vector<float>  total_theo_up, total_theo_down;
   l->Draw("same");
   h_ratio_unc->Draw("e2 same");
   h_ratio->Draw("pe same");
+/*
+  TArrow *ar6 = new TArrow(4.05,.6,4.05,.7, .007,"<");
 
+  ar6->SetLineColor(kRed);
+  ar6->SetFillColor(kWhite);
+  ar6->Draw();
+*/
   h_ratio->GetXaxis()->SetTitle(xAxisTitle(observable).c_str());
-  h_ratio->GetXaxis()->SetTitleSize(.09);
-  h_ratio->GetXaxis()->SetLabelSize(.08);
+  h_ratio->GetXaxis()->SetTitleSize(.12);
+  h_ratio->GetXaxis()->SetLabelSize(.12);
   h_ratio->GetXaxis()->SetLabelOffset(.04);
   h_ratio->GetYaxis()->SetLabelOffset(.006);
   h_ratio->GetYaxis()->SetNdivisions(508);
-  h_ratio->GetYaxis()->SetLabelSize(.08);
+  h_ratio->GetYaxis()->SetLabelSize(.12);
   h_ratio->GetYaxis()->CenterTitle(true);
-  h_ratio->GetYaxis()->SetTitleSize(.09);
+  h_ratio->GetYaxis()->SetTitleSize(.12);
   h_ratio->GetYaxis()->SetTitleOffset(.7);
   h_ratio->GetYaxis()->SetTitle("Data / Pred.");
   h_ratio->GetXaxis()->SetRangeUser(m_xminimum,m_xmaximum);
@@ -1199,6 +1234,19 @@ void plotting::prefit_bdts(std::string region, std::string observable, std::stri
   h_ggf->Add(h_vh);
   h_ggf->Add(h_htt);
 
+  bool binwidth =false;
+  if(region=="SR1DPhill_0" || region=="SR1DPhill_1" || region=="SR1DPhill_2" || region=="SR1DPhill_3" || region=="SR1DPhill_4" || 
+    region=="SR1Mjj_0" || region=="SR1Mjj_1" || region=="SR1Mjj_2" || region=="SR1Mjj_3" || region=="SR1Mjj_4") {
+    h_Fakes->Scale(1,"width");
+    h_WW->Scale(1,"width");
+    h_Zjets->Scale(1,"width");
+    h_top1->Scale(1,"width");
+    h_vbf->Scale(1,"width");
+    h_ggf->Scale(1,"width");
+    h_data->Scale(1,"width");
+    binwidth=true;
+}
+
   h_Fakes->SetFillColor(kCyan-7); //Mis-Id
   h_Fakes->SetLineColor(kBlack);
  
@@ -1211,7 +1259,7 @@ void plotting::prefit_bdts(std::string region, std::string observable, std::stri
   h_vbf->SetLineColor(kBlack); //VBF
   h_vbf->SetFillColor(kRed+1);
 
-  h_ggf->SetFillColor(kOrange+3); //Other Higgs
+  h_ggf->SetFillColor(kOrange+1); //Other Higgs
   h_ggf->SetLineColor(kBlack);
   
   h_Zjets->SetFillColor(kGreen+2); //Zgamma*+jets
@@ -1362,19 +1410,33 @@ void plotting::prefit_bdts(std::string region, std::string observable, std::stri
 
     for(int i=0; i<name_Zjets.size(); i++){
       float total_sum_nom = h_Zjets->GetBinContent(ibin+1) +  h_top1->GetBinContent(ibin+1) + h_WW->GetBinContent(ibin+1) + h_ggf->GetBinContent(ibin+1) + h_vbf->GetBinContent(ibin+1);
-      float total_sum_up = h_Zjets_up.at(i)->GetBinContent(ibin+1) +  h_top_up.at(i)->GetBinContent(ibin+1) + h_diboson_up.at(i)->GetBinContent(ibin+1) + h_Vgamma_up.at(i)->GetBinContent(ibin+1) + h_ggf_up.at(i)->GetBinContent(ibin+1)  + h_vh_up.at(i)->GetBinContent(ibin+1) + h_htt_up.at(i)->GetBinContent(ibin+1) + h_vbf_up.at(i)->GetBinContent(ibin+1);
-      float total_sum_down = h_Zjets_down.at(i)->GetBinContent(ibin+1) +  h_top_down.at(i)->GetBinContent(ibin+1) + h_diboson_down.at(i)->GetBinContent(ibin+1) + h_Vgamma_down.at(i)->GetBinContent(ibin+1) + h_ggf_down.at(i)->GetBinContent(ibin+1)  + h_vh_down.at(i)->GetBinContent(ibin+1) + h_htt_down.at(i)->GetBinContent(ibin+1) + h_vbf_down.at(i)->GetBinContent(ibin+1);
+      
+      float total_sum_up =0; 
+      float total_sum_down =0; 
+    
+      if(binwidth) {
+        total_sum_up = h_Zjets_up.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) +  h_top_up.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) + h_diboson_up.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) + h_Vgamma_up.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) + h_ggf_up.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1)  + h_vh_up.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) + h_htt_up.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) + h_vbf_up.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1);
+        total_sum_down = h_Zjets_down.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) +  h_top_down.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) + h_diboson_down.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) + h_Vgamma_down.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) + h_ggf_down.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1)  + h_vh_down.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) + h_htt_down.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1) + h_vbf_down.at(i)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1);
+      }
+      else {
+        total_sum_up = h_Zjets_up.at(i)->GetBinContent(ibin+1) +  h_top_up.at(i)->GetBinContent(ibin+1) + h_diboson_up.at(i)->GetBinContent(ibin+1) + h_Vgamma_up.at(i)->GetBinContent(ibin+1) + h_ggf_up.at(i)->GetBinContent(ibin+1)  + h_vh_up.at(i)->GetBinContent(ibin+1) + h_htt_up.at(i)->GetBinContent(ibin+1) + h_vbf_up.at(i)->GetBinContent(ibin+1);
+        total_sum_down = h_Zjets_down.at(i)->GetBinContent(ibin+1) +  h_top_down.at(i)->GetBinContent(ibin+1) + h_diboson_down.at(i)->GetBinContent(ibin+1) + h_Vgamma_down.at(i)->GetBinContent(ibin+1) + h_ggf_down.at(i)->GetBinContent(ibin+1)  + h_vh_down.at(i)->GetBinContent(ibin+1) + h_htt_down.at(i)->GetBinContent(ibin+1) + h_vbf_down.at(i)->GetBinContent(ibin+1);
+      }
+      diff_up += std::pow(total_sum_nom - total_sum_up, 2);
+      diff_down += std::pow(total_sum_nom - total_sum_down,2);
     }
     for(int j=0; j<name_Fakes.size(); j++) {
       float total_sum_nom = h_Fakes->GetBinContent(ibin+1);
       if( h_Fakes_up.at(j)!=nullptr ) 
       {
         float total_sum_up = h_Fakes_up.at(j)->GetBinContent(ibin+1);
+        if(binwidth) total_sum_up = h_Fakes_up.at(j)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1);
         diff_up += std::pow(total_sum_nom - total_sum_up , 2);
       }
       if( h_Fakes_down.at(j)!=nullptr )
       {
         float total_sum_down = h_Fakes_down.at(j)->GetBinContent(ibin+1);
+        if(binwidth) total_sum_down = h_Fakes_down.at(j)->GetBinContent(ibin+1)/h_vbf->GetBinWidth(ibin+1);
         diff_down += std::pow(total_sum_nom - total_sum_down , 2);
       }  
     }
@@ -1455,6 +1517,7 @@ std::vector<float>  total_theo_up, total_theo_down;
     h_data->SetBinContent(isys+1, h_data->GetBinContent(isys+1)*std::abs(mult_factor));
     h_data->SetBinError(isys+1, h_data->GetBinError(isys+1)*std::abs(mult_factor));
     h_exp_sys_errors->SetPoint(isys,x_stat.at(isys),std::abs(mult_factor)*y_stat.at(isys));
+    std::cout<<"SYS BANDS: "<<total_exp_sys_up.at(isys)<< " "<<total_stat.at(isys)<<" "<< total_theo_up.at(isys)<<" "<<total_exp_sys_down.at(isys) <<" "<< total_stat.at(isys) << " "<<total_theo_down.at(isys)<<std::endl;
     h_exp_sys_errors->SetPointError(isys, h_Fakes->GetBinWidth(isys+1)/2, h_Fakes->GetBinWidth(isys+1)/2, std::abs(mult_factor)*std::sqrt( total_exp_sys_up.at(isys) + total_stat.at(isys) + total_theo_up.at(isys) ), std::abs(mult_factor)*std::sqrt( total_exp_sys_down.at(isys) + total_stat.at(isys) + total_theo_down.at(isys)) );
   }
   
@@ -1528,7 +1591,7 @@ std::vector<float>  total_theo_up, total_theo_down;
   legend->SetTextSize(0.);
   legend->SetNColumns(2);
  
-  legend->AddEntry(h_data, "#bf{#scale[.8]{Data}}", "pe");
+  legend->AddEntry(h_data, "#bf{#scale[.8]{Data}}", "p");
   legend->AddEntry(h_exp_sys_errors, "#bf{#scale[.8]{Uncertainty}}", "f");
   legend->AddEntry(h_vbf,"#bf{#scale[.8]{H_{VBF}}}", "f");
   legend->AddEntry(h_ggf, "#bf{#scale[.8]{H_{other}}}", "f");
@@ -1577,12 +1640,17 @@ std::vector<float>  total_theo_up, total_theo_down;
   h_ratio_unc->SetName(ratio_band_name.c_str());
   h_ratio_unc->SetFillColor(kGray+2);  
   h_ratio_unc->SetFillStyle(3345);
-  h_ratio->Draw("pe");
+  
+  if(m_regionName=="DYCR" || m_regionName=="ggFCR1") h_ratio->Draw("pe Y+"); 
+  else h_ratio->Draw("pe");
+
 
   TLine *l=new TLine(m_xminimum,1.0,m_xmaximum,1.0);
   l->SetLineColor(kBlack);
   l->Draw("same");
   h_ratio_unc->Draw("e2 same");
+  
+  
   h_ratio->Draw("pe same");
 
   h_ratio->GetXaxis()->SetTitle(xAxisTitle(observable).c_str());
@@ -1608,6 +1676,7 @@ std::vector<float>  total_theo_up, total_theo_down;
   c->SaveAs(save_name.c_str());
 
 }
+
 
 void plotting::Plots(std::string region1, std::string region2, std::string observable)
 {
