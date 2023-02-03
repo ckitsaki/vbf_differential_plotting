@@ -1,10 +1,19 @@
-===========================================
-SIGNAL REGION pre-fit detector level plots
-+++++++++++++++++++++++++++++++++++++++++++
+# How to make the detector level plots pre-fit we have in the paper:  
+```
+cd src
+root -l
+.L plotting.C
+```
+and then call the appropriate function as listed below 
+**but before be sure you're**
+**using the correct theory inputs** [lines to be changed](https://gitlab.cern.ch/ckitsaki/vbf_differential_plotting/-/blob/master/src/plotting.C#L96-97)
 
-======> MT, Mll, jet0_pt, sumOfCentralitiesL, DYll, jet0_eta, jet1_eta, jet1_pt, SignedDPhijj, Ml0j0
+## SIGNAL REGION 
+### MT, Mll, jet0_pt, sumOfCentralitiesL, DYll, jet0_eta, jet1_eta, jet1_pt, SignedDPhijj, Ml0j0
 theory unc files to be used
+
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";
+
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/diboson-ewk_histos_2jets.root";
 
 plotting("SR","MT",1,0,1,0,0,300,"0",250,"0.6",1.4,false)
@@ -18,9 +27,11 @@ plotting("SR","jet1_pt",1,0,1,0,0,600,"0",200,"0.",2,false)
 plotting("SR","SignedDPhijj",1,0,1,0,0,150,")-3.14",3.14,"0.5",1.5,false)
 plotting("SR","Ml0j0",1,0,1,0,0,200,"0",600,"0.5",1.5,false)
 
-======> DPhill, DYjj, Mjj
+### DPhill, DYjj, Mjj
 theory unc files to be used
+
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/"+ sample + "_histos_SR.root";
+
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_Rebin_SR12_1Jun2022/diboson-ewk_histos_SR.root";
 
 plotting("SR","DPhill",1,1,1,0,0,1500,"0",1.4,"0.6",1.3,true)
@@ -39,7 +50,7 @@ plotting("SR1","bdt_vbf",1,1,1,0,0,2500,"0.5",1,"0.7",1.3,true)
 plotting("SR2","bdt_TopWWAll",1,1,1,0,0,800,")-1",1,"0.7",1.3,false)
 
 
-======> GGFCR
+### GGFCR
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/"+ sample + "_histos_2jets.root";
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/diboson-ewk_histos_2jets.root";
 
@@ -53,7 +64,7 @@ plotting("ggFCR1","MET",1,0,1,0,0,3500,"0",250,"0.7",1.3,false)
 plotting("ggFCR1","jet0_pt",1,0,1,0,0,4100,"0",310,"0.7",1.3,false)
 plotting("ggFCR1","jet1_pt",1,0,1,0,0,11000,"0",210,"0.6",1.4,false)
 
-=====> ZJETS CR
+### Z+JETS CR
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_MT/"+ sample + "_histos_MT.root";
 "/usatlas/u/sagar/usatlaswork/scripts/CharaStackPlotsHists/StackPlots_22Feb2022/diboson-ewk_histos_2jets.root";
 
