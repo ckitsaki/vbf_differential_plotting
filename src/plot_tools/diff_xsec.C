@@ -22,12 +22,12 @@ TGraphAsymmErrors* getHistogram(TFile* fin, std::string observable="Mjj")
 std::string getAxisTitle(std::string observable="Mjj")
 {
   std::string title_obs="";
-  if(observable=="DYjj") title_obs = "#Delta#it{y}_{jj}"; 
+  if(observable=="DYjj") title_obs = "|#Delta#it{y}_{jj}|"; 
   if(observable=="Mll")  title_obs = "#it{m}_{ll}";
   if(observable=="Mjj")  title_obs = "#it{m}_{jj}";
-  if(observable=="costhetastar") title_obs = "#it{#theta}_{#eta}*";
-  if(observable=="DYll") title_obs = "#Delta#it{y}_{ll}";
-  if(observable=="DPhill") title_obs = "#Delta#it{#phi}_{ll}";
+  if(observable=="costhetastar") title_obs = "#it{cos(#theta}_{#eta}*#it{)}";
+  if(observable=="DYll") title_obs = "|#Delta#it{y}_{ll}|";
+  if(observable=="DPhill") title_obs = "|#Delta#it{#phi}_{ll}|";
   if(observable=="SignedDPhijj") title_obs = "#Delta#it{#phi}_{jj}";
   if(observable=="pt_H") title_obs = "#it{p}_{T}^{H}";
   if(observable=="Ptll") title_obs = "#it{p}_{T}^{ll}";
