@@ -18,7 +18,7 @@ log = log/$(ClusterId).$(ProcId).log
 
 observable = Ptll
 y_min = )-0.003
-ymax = 0.037
+ymax = 0.04
 y_ratio_min = 0
 ratio_ymax = 2.05
 merged = true
@@ -29,7 +29,7 @@ queue 1
 
 observable = Mll
 y_min = )-0.01
-ymax = 0.13
+ymax = 0.14
 y_ratio_min = )-.5
 ratio_ymax = 3.5
 merged = true
@@ -40,7 +40,7 @@ queue 1
 
 observable = Mjj
 y_min = )-0.0015
-ymax = .005
+ymax = .0055
 y_ratio_min = 0.
 ratio_ymax = 2.5
 merged = true
@@ -51,7 +51,7 @@ queue 1
 
 observable = lep0_pt
 y_min = )-0.015
-ymax = .065
+ymax = .07
 y_ratio_min = )-1.2
 ratio_ymax = 3.5
 merged = true
@@ -62,9 +62,9 @@ queue 1
 
 observable = lep1_pt
 y_min = )-0.01
-ymax = 0.14
+ymax = 0.15
 y_ratio_min = 0.
-ratio_ymax = 2.5
+ratio_ymax = 2.4
 merged = true
 
 arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
@@ -84,7 +84,7 @@ queue 1
 
 observable = SignedDPhijj
 y_min = 0
-ymax = .9
+ymax = 1.
 y_ratio_min = 0.4
 ratio_ymax = 1.8
 merged = false
@@ -95,9 +95,9 @@ queue 1
 
 observable = DYll
 y_min = )-1.2
-ymax = 5.
+ymax = 5.5
 y_ratio_min = 0.
-ratio_ymax = 2.
+ratio_ymax = 2.1
 merged = false 
 
 arguments = $(observable) $(y_min) $(ymax) $(y_ratio_min) $(ratio_ymax) $(merged)
@@ -106,7 +106,7 @@ queue 1
 
 observable = DPhill
 y_min = 0
-ymax = 4.5
+ymax = 5.
 y_ratio_min = 0.2
 ratio_ymax = 2.
 merged = false
@@ -128,7 +128,7 @@ queue 1
 
 observable = pt_H
 y_min = )-0.003
-ymax = 0.035
+ymax = 0.04
 y_ratio_min = )-1
 ratio_ymax = 3.
 merged = true
@@ -140,7 +140,7 @@ queue 1
 observable = costhetastar
 y_min = )-1.5
 ymax = 12
-y_ratio_min = 0.3
+y_ratio_min = 0.2
 ratio_ymax = 2.
 merged = false
 
@@ -150,7 +150,7 @@ queue 1
 
 observable = jet1_pt
 y_min = )-0.005
-ymax = .07
+ymax = .075
 y_ratio_min = )-0.2
 ratio_ymax = 2.5
 merged = true

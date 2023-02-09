@@ -25,7 +25,7 @@ std::string getAxisTitle(std::string observable="Mjj")
   if(observable=="DYjj") title_obs = "|#Delta#it{y}_{jj}|"; 
   if(observable=="Mll")  title_obs = "#it{m}_{ll}";
   if(observable=="Mjj")  title_obs = "#it{m}_{jj}";
-  if(observable=="costhetastar") title_obs = "#it{cos(#theta}_{#eta}*#it{)}";
+  if(observable=="costhetastar") title_obs = "#it{cos#it{(}#theta}_{#eta}*)";//"#it{cos(#theta}_{#eta}*#it{)}"; "#it{cos(#theta}_{#eta}*#it{)}";
   if(observable=="DYll") title_obs = "|#Delta#it{y}_{ll}|";
   if(observable=="DPhill") title_obs = "|#Delta#it{#phi}_{ll}|";
   if(observable=="SignedDPhijj") title_obs = "#Delta#it{#phi}_{jj}";
@@ -318,14 +318,14 @@ void diff_xsec(std::string observable="Mjj", bool merged=false, std::string data
   gr_powpy8_0->GetXaxis()->SetLabelOffset(10);
   gr_powpy8_0->GetYaxis()->SetRangeUser(ymin,ymax);
   
-  std::string y_title = "d#sigma/d" + getAxisTitle(observable) + getUnits(observable);
+  std::string y_title = "d#sigma^{fid}/d" + getAxisTitle(observable) + getUnits(observable);
   gr_powpy8_0->GetYaxis()->SetTitle(y_title.c_str());
   gr_powpy8_0->GetYaxis()->SetLabelSize(.05);
   gr_powpy8_0->GetYaxis()->SetTitleOffset(1.);
   if(observable=="Ptll" || observable=="lep0_pt" || observable=="lep1_pt" || observable=="jet0_pt" || observable=="jet1_pt" || observable=="pt_H" || observable=="Mjj") gr_powpy8_0->GetYaxis()->SetTitleOffset(1.2);
   gr_powpy8_0->GetYaxis()->SetTitleSize(.05);
 
-  TLegend *legend = new TLegend(0.43,0.65,0.9,0.92);
+  TLegend *legend = new TLegend(0.45,0.58,0.91,0.92);
   if(latexOneColumn) legend = new TLegend(0.58, 0.32, 0.82, .74);
   legend->SetNColumns(2);
   legend->SetBorderSize(0);
@@ -360,14 +360,17 @@ void diff_xsec(std::string observable="Mjj", bool merged=false, std::string data
   
   legend->Draw();
 
-  auto legAtlas = new TLegend(0.08,0.78,0.5,0.92);
-  if(latexOneColumn) legAtlas = new TLegend(0.48, 0.74, .94, .9);
+  auto legAtlas = new TLegend(0.08,0.7,0.5,0.92);
+  if(latexOneColumn) legAtlas = new TLegend(0.48, 0.64, .94, .9);
   legAtlas->SetBorderSize(0);
   legAtlas->SetFillStyle(0);
   legAtlas->SetTextSize(0.);
   legAtlas->AddEntry((TObject*)0, "#it{#scale[1.1]{ATLAS} #bf{#it{Internal}}}", "");
   legAtlas->AddEntry((TObject*)0, "#bf{#sqrt{#scale[.8]{#it{s}}} #scale[.8]{= 13 TeV, 139 fb^{-1}}  }", "");
+  legAtlas->AddEntry((TObject*)0, "#bf{ #scale[.8]{H#rightarrow WW* #rightarrow #scale[0.95]{e}#nu + #mu#nu }}", "");
   legAtlas->Draw();
+
+  
  /*
 
   TLegend *legend = new TLegend(0.62,0.6,0.86,0.9);

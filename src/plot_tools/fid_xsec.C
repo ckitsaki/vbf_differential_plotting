@@ -54,8 +54,8 @@ void fidxsec(float central_value=1.68, float stat_up=0.33, float stat_down=0.32,
 
   gr->Draw("L same");
  
-  gr->GetXaxis()->SetTitleSize(0.03);
-  gr->GetXaxis()->SetLabelSize(0.03);
+  gr->GetXaxis()->SetTitleSize(0.035);
+  gr->GetXaxis()->SetLabelSize(0.035);
   gr->GetXaxis()->SetTitle("#it{#sigma}^{fid} [fb]");
 
   gPad->RedrawAxis();
@@ -72,7 +72,7 @@ void fidxsec(float central_value=1.68, float stat_up=0.33, float stat_down=0.32,
   gr_madher7->SetMarkerStyle(29);
   gr_vbfnlopy8->SetMarkerStyle(23);
   gr_vbfnlo->SetMarkerStyle(33);
-  gr_vbfnlolo->SetMarkerStyle(20);
+  gr_vbfnlolo->SetMarkerStyle(47);
 
   gr_powpy8->SetLineWidth(2);//33);
   gr_powher7->SetLineWidth(2);
@@ -150,8 +150,10 @@ void fidxsec(float central_value=1.68, float stat_up=0.33, float stat_down=0.32,
 
   TLatex latex;
   latex.SetTextSize(0.03);
-  latex.DrawLatex(-0.1, 2.15, "#it{H}#rightarrow #it{WW*}#rightarrow #it{e^{#pm}#nu + #mu^{#mp}#nu}");
-  latex.DrawLatex(-0.1, 2.00, "Fiducial cross section");
+  latex.DrawLatex(-0.1, 2.15, "H#rightarrow WW* #rightarrow #scale[0.95]{e}#nu + #mu#nu");
+  latex.DrawLatex(-0.1, 2.00, "VBF fiducial cross section");
+  //\ensuremath{H{\rightarrow\,}WW^{\ast}{\rightarrow\,}e\nu\mu\nu}
+
 
   auto legend = new TLegend(0.18,0.19,0.5,0.38);
   legend->SetBorderSize(0);
