@@ -155,6 +155,14 @@ void plotting::getTheoForBDTs(std::string sample, std::string binNum, std::strin
   TH1F* h_theo_var_up = (TH1F*)f_theo_file->Get(theo_var_up.c_str());
   TH1F* h_theo_var_down = (TH1F*)f_theo_file->Get(theo_var_down.c_str());
 
+if(m_regionName=="SR2Mjj_0" || m_regionName=="SR2Mjj_1" || m_regionName=="SR2Mjj_2" || m_regionName=="SR2Mjj_3" || m_regionName=="SR2Mjj_4" ||
+   m_regionName=="SR2DPhill_0" || m_regionName=="SR2DPhill_1" || m_regionName=="SR2DPhill_2" || m_regionName=="SR2DPhill_3" || m_regionName=="SR2DPhill_4") {
+  h_theo_nom->Rebin(2);
+  h_theo_var_up->Rebin(2);
+  h_theo_var_down->Rebin(2);
+
+}
+
   if(m_regionName=="SR1DPhill_0" || m_regionName=="SR1DPhill_1" || m_regionName=="SR1DPhill_2" || m_regionName=="SR1DPhill_3" || m_regionName=="SR1DPhill_4" || 
     m_regionName=="SR1Mjj_0" || m_regionName=="SR1Mjj_1" || m_regionName=="SR1Mjj_2" || m_regionName=="SR1Mjj_3" || m_regionName=="SR1Mjj_4") 
   {
@@ -1224,6 +1232,8 @@ void plotting::prefit_bdts(std::string region, std::string observable, std::stri
   h_vh = getNominalHisto("vh");
   h_htt = getNominalHisto("htt");
   h_data = getNominalHisto("data");
+
+  
   
   THStack* h_stack = new THStack("h_stack","");
 
@@ -1245,6 +1255,17 @@ void plotting::prefit_bdts(std::string region, std::string observable, std::stri
     h_ggf->Scale(1,"width");
     h_data->Scale(1,"width");
     binwidth=true;
+}
+if(m_regionName=="SR2Mjj_0" || m_regionName=="SR2Mjj_1" || m_regionName=="SR2Mjj_2" || m_regionName=="SR2Mjj_3" || m_regionName=="SR2Mjj_4" ||
+   m_regionName=="SR2DPhill_0" || m_regionName=="SR2DPhill_1" || m_regionName=="SR2DPhill_2" || m_regionName=="SR2DPhill_3" || m_regionName=="SR2DPhill_4") {
+  h_Fakes->Rebin(2);
+  h_WW->Rebin(2);
+  h_Zjets->Rebin(2);
+  h_top1->Rebin(2);
+  h_vbf->Rebin(2);
+  h_ggf->Rebin(2);
+  h_data->Rebin(2);
+  m_nbins = 2;
 }
 
   h_Fakes->SetFillColor(kCyan-7); //Mis-Id
@@ -1398,6 +1419,32 @@ void plotting::prefit_bdts(std::string region, std::string observable, std::stri
     h_vbf_down.push_back((TH1F*)f_exp->Get(name_vbf_down.at(i).c_str()));
   
   }
+  if(m_regionName=="SR2Mjj_0" || m_regionName=="SR2Mjj_1" || m_regionName=="SR2Mjj_2" || m_regionName=="SR2Mjj_3" || m_regionName=="SR2Mjj_4" ||
+      m_regionName=="SR2DPhill_0" || m_regionName=="SR2DPhill_1" || m_regionName=="SR2DPhill_2" || m_regionName=="SR2DPhill_3" || m_regionName=="SR2DPhill_4") {
+        for(int i=0; i<h_vbf_up.size(); i++) {
+        h_Zjets_up.at(i)->Rebin(2);
+        h_top_up.at(i)->Rebin(2);
+        h_diboson_up.at(i)->Rebin(2);
+        h_Vgamma_up.at(i)->Rebin(2);
+        h_ggf_up.at(i)->Rebin(2);
+        h_vh_up.at(i)->Rebin(2);
+        h_htt_up.at(i)->Rebin(2);
+        h_vbf_up.at(i)->Rebin(2);
+
+        h_Zjets_down.at(i)->Rebin(2);
+        h_top_down.at(i)->Rebin(2);
+        h_diboson_down.at(i)->Rebin(2);
+        h_Vgamma_down.at(i)->Rebin(2);
+        h_ggf_down.at(i)->Rebin(2);
+        h_vh_down.at(i)->Rebin(2);
+        h_htt_down.at(i)->Rebin(2);
+        h_vbf_down.at(i)->Rebin(2);
+        }
+        for(int j=0; j<h_Fakes_up.size(); j++)
+        {
+           h_Fakes_up.at(j)->Rebin(2); h_Fakes_down.at(j)->Rebin(2);
+        }
+      }
 
   std::vector<float> total_exp_sys_up, total_exp_sys_down;
   for(int ibin =0; ibin<m_nbins; ibin++){
@@ -1427,6 +1474,7 @@ void plotting::prefit_bdts(std::string region, std::string observable, std::stri
     }
     for(int j=0; j<name_Fakes.size(); j++) {
       float total_sum_nom = h_Fakes->GetBinContent(ibin+1);
+
       if( h_Fakes_up.at(j)!=nullptr ) 
       {
         float total_sum_up = h_Fakes_up.at(j)->GetBinContent(ibin+1);
@@ -1548,7 +1596,13 @@ std::vector<float>  total_theo_up, total_theo_down;
    main_pad->cd();
 
   h_stack->Draw("hist");
-  if(m_regionName=="DYCR" || m_regionName=="ggFCR1") h_stack->Draw("hist Y+"); 
+ /* h_Fakes->Draw("hist");
+  h_Zjets->Draw("hist same");
+  h_WW->Draw("hist same");
+  h_top1->Draw("hist same");
+  h_ggf->Draw("hist same");
+  h_vbf->Draw("hist same");
+ */ if(m_regionName=="DYCR" || m_regionName=="ggFCR1") h_stack->Draw("hist Y+"); 
   
   std::string error_band_name = "error_band_"+m_obsName+"_"+m_regionName;
   h_exp_sys_errors->SetName(error_band_name.c_str());
