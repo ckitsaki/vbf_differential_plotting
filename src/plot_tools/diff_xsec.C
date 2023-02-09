@@ -367,7 +367,7 @@ void diff_xsec(std::string observable="Mjj", bool merged=false, std::string data
   legAtlas->SetTextSize(0.);
   legAtlas->AddEntry((TObject*)0, "#it{#scale[1.1]{ATLAS} #bf{#it{Internal}}}", "");
   legAtlas->AddEntry((TObject*)0, "#bf{#sqrt{#scale[.8]{#it{s}}} #scale[.8]{= 13 TeV, 139 fb^{-1}}  }", "");
-  legAtlas->AddEntry((TObject*)0, "#bf{ #scale[.8]{H#rightarrow WW* #rightarrow #scale[0.95]{e}#nu + #mu#nu }}", "");
+  legAtlas->AddEntry((TObject*)0, "#bf{ #scale[.8]{H#rightarrow WW* #rightarrow #scale[0.95]{e}#nu#mu#nu }}", "");
   legAtlas->Draw();
 
   

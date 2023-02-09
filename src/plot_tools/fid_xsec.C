@@ -150,7 +150,7 @@ void fidxsec(float central_value=1.68, float stat_up=0.33, float stat_down=0.32,
 
   TLatex latex;
   latex.SetTextSize(0.03);
-  latex.DrawLatex(-0.1, 2.15, "H#rightarrow WW* #rightarrow #scale[0.95]{e}#nu + #mu#nu");
+  latex.DrawLatex(-0.1, 2.15, "H#rightarrow WW* #rightarrow #scale[0.95]{e}#nu#mu#nu");
   latex.DrawLatex(-0.1, 2.00, "VBF fiducial cross section");
   //\ensuremath{H{\rightarrow\,}WW^{\ast}{\rightarrow\,}e\nu\mu\nu}
 
