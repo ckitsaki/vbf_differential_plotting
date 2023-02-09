@@ -89,10 +89,12 @@ Step 1: Modify accordingly the `./submission_files/plot_production/submit_plots_
 Step 2: Make sure that the correct configuration file is linked in submit_jobs_plots.sh and run `./submit_jobs_plots.sh`. The outputs are saved in prefit_bdt_inputs folder
 
 Step 3: `cd src/plot_tools` and open a root session 
-```
+``` bash
 root -l
 .L pre_fit_bdt.cpp
-make_pre_fit_plot(binSR1,observable,setRatioLimits)
+# not used
+# make_pre_fit_plot(binSR1,observable,setRatioLimits) 
+test_plot(binSR1,observable)
 ```
 Arguments:
 * binSR1 (int): total number of observable's bins in SR1 (and SR2)
